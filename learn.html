@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn - Hanverse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #E63946;
+            --primary-light: #FF6B6B;
+            --secondary: #1D3557;
+            --background: #FAFBFC;
+            --surface: #FFFFFF;
+            --text-primary: #1A1A2E;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        .app-container {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--surface);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .app-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+        .app-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .main-content {
+            padding: 1.25rem;
+            padding-bottom: 100px;
+        }
+        .disclaimer {
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid #FFB74D;
+        }
+        .disclaimer-icon {
+            font-size: 1.5rem;
+        }
+        .disclaimer-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #E65100;
+        }
+        .section-header {
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .course-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .course-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .course-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(230, 57, 70, 0.15);
+        }
+        .course-card:active {
+            transform: scale(0.98);
+        }
+        .course-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FFE5E5 0%, #FFCDD2 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        .course-info {
+            flex: 1;
+        }
+        .course-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .course-level {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .course-stats {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem 1rem;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-secondary);
+            min-width: 60px;
+        }
+        .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-item.active .nav-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: var(--background);
+        }
+        .nav-label {
+            font-size: 0.6875rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-left">
+                <div class="app-logo">汉</div>
+                <span class="app-title">Learn</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="disclaimer">
+                <span class="disclaimer-icon">🎉</span>
+                <span class="disclaimer-text">YCT 2 is coming soon!</span>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">YCT (Youth Chinese Test)</h2>
+            </div>
+            <div class="course-grid">
+                <div class="course-card" onclick="window.location.href='yct1.html'">
+                    <div class="course-header">
+                        <div class="course-icon">🌱</div>
+                        <div class="course-info">
+                            <h3 class="course-name">YCT 1</h3>
+                            <p class="course-level">Beginner Level</p>
+                        </div>
+                    </div>
+                    <div class="course-stats">
+                        <span class="stat">📝 80 words</span>
+                        <span class="stat">⏱️ 35 min test</span>
+                        <span class="stat">⭐ Level A1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">HSK (Chinese Proficiency Test)</h2>
+            </div>
+            <div class="course-grid">
+                <div class="course-card" onclick="window.location.href='hsk1.html'">
+                    <div class="course-header">
+                        <div class="course-icon">🎯</div>
+                        <div class="course-info">
+                            <h3 class="course-name">HSK 1</h3>
+                            <p class="course-level">Elementary Level</p>
+                        </div>
+                    </div>
+                    <div class="course-stats">
+                        <span class="stat">📝 150 words</span>
+                        <span class="stat">⏱️ 40 min test</span>
+                        <span class="stat">⭐ Level A1</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <span class="nav-label">Home</span>
+            </a>
+            <a href="learn.html" class="nav-item active">
+                <div class="nav-icon">📚</div>
+                <span class="nav-label">Learn</span>
+            </a>
+            <a href="practice.html" class="nav-item">
+                <div class="nav-icon">🎯</div>
+                <span class="nav-label">Practice</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <div class="nav-icon">👤</div>
+                <span class="nav-label">Profile</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

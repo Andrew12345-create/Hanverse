@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Hanverse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #E63946;
+            --primary-light: #FF6B6B;
+            --background: #FAFBFC;
+            --surface: #FFFFFF;
+            --text-primary: #1A1A2E;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --radius-lg: 24px;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            min-height: 100vh;
+        }
+        .app-container {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--surface);
+        }
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 2rem 1.25rem;
+            text-align: center;
+            color: white;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .username {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .user-level {
+            opacity: 0.9;
+        }
+        .main-content {
+            padding: 1.25rem;
+            padding-bottom: 100px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .menu-section {
+            margin-bottom: 1.5rem;
+        }
+        .menu-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .menu-item:hover {
+            border-color: var(--primary);
+        }
+        .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .menu-icon {
+            font-size: 1.5rem;
+        }
+        .menu-text {
+            font-weight: 500;
+        }
+        .logout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover {
+            background: var(--primary-light);
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem 1rem;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-secondary);
+            min-width: 60px;
+        }
+        .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-item.active .nav-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: var(--background);
+        }
+        .nav-label {
+            font-size: 0.6875rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="profile-header">
+            <div class="avatar">👤</div>
+            <h1 class="username" id="userName">User</h1>
+            <p class="user-level">Level 5 • Intermediate</p>
+        </header>
+        <main class="main-content">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">2,450</div>
+                    <div class="stat-label">Total XP</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">45</div>
+                    <div class="stat-label">Lessons</div>
+                </div>
+            </div>
+            <div class="menu-section">
+                <div class="menu-item">
+                    <div class="menu-left">
+                        <span class="menu-icon">📊</span>
+                        <span class="menu-text">Progress</span>
+                    </div>
+                    <span>›</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-left">
+                        <span class="menu-icon">🏆</span>
+                        <span class="menu-text">Achievements</span>
+                    </div>
+                    <span>›</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-left">
+                        <span class="menu-icon">⚙️</span>
+                        <span class="menu-text">Settings</span>
+                    </div>
+                    <span>›</span>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-left">
+                        <span class="menu-icon">❓</span>
+                        <span class="menu-text">Help & Support</span>
+                    </div>
+                    <span>›</span>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </main>
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <span class="nav-label">Home</span>
+            </a>
+            <a href="learn.html" class="nav-item">
+                <div class="nav-icon">📚</div>
+                <span class="nav-label">Learn</span>
+            </a>
+            <a href="practice.html" class="nav-item">
+                <div class="nav-icon">🎯</div>
+                <span class="nav-label">Practice</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <div class="nav-icon">👤</div>
+                <span class="nav-label">Profile</span>
+            </a>
+        </nav>
+    </div>
+    <script>
+        const user = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
+        if (user.email) {
+            document.getElementById('userName').textContent = user.email.split('@')[0];
+        }
+        function logout() {
+            localStorage.removeItem('hanverse_user');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

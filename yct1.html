@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YCT 1 - Hanverse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #E63946;
+            --primary-light: #FF6B6B;
+            --background: #FAFBFC;
+            --surface: #FFFFFF;
+            --text-primary: #1A1A2E;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --radius-lg: 24px;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            min-height: 100vh;
+        }
+        .app-container {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--surface);
+        }
+        .app-header {
+            background: linear-gradient(135deg, #FFE5E5 0%, #FFCDD2 100%);
+            padding: 2rem 1.25rem;
+            text-align: center;
+        }
+        .back-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+        .course-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .course-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .course-subtitle {
+            color: var(--text-secondary);
+        }
+        .main-content {
+            padding: 1.25rem;
+            padding-bottom: 100px;
+        }
+        .lesson-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lesson-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .lesson-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        .lesson-info {
+            flex: 1;
+        }
+        .lesson-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .lesson-meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <button class="back-btn" onclick="window.location.href='learn.html'">←</button>
+            <div class="course-icon">🌱</div>
+            <h1 class="course-title">YCT 1</h1>
+            <p class="course-subtitle">80 words • Beginner Level</p>
+        </header>
+        <main class="main-content">
+            <div class="lesson-card">
+                <div class="lesson-number">1</div>
+                <div class="lesson-info">
+                    <h3 class="lesson-title">Greetings</h3>
+                    <p class="lesson-meta">10 words • 5 min</p>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-number">2</div>
+                <div class="lesson-info">
+                    <h3 class="lesson-title">Numbers 1-10</h3>
+                    <p class="lesson-meta">10 words • 8 min</p>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-number">3</div>
+                <div class="lesson-info">
+                    <h3 class="lesson-title">Family Members</h3>
+                    <p class="lesson-meta">12 words • 10 min</p>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-number">4</div>
+                <div class="lesson-info">
+                    <h3 class="lesson-title">Colors</h3>
+                    <p class="lesson-meta">8 words • 6 min</p>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-number">5</div>
+                <div class="lesson-info">
+                    <h3 class="lesson-title">Basic Verbs</h3>
+                    <p class="lesson-meta">15 words • 12 min</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
