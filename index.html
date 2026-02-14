@@ -604,8 +604,8 @@
                 <span class="app-title">Hanverse</span>
             </div>
             <div class="header-right">
-                <button class="icon-btn">🔔</button>
-                <button class="icon-btn">⚙️</button>
+                <button class="icon-btn" onclick="window.location.href='notifications.html'">🔔</button>
+                <button class="icon-btn" onclick="window.location.href='settings.html'">⚙️</button>
             </div>
         </header>
 
@@ -678,39 +678,7 @@
                     <a href="#" class="section-action">View All</a>
                 </div>
                 <div class="lessons-grid">
-                    <div class="lesson-card">
-                        <div class="lesson-icon characters">字</div>
-                        <div class="lesson-content">
-                            <h3 class="lesson-title">Basic Characters</h3>
-                            <p class="lesson-subtitle">
-                                <span class="lesson-badge badge-progress">In Progress</span>
-                                Lesson 5 of 10
-                            </p>
-                        </div>
-                        <span class="lesson-arrow">›</span>
-                    </div>
-                    <div class="lesson-card">
-                        <div class="lesson-icon speaking">言</div>
-                        <div class="lesson-content">
-                            <h3 class="lesson-title">Daily Conversations</h3>
-                            <p class="lesson-subtitle">
-                                <span class="lesson-badge badge-new">New</span>
-                                Start learning
-                            </p>
-                        </div>
-                        <span class="lesson-arrow">›</span>
-                    </div>
-                    <div class="lesson-card">
-                        <div class="lesson-icon vocabulary">词</div>
-                        <div class="lesson-content">
-                            <h3 class="lesson-title">Essential Vocabulary</h3>
-                            <p class="lesson-subtitle">
-                                <span class="lesson-badge badge-progress">75%</span>
-                                3 lessons left
-                            </p>
-                        </div>
-                        <span class="lesson-arrow">›</span>
-                    </div>
+                    <!-- Dynamically populated based on user progress -->
                 </div>
             </section>
 
@@ -774,6 +742,53 @@
         const user = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
         if (!user.loggedIn) {
             window.location.href = 'login.html';
+        }
+        
+        // Display user stats
+        document.querySelector('.stat-value.streak-active').textContent = user.streak || 0;
+        document.querySelectorAll('.stat-value')[1].textContent = user.xp || 0;
+        document.querySelectorAll('.stat-value')[2].textContent = 'Lv.' + (user.level || 1);
+
+        // Load user progress and populate Continue Learning section
+        const progress = JSON.parse(localStorage.getItem('hanverse_progress') || '[]');
+        const continueLearningSection = document.querySelector('.animate-in.delay-3');
+        const lessonsGrid = continueLearningSection.querySelector('.lessons-grid');
+        
+        // Filter for incomplete lessons (where user left off)
+        const inProgressLessons = progress.filter(p => p.completed === false);
+        
+        if (inProgressLessons.length === 0) {
+            // No in-progress lessons - hide the section for new users
+            continueLearningSection.style.display = 'none';
+        } else {
+            // Populate with actual in-progress lessons
+            lessonsGrid.innerHTML = '';
+            inProgressLessons.slice(0, 3).forEach(lesson => {
+                const courseName = lesson.course_type + ' ' + lesson.course_level;
+                const lessonCard = document.createElement('div');
+                lessonCard.className = 'lesson-card';
+                lessonCard.onclick = () => {
+                    if (lesson.course_type === 'HSK') {
+                        window.location.href = 'hsk1.html';
+                    } else if (lesson.course_type === 'YCT') {
+                        window.location.href = 'yct1.html';
+                    }
+                };
+                
+                const icon = lesson.course_type === 'HSK' ? '字' : '言';
+                lessonCard.innerHTML = `
+                    <div class="lesson-icon characters">${icon}</div>
+                    <div class="lesson-content">
+                        <h3 class="lesson-title">${courseName}</h3>
+                        <p class="lesson-subtitle">
+                            <span class="lesson-badge badge-progress">In Progress</span>
+                            Lesson ${lesson.lesson_id}
+                        </p>
+                    </div>
+                    <span class="lesson-arrow">›</span>
+                `;
+                lessonsGrid.appendChild(lessonCard);
+            });
         }
 
         // Animate elements on scroll

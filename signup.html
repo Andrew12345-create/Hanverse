@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Hanverse</title>
+    <title>Sign Up - Hanverse</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,7 +26,7 @@
             align-items: center;
             justify-content: center;
         }
-        .login-container {
+        .signup-container {
             max-width: 400px;
             width: 90%;
             background: var(--surface);
@@ -106,19 +106,13 @@
         .btn:active {
             transform: translateY(0);
         }
-        .divider {
-            text-align: center;
-            margin: 1.5rem 0;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-        .signup-link {
+        .login-link {
             text-align: center;
             margin-top: 1.5rem;
             color: var(--text-secondary);
             font-size: 0.875rem;
         }
-        .signup-link a {
+        .login-link a {
             color: var(--primary);
             font-weight: 600;
             text-decoration: none;
@@ -135,14 +129,22 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="signup-container">
         <div class="logo-section">
             <div class="logo">汉</div>
-            <h1>Welcome to Hanverse</h1>
+            <h1>Create Account</h1>
             <p class="subtitle">Start your Chinese learning journey</p>
         </div>
-        <form id="loginForm">
+        <form id="signupForm">
             <div class="error-message" id="errorMessage"></div>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="johndoe" required>
+            </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" placeholder="your@email.com" required>
@@ -151,24 +153,31 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn">Sign In</button>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn">Create Account</button>
         </form>
-        <div class="signup-link">
-            Don't have an account? <a href="signup.html">Sign up</a>
+        <div class="login-link">
+            Already have an account? <a href="login.html">Sign in</a>
         </div>
     </div>
     <script>
         const API_URL = 'http://localhost:3000/api';
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
             const errorMsg = document.getElementById('errorMessage');
             const btn = document.querySelector('.btn');
             
             // Validation
-            if (!email || !password) {
+            if (!fullName || !username || !email || !password || !confirmPassword) {
                 errorMsg.textContent = 'Please fill in all fields';
                 errorMsg.style.display = 'block';
                 return;
@@ -180,62 +189,52 @@
                 return;
             }
             
-            // Disable button during login
+            if (password !== confirmPassword) {
+                errorMsg.textContent = 'Passwords do not match';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            // Disable button during signup
             btn.disabled = true;
-            btn.textContent = 'Signing in...';
+            btn.textContent = 'Creating account...';
             errorMsg.style.display = 'none';
             
             try {
-                // Send login request to backend
-                const response = await fetch(`${API_URL}/login`, {
+                // Send signup request to backend
+                const response = await fetch(`${API_URL}/signup`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ 
+                        email, 
+                        password, 
+                        fullName, 
+                        username 
+                    })
                 });
                 
                 const data = await response.json();
                 
                 if (!response.ok) {
-                    errorMsg.textContent = data.error || 'Login failed';
+                    errorMsg.textContent = data.error || 'Signup failed';
                     errorMsg.style.display = 'block';
                     btn.disabled = false;
-                    btn.textContent = 'Sign In';
+                    btn.textContent = 'Create Account';
                     return;
                 }
                 
-                // Store all user data in localStorage
-                localStorage.setItem('hanverse_user', JSON.stringify({
-                    user_id: data.user.user_id,
-                    email: data.user.email,
-                    full_name: data.user.full_name,
-                    username: data.user.username,
-                    xp: data.user.xp,
-                    level: data.user.level,
-                    streak_days: data.user.streak_days,
-                    profile_picture: data.user.profile_picture,
-                    created_at: data.user.created_at,
-                    loggedIn: true
-                }));
-                
-                // Store all fetched data
-                localStorage.setItem('hanverse_progress', JSON.stringify(data.progress));
-                localStorage.setItem('hanverse_achievements', JSON.stringify(data.achievements));
-                localStorage.setItem('hanverse_daily_goals', JSON.stringify(data.dailyGoals));
-                localStorage.setItem('hanverse_notifications', JSON.stringify(data.notifications));
-                localStorage.setItem('hanverse_settings', JSON.stringify(data.settings));
-                localStorage.setItem('hanverse_vocabulary', JSON.stringify(data.vocabulary));
-                
-                // Redirect to dashboard
-                window.location.href = 'index.html';
+                // Account created successfully, redirect to login
+                alert('Account created successfully! Please log in.');
+                window.location.href = 'login.html';
                 
             } catch (error) {
-                console.error('Login error:', error);
+                console.error('Signup error:', error);
                 errorMsg.textContent = 'Connection error. Make sure the server is running on localhost:3000';
                 errorMsg.style.display = 'block';
                 btn.disabled = false;
-                btn.textContent = 'Sign In';
+                btn.textContent = 'Create Account';
             }
         });
     </script>

@@ -210,7 +210,7 @@
                     </div>
                     <span>›</span>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="window.location.href='settings.html'">
                     <div class="menu-left">
                         <span class="menu-icon">⚙️</span>
                         <span class="menu-text">Settings</span>
@@ -249,8 +249,12 @@
     <script>
         const user = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
         if (user.email) {
-            document.getElementById('userName').textContent = user.email.split('@')[0];
+            document.getElementById('userName').textContent = user.fullName || user.username || user.email.split('@')[0];
         }
+        
+        document.querySelectorAll('.stat-value')[0].textContent = user.streak || 0;
+        document.querySelectorAll('.stat-value')[1].textContent = user.xp || 0;
+        
         function logout() {
             localStorage.removeItem('hanverse_user');
             window.location.href = 'login.html';
