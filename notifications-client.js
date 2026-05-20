@@ -30,11 +30,10 @@
     return new Set(Array.isArray(arr) ? arr : []);
   }
 
-  /* ── time formatter ────────────────────────────────────────────────────── */
+  /* ── time formatter (relative) ─────────────────────────────────────────── */
   function fmtTime(ts) {
     if (!ts) return '';
-    const d   = new Date(ts);
-    const diff = Date.now() - d.getTime();
+    const diff = Date.now() - new Date(ts).getTime();
     const m  = Math.floor(diff / 60000);
     if (m < 1)      return 'just now';
     if (m < 60)     return `${m} min ago`;
@@ -42,6 +41,24 @@
     if (h < 24)     return `${h} hours ago`;
     const dd = Math.floor(h / 24);
     return `${dd} day${dd === 1 ? '' : 's'} ago`;
+  }
+
+  /* ── localized absolute time (user timezone) ────────────────────────────── */
+  function fmtLocalTime(ts) {
+    if (!ts) return '';
+    const d = (ts instanceof Date) ? ts : new Date(ts);
+    const now = new Date();
+    if (isNaN(d.getTime())) return '';
+    if (d.toDateString() === now.toDateString()) {
+      return d.toLocaleTimeString('en', { timeZoneName: 'long' });
+    }
+    return d.toLocaleString('en', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'long' });
+  }
+
+  /* ── time label: ────────────────────────────────────────────────────────── */
+  /* for belt-and-suspenders, store the formatted string on the node */
+  function timeLabel(n) {
+    return n.sts || fmtLocalTime(n.created_at || n.ts || null) || fmtTime(n.ts) || '';
   }
 
   /* ── fetch from DB ─────────────────────────────────────────────────────── */
@@ -91,7 +108,7 @@
         <div style="flex:1;min-width:0">
           <div class="hn-notif-body-title">${esc(n.title || 'Notification')}</div>
           ${n.message ? `<div class="hn-notif-body-msg">${esc(n.message)}</div>` : ''}
-          <div class="hn-notif-body-time">${n.sts || fmtTime(n.ts) || ''}</div>
+          <div class="hn-notif-body-time">${timeLabel(n)}</div>
         </div>
         <button class="hn-notif-del" data-dismiss="${i}" aria-label="Dismiss">&times;</button>
       </div>
@@ -163,6 +180,7 @@
     fetchNotifsFromDB,
     esc,
     fmtTime,
+    fmtLocalTime,
   };
 
 })();

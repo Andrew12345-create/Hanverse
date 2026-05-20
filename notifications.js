@@ -38,7 +38,7 @@ const MAX_HISTORY     = 200;
 
   function addHistoryEntry(entry) {
     const history = loadHistory();
-    const ts      = Date.now();
+    const ts      = entry.ts || Date.now();   // keep provided ts (DB) or use now
     const id      = String(entry.id || entry.title || ts);
     // dedupe within ±10 s window
     const isRecentDup = history.some(h => {
@@ -46,6 +46,16 @@ const MAX_HISTORY     = 200;
       return Math.abs(hTs - ts) < 10_000 && (h.id === id || h.title === (entry.title || ''));
     });
     if (isRecentDup) return;
+    // compute locale time string if not already provided
+    if (entry.sts === undefined) {
+      const d   = (ts instanceof Date) ? ts : new Date(ts);
+      const now = new Date();
+      if (d.toDateString() === now.toDateString()) {
+        entry.sts = d.toLocaleTimeString('en', { timeZoneName: 'long' });
+      } else {
+        entry.sts = d.toLocaleString('en', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'long' });
+      }
+    }
     history.push({ ...entry, ts, id });
     saveHistoryRaw(history);
   }
@@ -526,17 +536,27 @@ const MAX_HISTORY     = 200;
   function renderBellList() {
     const list   = document.getElementById('hn-notif-list');
     if (!list) return;
-    const history = loadHistory();
-    const recent  = history.slice(-50).reverse(); // newest first
+    const history = loadHistory().slice(-50).reverse(); // newest first
+    const unread  = history.filter(n => !n.read).length;
 
-    if (!recent.length) {
+    if (!history.length) {
       list.innerHTML = '<div class="hn-notif-empty">No notifications yet.<br>Keep learning!</div>';
       return;
     }
 
     const typeLabel = { success: '✅', warn: '⚠️', info: '💡', error: '❌', star: '⭐', xp: '✨', streak: '🔥', streak2: '💖', lock: '🔒', heart: '💜' };
 
-    list.innerHTML = recent.map((n, i) => {
+    list.innerHTML = history.map((n, i) => {
+      // backfill locale time string for entries saved before the sts fix
+      if (!n.sts && n.ts) {
+        const d   = new Date(n.ts);
+        const now = new Date();
+        if (d.toDateString() === now.toDateString()) {
+          n.sts = d.toLocaleTimeString('en', { timeZoneName: 'long' });
+        } else {
+          n.sts = d.toLocaleString('en', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'long' });
+        }
+      }
       const emoji     = typeLabel[n.type] || (n.emoji || '🔔');
       const isUnread  = !n.read;
       return `<div class="hn-notif-item${isUnread ? ' unread' : ''}" data-idx="${i}">
