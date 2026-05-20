@@ -8,7 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #E63946;
+            --primary: #F4D35E;
             --primary-light: #FF6B6B;
             --background: #FAFBFC;
             --surface: #FFFFFF;
@@ -29,7 +29,7 @@
             background: var(--surface);
         }
         .app-header {
-            background: linear-gradient(135deg, #FFE5E5 0%, #FFCDD2 100%);
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
             padding: 2rem 1.25rem;
             text-align: center;
         }
@@ -76,7 +76,7 @@
         .lesson-card:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.15);
+            box-shadow: 0 4px 12px rgba(244,211,94, 0.15);
         }
         .lesson-card.completed {
             opacity: 0.6;
@@ -163,36 +163,55 @@
             </div>
         </main>
     </div>
+    <script src="notifications.js"></script>
     <script>
         function completeLesson(card, lessonNum) {
             const user = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
             const users = JSON.parse(localStorage.getItem('hanverse_users') || '{}');
-            
-            // Ensure user starts at level 1 with XP 0 if not set
+
             if (!user.level || user.level < 1) user.level = 1;
             if (typeof user.xp !== 'number') user.xp = 0;
-            
+
             if (!user.email) return;
-            
+
             card.classList.add('completed');
             card.onclick = null;
             card.querySelector('.lesson-number').textContent = '✓';
-            
+
             const xpGain = 50;
             user.xp += xpGain;
-            
+
+            let leveledUp = false;
             if (user.xp >= user.level * 100) {
                 user.level += 1;
+                leveledUp = true;
             }
-            
+
             users[user.email].xp = user.xp;
             users[user.email].level = user.level;
-            
+
             localStorage.setItem('hanverse_user', JSON.stringify(user));
             localStorage.setItem('hanverse_users', JSON.stringify(users));
-            
-            alert(`Lesson completed! +${xpGain} XP`);
+
+            Notify.toast(`Lesson completed! +${xpGain} XP`, 'success', 3000);
+            Notify.showXP(xpGain);
+            Notify.miniConfetti();
+
+            if (leveledUp) {
+                setTimeout(() => {
+                    Notify.levelUp(user.level, 'yct1_lesson_' + lessonNum);
+                }, 800);
+            }
         }
+
+        window.addEventListener('load', function() {
+            const completedCount = document.querySelectorAll('.lesson-card.completed').length;
+            if (completedCount > 0) {
+                setTimeout(function() {
+                    Notify.toast('Welcome back! ' + completedCount + ' lessons already done 🌱', 'info', 4000);
+                }, 600);
+            }
+        });
     </script>
 </body>
 </html>

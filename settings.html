@@ -8,7 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #E63946;
+            --primary: #F4D35E;
             --primary-light: #FF6B6B;
             --background: #FAFBFC;
             --surface: #FFFFFF;
@@ -132,6 +132,23 @@
             font-family: 'Poppins', sans-serif;
             font-size: 0.875rem;
         }
+        .save-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1.5rem;
+        }
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(244,211,94, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -150,7 +167,8 @@
                         <p>Receive learning reminders</p>
                     </div>
                 </div>
-                <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                <div class="toggle-switch active" id="togglePushNotifications"
+                     onclick="toggleSetting(this, 'Push Notifications')"></div>
             </div>
             <div class="setting-item">
                 <div class="setting-left">
@@ -196,7 +214,8 @@
                         <p>Play sounds during lessons</p>
                     </div>
                 </div>
-                <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                <div class="toggle-switch active" id="toggleSoundEffects"
+                     onclick="toggleSetting(this, 'Sound Effects')"></div>
             </div>
 
             <h2 class="section-title">Account</h2>
@@ -255,7 +274,36 @@
                 </div>
                 <span>›</span>
             </div>
+
+            <button class="save-btn" id="saveSettingsBtn">Save Settings</button>
         </main>
     </div>
+    <script src="notifications.js"></script>
+    <script>
+        function toggleSetting(toggleEl, settingName) {
+            var isActive = toggleEl.classList.toggle('active');
+            var msg = isActive
+                ? settingName + ' turned ON ✓'
+                : settingName + ' turned OFF';
+            var type = isActive ? 'success' : 'warn';
+            Notify.toast(msg, type, 3000);
+        }
+
+        document.getElementById('saveSettingsBtn').addEventListener('click', function() {
+            var selects = document.querySelectorAll('select');
+            var settings = {};
+            selects.forEach(function(s) {
+                settings[s.parentElement.parentElement.querySelector('h3').textContent] = s.value;
+            });
+            Notify.toast('Settings saved successfully! ✅', 'success', 3500);
+            Notify.miniConfetti();
+        });
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                Notify.toast('Settings loaded — tap the toggles to change preferences ✨', 'info', 4000);
+            }, 800);
+        });
+    </script>
 </body>
 </html>

@@ -1,822 +1,1136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hanverse - Learn Chinese</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        :root {
-            --primary: #E63946;
-            --primary-light: #FF6B6B;
-            --secondary: #1D3557;
-            --accent: #F4A261;
-            --background: #FAFBFC;
-            --surface: #FFFFFF;
-            --surface-elevated: #FFFFFF;
-            --text-primary: #1A1A2E;
-            --text-secondary: #6B7280;
-            --text-tertiary: #9CA3AF;
-            --border: #E5E7EB;
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --radius-sm: 12px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--background);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            line-height: 1.5;
-            min-height: 100vh;
-            min-height: 100dvh;
-        }
-
-        /* App Container */
-        .app-container {
-            max-width: 430px;
-            margin: 0 auto;
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: var(--surface);
-            position: relative;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Header */
-        .app-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.95);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            padding: 1rem 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .app-logo {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: white;
-            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
-        }
-
-        .app-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .icon-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: none;
-            background: var(--background);
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.2s ease;
-        }
-
-        .icon-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 1.25rem;
-            padding-bottom: 100px;
-        }
-
-        /* Greeting Section */
-        .greeting-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .greeting-text {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-        }
-
-        .greeting-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .greeting-title span {
-            font-family: 'Noto Serif SC', serif;
-            color: var(--primary);
-        }
-
-        /* Stats Cards */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card {
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: all 0.2s ease;
-        }
-
-        .stat-card:active {
-            transform: scale(0.98);
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            margin: 0 auto 0.5rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.2);
-        }
-
-        .stat-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.125rem;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        /* Daily Goal Card */
-        .daily-goal-card {
-            background: linear-gradient(135deg, #1D3557 0%, #457B9D 100%);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .daily-goal-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-        }
-
-        .goal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .goal-title {
-            font-size: 1rem;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        .goal-progress-text {
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .goal-progress-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 0.75rem;
-        }
-
-        .goal-progress-fill {
-            height: 100%;
-            background: white;
-            border-radius: 4px;
-            width: 65%;
-            transition: width 0.5s ease;
-        }
-
-        .goal-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            opacity: 0.8;
-        }
-
-        /* Section Header */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .section-action {
-            font-size: 0.875rem;
-            color: var(--primary);
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        /* Lesson Cards */
-        .lessons-grid {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .lesson-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 1.25rem;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.2s ease;
-        }
-
-        .lesson-card:active {
-            transform: scale(0.98);
-        }
-
-        .lesson-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            flex-shrink: 0;
-        }
-
-        .lesson-icon.characters {
-            background: linear-gradient(135deg, #FFE5E5 0%, #FFCDD2 100%);
-        }
-
-        .lesson-icon.speaking {
-            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-        }
-
-        .lesson-icon.vocabulary {
-            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
-        }
-
-        .lesson-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .lesson-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .lesson-subtitle {
-            font-size: 0.8125rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .lesson-badge {
-            font-size: 0.6875rem;
-            padding: 0.125rem 0.5rem;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-
-        .badge-new {
-            background: #E8F5E9;
-            color: #2E7D32;
-        }
-
-        .badge-progress {
-            background: #FFF3E0;
-            color: #E65100;
-        }
-
-        .lesson-arrow {
-            color: var(--text-tertiary);
-            font-size: 1.25rem;
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .quick-action {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 0.5rem;
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .quick-action:active {
-            transform: scale(0.95);
-        }
-
-        .quick-action-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .quick-action-label {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        /* Recommended Section */
-        .recommended-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .recommended-scroll {
-            display: flex;
-            gap: 1rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .recommended-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .recommended-card {
-            min-width: 160px;
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 1rem;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .recommended-card:active {
-            transform: scale(0.98);
-        }
-
-        .recommended-image {
-            width: 100%;
-            height: 80px;
-            border-radius: var(--radius-md);
-            background: linear-gradient(135deg, #FFE5E5 0%, #FFCDD2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .recommended-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .recommended-meta {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 430px;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 0.75rem 1rem;
-            padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-            z-index: 100;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            color: var(--text-tertiary);
-            min-width: 60px;
-        }
-
-        .nav-item:active {
-            transform: scale(0.95);
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
-
-        .nav-item.active .nav-icon {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
-        }
-
-        .nav-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            background: var(--background);
-            transition: all 0.2s ease;
-        }
-
-        .nav-label {
-            font-size: 0.6875rem;
-            font-weight: 500;
-        }
-
-        /* Animations */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-in {
-            animation: slideUp 0.5s ease forwards;
-        }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-
-        /* Floating Action Button */
-        .fab {
-            position: fixed;
-            bottom: 90px;
-            right: 1.5rem;
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 16px;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
-            cursor: pointer;
-            z-index: 99;
-            transition: all 0.3s ease;
-        }
-
-        .fab:active {
-            transform: scale(0.95);
-        }
-
-        /* Streak Animation */
-        @keyframes streak {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .streak-active {
-            animation: streak 2s infinite ease-in-out;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hanverse</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--red:#F4D35E;
+--yellow:#E63946;
+--blue:#4EA8DE;
+--green:#74C69D;
+--bg:#FFFDF7;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:var(--bg);
+color:#333;
+overflow-x:hidden;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+
+/* NAVBAR */
+
+nav{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:18px 8%;
+
+background:white;
+
+position:sticky;
+top:0;
+
+z-index:1000;
+
+box-shadow:
+0 4px 20px rgba(0,0,0,.05);
+
+}
+
+.logo{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+font-size:28px;
+font-weight:700;
+
+color:var(--red);
+
+}
+
+.logo-badge{
+
+background:var(--yellow);
+
+padding:8px;
+
+border-radius:50%;
+
+}
+
+nav ul{
+
+display:flex;
+gap:30px;
+
+list-style:none;
+
+}
+
+nav a{
+
+text-decoration:none;
+color:#444;
+font-weight:500;
+position:relative;
+
+}
+
+nav a.active{
+
+color:var(--red);
+
+font-weight:700;
+
+}
+
+nav a.active::after{
+
+content:"";
+
+position:absolute;
+
+height:4px;
+
+width:100%;
+
+left:0;
+bottom:-8px;
+
+background:var(--yellow);
+
+border-radius:30px;
+
+}
+
+nav a:hover{
+
+color:var(--red);
+
+}
+
+.nav-buttons{
+
+display:flex;
+gap:10px;
+
+}
+
+
+
+/* BUTTONS */
+
+.btn{
+
+padding:13px 24px;
+
+border:none;
+
+border-radius:40px;
+
+cursor:pointer;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.btn-main{
+
+background:var(--red);
+
+color:white;
+
+}
+
+.btn-main:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 10px 25px rgba(244,211,94,.25);
+
+}
+
+.btn-secondary{
+
+background:var(--yellow);
+
+color:#333;
+
+}
+
+
+/* HERO */
+
+.hero{
+
+padding:90px 8%;
+
+display:flex;
+
+justify-content:space-between;
+align-items:center;
+
+gap:60px;
+
+}
+
+.hero-text{
+
+flex:1;
+
+animation:slide .8s;
+
+}
+
+@keyframes slide{
+
+from{
+
+opacity:0;
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+
+.tag{
+
+display:inline-block;
+
+padding:8px 18px;
+
+background:
+rgba(78,168,222,.15);
+
+color:var(--blue);
+
+border-radius:30px;
+
+margin-bottom:20px;
+
+font-weight:600;
+
+}
+
+.hero h1{
+
+font-size:64px;
+
+line-height:1.1;
+
+margin-bottom:20px;
+
+}
+
+.red{
+
+color:var(--red);
+
+}
+
+.blue{
+
+color:var(--blue);
+
+}
+
+.hero p{
+
+font-size:18px;
+
+line-height:1.8;
+
+color:#666;
+
+max-width:600px;
+
+margin-bottom:35px;
+
+}
+
+.hero-buttons{
+
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+
+}
+
+
+
+/* PANDA CARD */
+
+.hero-right{
+
+flex:1;
+
+display:flex;
+justify-content:center;
+
+}
+
+.learning-card{
+
+height:360px;
+width:360px;
+
+background:white;
+
+border-radius:40px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:120px;
+
+position:relative;
+
+box-shadow:
+0 15px 30px rgba(0,0,0,.05);
+
+animation:float 4s infinite;
+
+transition:box-shadow .4s ease, transform .4s ease;
+
+}
+
+.learning-card:hover{
+box-shadow:
+0 20px 45px rgba(0,0,0,.1),
+0 0 32px rgba(78,168,222,.18);
+transform:translateY(-6px) scale(1.01) !important;
+}
+
+@keyframes float{
+
+50%{
+
+transform:
+translateY(-15px);
+
+}
+
+}
+
+.badge{
+
+position:absolute;
+
+padding:10px 16px;
+
+border-radius:20px;
+
+font-size:14px;
+font-weight:600;
+
+}
+
+.yct{
+
+top:-10px;
+left:-10px;
+
+background:var(--yellow);
+
+}
+
+.progress{
+
+bottom:20px;
+right:-10px;
+
+background:var(--green);
+
+}
+
+.star{
+
+position:absolute;
+
+top:35px;
+right:35px;
+
+font-size:35px;
+
+color:var(--yellow);
+
+}
+
+
+
+/* STATS */
+
+.stats{
+
+padding:60px 8%;
+
+display:flex;
+justify-content:center;
+
+gap:25px;
+
+flex-wrap:wrap;
+
+}
+
+.stat{
+
+background:white;
+
+padding:35px;
+
+width:220px;
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.05);
+
+border-top:
+5px solid var(--blue);
+
+transition:transform .3s ease, box-shadow .3s ease;
+
+}
+
+.stat:hover{
+
+transform:translateY(-5px);
+box-shadow:0 16px 36px rgba(0,0,0,.08);
+
+}
+
+.stat h2{
+
+font-size:42px;
+
+color:var(--red);
+
+margin-bottom:10px;
+
+transition:color .3s ease;
+
+}
+
+
+
+/* FEATURES */
+
+.features{
+
+padding:90px 8%;
+
+text-align:center;
+
+}
+
+.title{
+
+font-size:42px;
+
+margin-bottom:20px;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(240px,1fr));
+
+gap:25px;
+
+margin-top:50px;
+
+}
+
+.box{
+
+background:white;
+
+padding:35px;
+
+border-radius:25px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.05);
+
+transition:.3s;
+
+cursor:pointer;
+
+.position:relative;
+overflow:hidden;
+
+}
+
+.box::before{
+
+content:'';
+
+position:absolute;
+inset:0;
+border-radius:25px;
+
+background:linear-gradient(135deg,rgba(78,168,222,.08),rgba(116,198,157,.08));
+opacity:0;
+transition:opacity .3s ease;
+
+}
+
+.box:hover::before{
+opacity:1;
+}
+
+.box:hover{
+
+transform:
+translateY(-8px);
+box-shadow:0 20px 40px rgba(0,0,0,.1);
+
+}
+
+.icon{
+
+font-size:40px;
+
+transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+
+}
+
+.box:hover .icon{
+
+transform:scale(1.18) rotate(-6deg);
+
+}
+
+.box h3{
+
+margin:15px 0;
+
+color:var(--blue);
+
+transition:color .3s ease;
+
+}
+
+.box:hover h3{
+color:var(--red);
+}
+
+
+
+/* FOOTER CARD */
+
+.end{
+
+padding:80px 8%;
+
+display:flex;
+justify-content:center;
+
+}
+
+.end-card{
+
+background:white;
+
+padding:45px;
+
+border-radius:35px;
+
+text-align:center;
+
+width:100%;
+max-width:850px;
+
+border:
+3px dashed var(--yellow);
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.05);
+
+transition:transform .3s ease, box-shadow .3s ease;
+
+}
+
+.end-card:hover{
+
+transform:translateY(-5px);
+box-shadow:0 16px 36px rgba(0,0,0,.1);
+
+}
+
+.end-card h2{
+
+color:var(--blue);
+
+margin-bottom:20px;
+
+}
+
+footer{
+
+padding:30px;
+
+text-align:center;
+
+color:#777;
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+nav{
+
+flex-direction:column;
+gap:20px;
+
+}
+
+nav ul{
+
+flex-wrap:wrap;
+justify-content:center;
+
+}
+
+.hero{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-size:42px;
+
+}
+
+.hero-buttons{
+
+justify-content:center;
+
+}
+
+.learning-card{
+
+height:280px;
+width:280px;
+
+}
+
+}
+
+/* ── CARD CLICK RIPPLE ── */
+.ripple-ring{
+position:absolute;border-radius:50%;
+border:3px solid rgba(244,211,94,.5);
+transform:scale(0);
+animation:ripple-out .5s ease-out forwards;
+pointer-events:none;
+}
+@keyframes ripple-out{
+to{transform:scale(4);opacity:0;}
+}
+
+</style>
 </head>
+
+
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <div class="app-logo">汉</div>
-                <span class="app-title">Hanverse</span>
-            </div>
-            <div class="header-right">
-                <button class="icon-btn" onclick="window.location.href='notifications.html'">🔔</button>
-                <button class="icon-btn" onclick="window.location.href='settings.html'">⚙️</button>
-            </div>
-        </header>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Greeting -->
-            <section class="greeting-section animate-in">
-                <p class="greeting-text">Welcome back!</p>
-                <h1 class="greeting-title">Ready to learn? <span>学</span></h1>
-            </section>
 
-            <!-- Stats Row -->
-            <section class="stats-row">
-                <div class="stat-card animate-in delay-1">
-                    <div class="stat-icon">🔥</div>
-                    <div class="stat-value streak-active">12</div>
-                    <div class="stat-label">Day Streak</div>
-                </div>
-                <div class="stat-card animate-in delay-2">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-value">2,450</div>
-                    <div class="stat-label">XP</div>
-                </div>
-                <div class="stat-card animate-in delay-3">
-                    <div class="stat-icon">🏆</div>
-                    <div class="stat-value">Lv.5</div>
-                    <div class="stat-label">Level</div>
-                </div>
-            </section>
+<nav>
 
-            <!-- Daily Goal -->
-            <section class="daily-goal-card animate-in delay-2">
-                <div class="goal-header">
-                    <span class="goal-title">🎯 Daily Goal</span>
-                    <span class="goal-progress-text">65%</span>
-                </div>
-                <div class="goal-progress-bar">
-                    <div class="goal-progress-fill"></div>
-                </div>
-                <div class="goal-footer">
-                    <span>13 / 20 lessons</span>
-                    <span>Keep it up!</span>
-                </div>
-            </section>
+<div class="logo">
 
-            <!-- Quick Actions -->
-            <section class="quick-actions animate-in delay-3">
-                <div class="quick-action">
-                    <div class="quick-action-icon" style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);">📖</div>
-                    <span class="quick-action-label">Characters</span>
-                </div>
-                <div class="quick-action">
-                    <div class="quick-action-icon" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);">🗣️</div>
-                    <span class="quick-action-label">Speak</span>
-                </div>
-                <div class="quick-action">
-                    <div class="quick-action-icon" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);">✍️</div>
-                    <span class="quick-action-label">Write</span>
-                </div>
-                <div class="quick-action">
-                    <div class="quick-action-icon" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);">🎮</div>
-                    <span class="quick-action-label">Quiz</span>
-                </div>
-            </section>
+<div class="logo-badge">
 
-            <!-- Continue Learning -->
-            <section class="animate-in delay-3">
-                <div class="section-header">
-                    <h2 class="section-title">Continue Learning</h2>
-                    <a href="#" class="section-action">View All</a>
-                </div>
-                <div class="lessons-grid">
-                    <!-- Dynamically populated based on user progress -->
-                </div>
-            </section>
+🐼
 
-            <!-- Recommended -->
-            <section class="recommended-section animate-in delay-4">
-                <div class="section-header">
-                    <h2 class="section-title">Recommended for You</h2>
-                    <a href="#" class="section-action">See All</a>
-                </div>
-                <div class="recommended-scroll">
-                    <div class="recommended-card">
-                        <div class="recommended-image">中</div>
-                        <h4 class="recommended-title">Numbers 数字</h4>
-                        <p class="recommended-meta">5 min • Beginner</p>
-                    </div>
-                    <div class="recommended-card">
-                        <div class="recommended-image">国</div>
-                        <h4 class="recommended-title">Countries 国家</h4>
-                        <p class="recommended-meta">8 min • Beginner</p>
-                    </div>
-                    <div class="recommended-card">
-                        <div class="recommended-image">爱</div>
-                        <h4 class="recommended-title">Feelings 感情</h4>
-                        <p class="recommended-meta">6 min • Elementary</p>
-                    </div>
-                    <div class="recommended-card">
-                        <div class="recommended-image">食</div>
-                        <h4 class="recommended-title">Food 食物</h4>
-                        <p class="recommended-meta">10 min • Intermediate</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+</div>
 
-        <!-- Floating Action Button -->
-        <button class="fab">+</button>
+Hanverse
 
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <a href="index.html" class="nav-item active">
-                <div class="nav-icon">🏠</div>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="learn.html" class="nav-item">
-                <div class="nav-icon">📚</div>
-                <span class="nav-label">Learn</span>
-            </a>
-            <a href="practice.html" class="nav-item">
-                <div class="nav-icon">🎯</div>
-                <span class="nav-label">Practice</span>
-            </a>
-            <a href="profile.html" class="nav-item">
-                <div class="nav-icon">👤</div>
-                <span class="nav-label">Profile</span>
-            </a>
-        </nav>
-    </div>
+</div>
 
-    <script>
-        // Check if user is logged in
-        const user = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
-        if (!user.loggedIn) {
-            window.location.href = 'login.html';
-        }
-        
-        // Display user stats
-        document.querySelector('.stat-value.streak-active').textContent = user.streak || 0;
-        document.querySelectorAll('.stat-value')[1].textContent = user.xp || 0;
-        document.querySelectorAll('.stat-value')[2].textContent = 'Lv.' + (user.level || 1);
 
-        // Load user progress and populate Continue Learning section
-        const progress = JSON.parse(localStorage.getItem('hanverse_progress') || '[]');
-        const continueLearningSection = document.querySelector('.animate-in.delay-3');
-        const lessonsGrid = continueLearningSection.querySelector('.lessons-grid');
-        
-        // Filter for incomplete lessons (where user left off)
-        const inProgressLessons = progress.filter(p => p.completed === false);
-        
-        if (inProgressLessons.length === 0) {
-            // No in-progress lessons - hide the section for new users
-            continueLearningSection.style.display = 'none';
-        } else {
-            // Populate with actual in-progress lessons
-            lessonsGrid.innerHTML = '';
-            inProgressLessons.slice(0, 3).forEach(lesson => {
-                const courseName = lesson.course_type + ' ' + lesson.course_level;
-                const lessonCard = document.createElement('div');
-                lessonCard.className = 'lesson-card';
-                lessonCard.onclick = () => {
-                    if (lesson.course_type === 'HSK') {
-                        window.location.href = 'hsk1.html';
-                    } else if (lesson.course_type === 'YCT') {
-                        window.location.href = 'yct1.html';
-                    }
-                };
-                
-                const icon = lesson.course_type === 'HSK' ? '字' : '言';
-                lessonCard.innerHTML = `
-                    <div class="lesson-icon characters">${icon}</div>
-                    <div class="lesson-content">
-                        <h3 class="lesson-title">${courseName}</h3>
-                        <p class="lesson-subtitle">
-                            <span class="lesson-badge badge-progress">In Progress</span>
-                            Lesson ${lesson.lesson_id}
-                        </p>
-                    </div>
-                    <span class="lesson-arrow">›</span>
-                `;
-                lessonsGrid.appendChild(lessonCard);
-            });
-        }
+<ul>
 
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -20px 0px'
-        };
+<li>
+<a href="index.html"
+class="active">
+Home
+</a>
+</li>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'slideUp 0.5s ease forwards';
-                }
-            });
-        }, observerOptions);
+<li>
+<a href="learn.html">
+Learn
+</a>
+</li>
 
-        // Observe elements that should animate
-        document.querySelectorAll('.lesson-card, .recommended-card, .quick-action').forEach(el => {
-            el.style.opacity = '0';
-            observer.observe(el);
-        });
+<li>
+<a href="#"
+onclick="comingSoon(event)">
+Worksheets
+</a>
+</li>
 
-        // Trigger animation on load for initial elements
-        setTimeout(() => {
-            document.querySelectorAll('.animate-in').forEach(el => {
-                el.style.animation = 'slideUp 0.5s ease forwards';
-            });
-        }, 100);
-    </script>
+<li>
+<a href="#"
+onclick="comingSoon(event)">
+Parents
+</a>
+</li>
+
+</ul>
+
+
+<div class="nav-buttons">
+
+<button
+class="btn btn-secondary"
+onclick="location.href='login.html'">
+
+Log In
+
+</button>
+
+
+<button
+class="btn btn-main"
+onclick="location.href='signup.html'">
+
+Sign Up
+
+</button>
+
+</div>
+
+</nav>
+
+
+
+<section class="hero">
+
+<div class="hero-text">
+
+<div class="tag">
+
+✨ Structured YCT Learning
+
+</div>
+
+<h1>
+
+Learn Mandarin Through
+
+<span class="red">
+
+Stories
+
+</span>,
+
+<span class="blue">
+
+Games
+
+</span>
+
+& AI
+
+</h1>
+
+<p>
+
+Built for African children using videos, stories and structured YCT learning.
+
+</p>
+
+
+<div class="hero-buttons">
+
+<button
+class="btn btn-main"
+onclick="location.href='learn.html'">
+
+Start Learning
+
+</button>
+
+
+<button
+class="btn btn-secondary"
+onclick="location.href='signup.html'">
+
+Join Free
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="hero-right">
+
+<div class="learning-card" id="pandaCard">
+
+🐼
+
+<div class="badge yct">
+
+YCT 1–4
+
+</div>
+
+<div class="badge progress">
+
+Progress +
+
+</div>
+
+<div class="star">
+
+⭐
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="stats">
+
+<div class="stat" id="studentsStat">
+
+<h2 id="students">
+
+0
+
+</h2>
+
+<p>
+
+Students
+
+</p>
+
+</div>
+
+
+<div class="stat" id="lessonsStat">
+
+<h2 id="lessons">
+
+0
+
+</h2>
+
+<p>
+
+Lessons
+
+</p>
+
+</div>
+
+
+<div class="stat" id="gamesStat">
+
+<h2 id="games">
+
+0
+
+</h2>
+
+<p>
+
+Games
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section class="features">
+
+<h2 class="title">
+
+Why Hanverse?
+
+</h2>
+
+
+<div class="grid">
+
+<div class="box" onclick="featureClick(this)">
+
+<div class="icon">
+
+🎮
+
+</div>
+
+<h3>
+
+Interactive Games
+
+</h3>
+
+<p>
+
+Learn while having fun
+
+</p>
+
+</div>
+
+
+
+<div class="box" onclick="featureClick(this)">
+
+<div class="icon">
+
+📺
+
+</div>
+
+<h3>
+
+Video Lessons
+
+</h3>
+
+<p>
+
+Stories and visual learning
+
+</p>
+
+</div>
+
+
+
+<div class="box" onclick="featureClick(this)">
+
+<div class="icon">
+
+🏆
+
+</div>
+
+<h3>
+
+Achievements
+
+</h3>
+
+<p>
+
+Earn rewards and badges
+
+</p>
+
+</div>
+
+
+
+<div class="box" onclick="featureClick(this)">
+
+<div class="icon">
+
+📈
+
+</div>
+
+<h3>
+
+Progress Tracking
+
+</h3>
+
+<p>
+
+Continue where you stopped
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="end">
+
+<div class="end-card">
+
+<h2>
+
+Start your Mandarin adventure 🌟
+
+</h2>
+
+<button
+class="btn btn-main"
+onclick="location.href='signup.html'">
+
+Create Account
+
+</button>
+
+</div>
+
+</section>
+
+<footer>
+
+© Hanverse 2026
+
+</footer>
+
+
+
+<!-- ════════════════════════════════════
+     NOTIFICATION SYSTEM
+     ════════════════════════════════════ -->
+<script src="notifications.js"></script>
+
+<script>
+
+function comingSoon(e){
+e.preventDefault();
+Notify.toast('This feature is coming soon! Stay tuned 🚀','info',3500);
+}
+
+/* ── Feature click flash ── */
+function featureClick(el){
+Notify.toast('Awesome feature coming! 🎮','xp',2000);
+Notify.miniConfetti();
+}
+
+/* ── Panda card click ── */
+document.getElementById('pandaCard').addEventListener('click',function(){
+Notify.toast('You are doing great! Keep going! 🐼','heart',2500);
+Notify.miniConfetti();
+Notify.showXP(10);
+});
+
+/* ── Stat hover color effects ── */
+const statIds = ['studentsStat','lessonsStat','gamesStat'];
+statIds.forEach((id,i)=>{
+const el = document.getElementById(id);
+if(!el) return;
+el.addEventListener('mouseenter',()=>{
+Notify.badgePulse(el);
+});
+});
+
+/* ── Animated counter ── */
+let s=0,l=0,g=0,done={s:false,l:false,g:false};
+
+let count=setInterval(()=>{
+if(s<500 && !done.s){
+s+=5;
+document.getElementById('students').innerText=s+'+';
+if(s>=500){ done.s=true; }
+}
+
+if(l<240 && !done.l){
+l+=3;
+document.getElementById('lessons').innerText=l+'+';
+if(l>=240){ done.l=true; }
+}
+
+if(g<30 && !done.g){
+g+=1;
+document.getElementById('games').innerText=g+'+';
+if(g>=30){ done.g=true; }
+}
+
+if(done.s&&done.l&&done.g){
+clearInterval(count);
+setTimeout(()=>{
+Notify.toast('500+ students and growing! Join the fun! 🎉','success',4000);
+Notify.miniConfetti();
+},300);
+}
+},25)
+
+/* ── Show XP when stats reach milestones ── */
+  function showStatsMilestones(){
+  if(s>=200 && !window._ms200){window._ms200=true;Notify.toast('200+ learners! So much growth! 🌱','star',2500);Notify.miniConfetti();Notify.achievementUnlock(7,'panda_welcome');}
+  if(s>=400 && !window._ms400){window._ms400=true;Notify.toast('400+ learners and growing!'  ,'star',2500);}
+  if(s>=500 && !window._ms500){window._ms500=true;Notify.toast('500+ learners! 🎉','heart',4000);Notify.confetti();Notify.achievementUnlock(7,'500_learners');}
+  }
+
+/* ── Page load celebration ── */
+window.addEventListener('load',()=>{
+setTimeout(()=>{
+Notify.toast('Welcome to Hanverse! Start your adventure! 🐼','heart',3500);
+Notify.miniConfetti();
+},800);
+});
+
+setInterval(showStatsMilestones,200);
+
+</script>
+
 </body>
 </html>

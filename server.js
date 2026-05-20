@@ -103,22 +103,15 @@ app.post('/api/login', async (req, res) => {
       newStreak = 1;
     }
 
-    // Award login XP
-    const newXp = user.xp + 10;
-    let newLevel = user.level;
-    if (newXp >= user.level * 100) {
-      newLevel += 1;
-    }
-
-    // Update user
+    // Update user (no login XP - users earn XP through lessons)
     await pool.query(
       `UPDATE users 
-       SET last_active = CURRENT_DATE, streak_days = $1, xp = $2, level = $3, updated_at = CURRENT_TIMESTAMP
-       WHERE user_id = $4`,
-      [newStreak, newXp, newLevel, user.user_id]
+       SET last_active = CURRENT_DATE, streak_days = $1, updated_at = CURRENT_TIMESTAMP
+       WHERE user_id = $2`,
+      [newStreak, user.user_id]
     );
 
-    // Return all user data
+    // Return all user data (no bonus XP on login)
     res.json({
       success: true,
       user: {
@@ -126,8 +119,8 @@ app.post('/api/login', async (req, res) => {
         username: user.username,
         email: user.email,
         full_name: user.full_name,
-        xp: newXp,
-        level: newLevel,
+        xp: user.xp,
+        level: user.level,
         streak_days: newStreak,
         profile_picture: user.profile_picture,
         created_at: user.created_at
@@ -255,7 +248,7 @@ app.get('/api/user/:userId', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, '127.0.0.1', () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

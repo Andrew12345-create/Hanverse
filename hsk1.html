@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSK 1 - Hanverse</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="notifications.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #E63946;
+            --primary: #F4D35E;
             --primary-light: #FF6B6B;
             --background: #FAFBFC;
             --surface: #FFFFFF;
@@ -76,7 +77,7 @@
         .lesson-card:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.15);
+            box-shadow: 0 4px 12px rgba(244,211,94, 0.15);
         }
         .lesson-card.completed {
             opacity: 0.6;
@@ -116,6 +117,7 @@
             color: var(--text-secondary);
         }
     </style>
+  <script src="notifications-client.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -189,7 +191,8 @@
             user.xp += xpGain;
             
             if (user.xp >= user.level * 100) {
-                user.level += 1;
+              user.level += 1;
+              Notify.levelUp(user.level, 'lvl_' + user.level + '_' + user.email);
             }
             
             users[user.email].xp = user.xp;
@@ -197,9 +200,24 @@
             
             localStorage.setItem('hanverse_user', JSON.stringify(user));
             localStorage.setItem('hanverse_users', JSON.stringify(users));
+
+            Notify.toast(`Lesson completed! +${xpGain} XP! 🎉`, 'success', 2500);
+            Notify.showXP(xpGain);
+            Notify.miniConfetti();
             
-            alert(`Lesson completed! +${xpGain} XP`);
+            if(user.xp >= 100 && user.xp < 150){
+              Notify.achievementUnlock(4,'lesson_100_' + user.email);
+            }
         }
     </script>
+<script>
+  window.addEventListener('load', () => {
+    try {
+      if (window.HanverseNotifications && window.HanverseNotifications.init) {
+        window.HanverseNotifications.init();
+      }
+    } catch (e) {}
+  });
+</script>
 </body>
 </html>
