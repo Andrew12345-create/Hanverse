@@ -13,7 +13,44 @@
   status = 200
 
 [[redirects]]
+  from = "/learn"
+  to = "/learn.html"
+  status = 200
+
+[[redirects]]
+  from = "/profile"
+  to = "/profile.html"
+  status = 200
+
+[[redirects]]
+  from = "/practice"
+  to = "/practice.html"
+  status = 200
+
+[[redirects]]
+  from = "/hsk1"
+  to = "/hsk1.html"
+  status = 200
+
+[[redirects]]
+  from = "/settings"
+  to = "/settings.html"
+  status = 200
+
+[[redirects]]
+  from = "/signup"
+  to = "/signup.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+
+[[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/server/:splat"
   status = 200
+  force = true
+
 
