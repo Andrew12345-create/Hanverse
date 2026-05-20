@@ -18,12 +18,46 @@ const Notify = (() => {
     heart:    { emoji: '💜', label: 'Great Job!' },
   };
 
+/* ─────────────── NOTIFICATION HISTORY ─────────────── */
+const HN_HISTORY_KEY  = 'hanverse_notification_history';
+const MAX_HISTORY     = 200;
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(HN_HISTORY_KEY) || '[]'); }
+    catch { return []; }
+  }
+
+  function saveHistory() {
+    // keep only the newest entries within MAX_HISTORY limit
+    saveHistoryRaw(loadHistory());
+  }
+
+  function saveHistoryRaw(entries) {
+    const trimmed = (entries || []).slice(-MAX_HISTORY);
+    localStorage.setItem(HN_HISTORY_KEY, JSON.stringify(trimmed));
+  }
+
+  function addHistoryEntry(entry) {
+    const history = loadHistory();
+    const ts      = Date.now();
+    const id      = String(entry.id || entry.title || ts);
+    // dedupe within ±10 s window
+    const isRecentDup = history.some(h => {
+      const hTs = h.ts || 0;
+      return Math.abs(hTs - ts) < 10_000 && (h.id === id || h.title === (entry.title || ''));
+    });
+    if (isRecentDup) return;
+    history.push({ ...entry, ts, id });
+    saveHistoryRaw(history);
+  }
+
   /* ─────────────── TOAST ─────────────── */
   let activeToasts = [];
 
   function toast(msg, type = 'info', duration = 3000) {
-    const cfg = TYPE[type] || TYPE.info;
-    const el = document.createElement('div');
+    const cfg  = TYPE[type] || TYPE.info;
+    const ts   = Date.now();
+    const id   = `${type}_${ts}`;
+    const el   = document.createElement('div');
     el.className = 'n-toast n-toast--' + type;
     el.innerHTML = `
       <span class="n-emoji">${cfg.emoji}</span>
@@ -33,6 +67,9 @@ const Notify = (() => {
       </div>
       <button class="n-close" aria-label="Close">&times;</button>
     `;
+
+    // persist to notification history
+    addHistoryEntry({ id, ts, title: cfg.label, message: msg, type });
 
     document.getElementById('n-host') || injectHost();
     document.getElementById('n-host').appendChild(el);
@@ -268,6 +305,17 @@ const Notify = (() => {
     miniConfetti();
   }
 
+  /* ─────────────── BELL INIT ─────────────── */
+  function initBell() {
+    injectBellCSS();
+    injectBellHTML();
+    updateBellBadge(getUnreadCount());
+    if (typeof window.wasPrer === 'undefined') {
+      // first load — render initial list
+      window.addEventListener('popstate', () => { /* stub */ });
+    }
+  }
+
   /* ─────────────── HOST INJECTION ─────────────── */
   function injectHost() {
     const host = document.createElement('div');
@@ -282,6 +330,9 @@ const Notify = (() => {
     const style = document.createElement('style');
     style.textContent = NOTIFY_CSS;
     document.head.appendChild(style);
+
+    // init bell on first host creation
+    initBell();
   }
 
   /* ─────────────── HIDE ─────────────── */
@@ -296,10 +347,247 @@ const Notify = (() => {
   }
 
   /* ─────────────── MISC ─────────────── */
-  let gsapCount = 0;
+  let injectedSEO  = false;
+  let injectedBell = false;
+  let gsapCount    = 0;
+
+  /* ─────────────── SEO INJECTION ─────────────── */
+  function injectSEO(config) {
+    if (injectedSEO) return;
+    injectedSEO = true;
+
+    const {
+      title, description, keywords, canonical,
+      ogType = 'website', ogUrl, ogTitle, ogDescription,
+      siteName = 'Hanverse', twitterCard = 'summary_large_image',
+    } = config;
+
+    const url    = ogUrl || canonical || location.href;
+    const ogDesc = ogDescription || description || 'Learn Mandarin Chinese the fun way!';
+
+    const metas = [
+      { name: 'description', content: description   || 'Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and engaging stories designed for young learners.' },
+      { name: 'keywords',    content: keywords      || 'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, HSK, learn Chinese online'    },
+      { name: 'robots',      content: 'index, follow'                                                                                                },
+      { name: 'author',      content: 'Hanverse'                                                                                                     },
+      { name: 'theme-color', content: '#F4D35E'                                                                                                      },
+      { name: 'mobile-web-app-capable', content: 'yes'                                                                                               },
+      { property: 'og:type',        content: ogType                                                                                                  },
+      { property: 'og:site_name',   content: siteName                                                                                                },
+      { property: 'og:url',         content: url                                                                                                     },
+      { property: 'og:title',       content: ogTitle || title || siteName                                                                          },
+      { property: 'og:description', content: ogDesc                                                                                                  },
+      { property: 'og:locale',      content: 'en_US'                                                                                                 },
+      { name: 'twitter:card',  content: twitterCard                                                                                                    },
+      { name: 'twitter:title', content: ogTitle || title || siteName                                                                                    },
+      { name: 'twitter:description', content: ogDesc                                                                                                    },
+    ];
+
+    metas.forEach(({ name, property, content }) => {
+      if (!content) return;
+      const m = document.createElement('meta');
+      if (property) m.setAttribute('property', property);
+      else          m.setAttribute('name', name);
+      m.content = content;
+      document.head.appendChild(m);
+    });
+
+    if (canonical) {
+      const link = document.createElement('link');
+      link.rel   = 'canonical';
+      link.href  = canonical;
+      document.head.appendChild(link);
+    }
+
+    // JSON-LD WebSite structured data
+    const jsonLd = {
+      '@context':    'https://schema.org',
+      '@type':       'WebSite',
+      name:          siteName,
+      url:           url,
+      description:   description || 'Learn Mandarin Chinese the fun way!',
+      inLanguage:    'en',
+      potentialAction: {
+        '@type':       'SearchAction',
+        target:        `${url}/?q={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+    };
+    const ldScript  = document.createElement('script');
+    ldScript.type   = 'application/ld+json';
+    ldScript.text   = JSON.stringify(jsonLd);
+    document.head.appendChild(ldScript);
+  }
+
+  /* ─────────────── NOTIFICATION BELL (top-right) ─────────────── */
+  function injectBellCSS() {
+    if (document.getElementById('hn-bell-css')) return;
+    const css = document.createElement('style');
+    css.id   = 'hn-bell-css';
+    css.textContent = `
+      .hn-nb-wrap{position:fixed;top:10px;right:12px;z-index:20000;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+      .hn-bell-btn{position:relative;border:none;background:var(--n-surface,#fff);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;box-shadow:0 4px 14px rgba(0,0,0,.12);border:1px solid var(--n-border,#E5E7EB);transition:transform .18s;z-index:20001;}
+      .hn-bell-btn:active{transform:scale(.9);}
+      .hn-bell-wrap{position:fixed;top:10px;right:12px;z-index:20000;}
+      .hn-bell-badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#E63946;color:#fff;font-weight:900;font-size:11px;display:none;align-items:center;justify-content:center;z-index:20002;}
+      .hn-bell-badge.show{display:flex;}
+      .hn-notif-panel{position:absolute;top:46px;right:0;width:320px;max-width:calc(100vw - 20px);max-height:420px;background:#fff;border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.18);border:1px solid #E5E7EB;z-index:20000;display:none;flex-direction:column;overflow:hidden;animation:hn-pop .2s ease-out;}
+      .hn-notif-panel.open{display:flex;}
+      @keyframes hn-pop{from{opacity:0;transform:translateY(-6px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+      .hn-notif-head{padding:14px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FFFDF7,#fff);cursor:pointer;}
+      .hn-notif-head-title{font-weight:800;font-size:15px;flex:1;color:#1A1A2E;}
+      .hn-notif-head-row{display:flex;align-items:center;gap:6px;}
+      .hn-notif-count{background:#F4D35E;color:#333;font-weight:800;font-size:11px;padding:2px 8px;border-radius:999px;}
+      .hn-notif-clear{background:none;border:none;color:#6B7280;font-size:11px;cursor:pointer;font-weight:600;}
+      .hn-notif-clear:hover{color:#E63946;}
+      .hn-notif-list{overflow-y:auto;flex:1;padding:8px 0;}
+      .hn-notif-empty{padding:30px 16px;text-align:center;color:#9CA3AF;font-size:.85rem;}
+      .hn-notif-del{background:none;border:none;cursor:pointer;font-size:14px;color:#bbb;padding:0 4px;line-height:1;transition:color .2s;flex-shrink:0;}
+      .hn-notif-del:hover{color:#E63946;}
+      .hn-notif-item{display:flex;gap:10px;align-items:flex-start;padding:10px 16px;transition:background .15s;cursor:default;}
+      .hn-notif-item:hover{background:#F9FAFB;}
+      .hn-notif-item + .hn-notif-item{border-top:1px solid #F3F4F6;}
+      .hn-notif-item-dot{width:8px;height:8px;border-radius:50%;background:#4EA8DE;flex-shrink:0;margin-top:7px;}
+      .hn-notif-item.unread .hn-notif-item-dot{background:#E63946;}
+      .hn-notif-body{flex:1;min-width:0;}
+      .hn-notif-body-title{font-weight:700;font-size:13px;color:#1A1A2E;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+      .hn-notif-body-msg{font-size:12px;color:#6B7280;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+      .hn-notif-body-time{font-size:11px;color:#9CA3AF;margin-top:3px;}
+    `;
+    document.head.appendChild(css);
+  }
+
+  function injectBellHTML() {
+    if (document.getElementById('hn-bn-panel')) return;
+    injectedBell = true;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'hn-nb-wrap';
+    wrap.id        = 'hn-nb-root';
+    wrap.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button id="hn-bell-btn" class="hn-bell-btn" aria-label="Notifications" title="Notifications">
+          🔔
+          <span id="hn-bell-badge" class="hn-bell-badge" aria-live="polite" aria-atomic="true">0</span>
+        </button>
+      </div>
+      <div id="hn-bn-panel" class="hn-notif-panel" role="menu">
+        <div class="hn-notif-head" id="hn-notif-head" role="button" tabindex="0" aria-label="Show all notifications">
+          <span class="hn-notif-head-title">🔔&nbsp;Notifications</span>
+          <div class="hn-notif-head-row">
+            <span id="hn-bell-count-pill" class="hn-notif-count" aria-hidden="true">0</span>
+            <button class="hn-notif-clear" id="hn-clear-all" aria-label="Mark all read">Mark all read</button>
+            <button class="hn-notif-del" id="hn-dismiss-all" aria-label="Dismiss all" title="Dismiss all">✕</button>
+          </div>
+        </div>
+        <div class="hn-notif-list" id="hn-notif-list" role="log"></div>
+      </div>
+    `;
+    document.body.appendChild(wrap);
+
+    // open / close panel
+    const btn    = document.getElementById('hn-bell-btn');
+    const panel  = document.getElementById('hn-bn-panel');
+    const head   = document.getElementById('hn-notif-head');
+    let   _open  = false;
+    function togglePanel() {
+      _open = !_open;
+      panel.classList.toggle('open', _open);
+      if (_open) renderBellList();
+    }
+    function closePanel() { _open = false; panel.classList.remove('open'); }
+    btn.addEventListener('click', e => { e.stopPropagation(); togglePanel(); });
+    head.addEventListener('click',   e => { e.stopPropagation(); togglePanel(); });
+    document.addEventListener('click', () => { if (_open) closePanel(); });
+    panel.addEventListener('click', e => e.stopPropagation());
+
+    // mark all / dismiss all
+    document.getElementById('hn-clear-all').addEventListener('click', e => {
+      e.stopPropagation();
+      markAllRead(true);
+      closePanel();
+    });
+    document.getElementById('hn-dismiss-all').addEventListener('click', e => {
+      e.stopPropagation();
+      clearAllHistory();
+      closePanel();
+    });
+  }
+
+  function updateBellBadge(count) {
+    injectBellCSS();
+    injectBellHTML();
+    const badge  = document.getElementById('hn-bell-badge');
+    const pill   = document.getElementById('hn-bell-count-pill');
+    if (badge)  { badge.textContent   = String(count > 99 ? '99+' : count); badge.classList.toggle('show', count > 0); }
+    if (pill)   { pill.textContent    = String(count > 99 ? '99+' : count); }
+  }
+
+  function renderBellList() {
+    const list   = document.getElementById('hn-notif-list');
+    if (!list) return;
+    const history = loadHistory();
+    const recent  = history.slice(-50).reverse(); // newest first
+
+    if (!recent.length) {
+      list.innerHTML = '<div class="hn-notif-empty">No notifications yet.<br>Keep learning!</div>';
+      return;
+    }
+
+    const typeLabel = { success: '✅', warn: '⚠️', info: '💡', error: '❌', star: '⭐', xp: '✨', streak: '🔥', streak2: '💖', lock: '🔒', heart: '💜' };
+
+    list.innerHTML = recent.map((n, i) => {
+      const emoji     = typeLabel[n.type] || (n.emoji || '🔔');
+      const isUnread  = !n.read;
+      return `<div class="hn-notif-item${isUnread ? ' unread' : ''}" data-idx="${i}">
+        <div class="hn-notif-item-dot"></div>
+        <div class="hn-notif-body">
+          <div class="hn-notif-body-title">${esc(n.title || 'Notification')}</div>
+          ${n.message ? `<div class="hn-notif-body-msg">${esc(n.message)}</div>` : ''}
+          <div class="hn-notif-body-time">${n.sts || n.ts_str || ''}</div>
+        </div>
+        <button class="hn-notif-del" data-dismiss="${i}" aria-label="Dismiss">&times;</button>
+      </div>`;
+    }).join('');
+
+    list.querySelectorAll('.hn-notif-del').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const idx  = parseInt(btn.dataset.dismiss, 10);
+        const hist = loadHistory();
+        hist.splice(hist.length - 1 - idx, 1);
+        saveHistoryRaw(hist);
+        renderBellList();
+        updateBellBadge(getUnreadCount());
+      });
+    });
+  }
+
+  function getUnreadCount() {
+    const history = loadHistory();
+    return history.filter(n => !n.read).length;
+  }
+
+  function markAllRead(skipSync) {
+    const history = loadHistory().map(n => ({ ...n, read: true }));
+    saveHistoryRaw(history);
+    if (!skipSync) renderBellList();
+    updateBellBadge(0);
+  }
+
+  function clearAllHistory() {
+    saveHistoryRaw([]);
+    renderBellList();
+    updateBellBadge(0);
+  }
+
+  function esc(s) {
+    try { return String(s ?? '') .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    catch { return ''; }
+  }
 
   /* ─────────────── PUBLIC API ─────────────── */
-  return {
+    return {
     toast,
     dismiss,
     hideAll,
@@ -310,6 +598,11 @@ const Notify = (() => {
     levelUp,
     streakFire,
     badgePulse,
+    history: { load: loadHistory, save: saveHistory, add: addHistoryEntry },
+    initBell,
+    markAllRead,
+    clearAllHistory,
+    getUnreadCount,
     get TYPE() { return TYPE; },
   };
 })();
@@ -522,3 +815,53 @@ const NOTIFY_CSS = `
 
 /* ─────────────── MAKE AVAILABLE GLOBALLY ─────────────── */
 window.Notify = Notify;
+
+/* ═══════════════════════════════════════════════
+   AUTO-INIT  — runs once on page load
+   ═══════════════════════════════════════════════ */
+(function autoInit(){
+  // ── Bell notification-icon ──────────────────────────────────────────────
+  if (typeof initBell === 'function') {
+    initBell();
+    // refresh badge every-other second (dismiss & ⌛ ticks)
+    setInterval(() => {
+      const badge = document.getElementById('hn-bell-badge');
+      if (!badge) return;
+      const count = getUnreadCount();
+      badge.textContent = count > 99 ? '99+' : String(count);
+    }, 2000);
+  }
+
+  // ── SEO injection (runs once) ───────────────────────────────────────────
+  if (!injectedSEO && typeof injectSEO === 'function') {
+    // Determine canonical URL
+    const baseUrl = 'https://hanverse.netlify.app';
+    const page    = location.pathname.split('/').pop() || 'index.html';
+    const fullUrl = baseUrl + '/' + (page === 'index.html' ? '' : page);
+
+    // Map page pathnames to their titles / descriptions
+    const map = {
+      '/'                         : { title:'Hanverse',                   desc:'Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and engaging stories designed for young learners.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, Chinese for kids, YCT exam prep' },
+      'login.html'                : { title:'Hanverse Login',             desc:'Log in to your Hanverse account. Continue your Mandarin journey and save your progress, achievements, and streaks.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, Hanverse login, Mandarin sign in' },
+      'signup.html'               : { title:'Sign Up - Hanverse',         desc:'Create a free Hanverse account. Start learning Mandarin Chinese with interactive lessons, games, and YCT certification courses.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, sign up, free Chinese lessons' },
+      'learn.html'                 : { title:'Hanverse Learn',             desc:'Browse all Hanverse Mandarin courses. YCT 1 through YCT 4 lessons with interactive exercises, vocabulary practice, and progress tracking.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, YCT lessons, Chinese courses' },
+      'profile.html'              : { title:'Profile - Hanverse',         desc:'View your Hanverse profile. Track your XP, learning streak, lessons completed, and earned achievements on your Mandarin journey.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, learner profile, XP achievements' },
+      'practice.html'             : { title:'Practice - Hanverse',        desc:'Practice your Mandarin with Hanverse. Vocabulary drills, pronunciation exercises, and writing practice to strengthen your Chinese skills.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, Chinese practice, vocabulary drills' },
+      'hsk1.html'                 : { title:'HSK 1 - Hanverse',           desc:'Prepare for the HSK 1 exam with Hanverse. Learn essential Chinese vocabulary and grammar in this structured beginner course.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, HSK 1, HSK exam prep' },
+      'yct1.html'                 : { title:'YCT 1 - Hanverse',           desc:'Start your YCT 1 foundation with Hanverse. Master 80 essential Chinese words with interactive stories and fun activities tailored for kids.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, YCT 1, Chinese words for beginners' },
+      'settings.html'             : { title:'Settings - Hanverse',        desc:'Customize your Hanverse learning experience. Manage notifications, study pace, and account preferences in your account settings.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, app settings, Hanverse preferences' },
+      'notifications.html'        : { title:'Notifications - Hanverse',   desc:'View all your Hanverse notifications. Stay up to date with lesson reminders, achievement unlocks, and streak updates.', keywords:'Mandarin Chinese, YCT, Chinese language learning, kids Chinese, notifications, learning reminders' },
+    };
+    const cfg = map[page] || map['/'];
+    const docTitle = document.title || cfg.title;
+    injectSEO({
+      title:          docTitle,
+      description:    cfg.desc,
+      keywords:       cfg.keywords,
+      canonical:      fullUrl,
+      ogUrl:          fullUrl,
+      ogTitle:        docTitle,
+      ogDescription:  cfg.desc,
+    });
+  }
+})();
