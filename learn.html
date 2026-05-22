@@ -91,17 +91,50 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 
-padding:18px 30px;
+padding:14px 30px;
 
 background:white;
 
 border-radius:25px;
 
-margin-bottom:40px;
+margin-bottom:30px;
 
 box-shadow:
 0 4px 20px rgba(0,0,0,.05);
 
+}
+
+/* ── Button base ── */
+.btn{
+padding:10px 22px;
+border:none;
+border-radius:40px;
+cursor:pointer;
+font-weight:600;
+font-size:.875rem;
+transition:.3s;
+}
+.btn-login{
+background:var(--red);
+color:white;
+}
+.btn-login:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(244,211,94,.25);
+}
+.btn-signup{
+background:var(--yellow);
+color:#333;
+}
+.btn-signup:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(230,57,70,.18);
+}
+.btn-nav-auth{
+white-space:nowrap;
+flex-shrink:0;
+text-decoration:none;
+text-align:center;
 }
 
 .logo{
@@ -660,29 +693,541 @@ gap:18px;
 }
 
 
-@media(max-width:900px){
-
-nav{
-
-
+/* Hamburger – hidden on large screens */
+.nav-checkbox{display:none;}
+.nav-hamburger{
+display:none;
 flex-direction:column;
+gap:5px;
+cursor:pointer;
+padding:4px;
+z-index:1002;
+}
+.nav-hamburger span{
+display:block;
+width:24px;height:2.5px;
+background:#333;
+border-radius:2px;
+transition:transform .3s,opacity .3s;
+}
 
-gap:20px;
+/* HERO */
+
+.hero{
+
+background:
+linear-gradient(
+135deg,
+var(--blue),
+#7bc7f4
+);
+
+padding:40px 30px;
+
+border-radius:35px;
+
+color:white;
+
+margin-bottom:40px;
+
+animation:fade .8s;
 
 }
 
-nav ul{
+@keyframes fade{
 
-flex-wrap:wrap;
+from{
 
-justify-content:center;
+opacity:0;
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
 
 }
 
 .hero h1{
 
-font-size:38px;
+font-size:42px;
 
+margin:15px 0;
+
+}
+
+.hero p{
+
+line-height:1.8;
+
+max-width:650px;
+
+}
+
+
+.preview{
+
+display:flex;
+gap:16px;
+
+margin-top:24px;
+
+flex-wrap:wrap;
+
+}
+
+.card{
+
+background:white;
+
+padding:20px;
+
+border-radius:22px;
+
+min-width:130px;
+
+color:#333;
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:
+translateY(-6px);
+
+}
+
+.card h2{
+
+color:var(--red);
+
+}
+
+
+/* LESSONS */
+
+.title{
+
+margin-bottom:24px;
+
+font-size:34px;
+
+}
+
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+
+gap:20px;
+
+}
+
+.lesson{
+
+background:white;
+
+padding:22px;
+
+border-radius:28px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.05);
+
+transition:.4s;
+
+animation:slide .8s;
+
+}
+
+.lesson:hover{
+
+transform:
+translateY(-6px);
+
+}
+
+.lesson h3{
+
+color:var(--blue);
+
+margin-bottom:12px;
+
+}
+
+.progress{
+
+height:10px;
+
+background:#eee;
+
+border-radius:18px;
+
+margin:12px 0;
+
+overflow:hidden;
+
+}
+
+.fill{
+
+width:0;
+
+height:100%;
+
+background:var(--green);
+
+transition:2s;
+
+}
+
+.badge{
+
+display:inline-block;
+
+padding:6px 14px;
+
+border-radius:18px;
+
+background:#e8fff0;
+
+font-size:12px;
+
+margin-top:8px;
+
+}
+
+
+/* SIGNUP CARD */
+
+.join{
+
+margin-top:60px;
+
+background:white;
+
+padding:36px;
+
+border-radius:30px;
+
+text-align:center;
+
+border:
+3px dashed var(--yellow);
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.05);
+
+}
+
+.join h2{
+
+color:var(--blue);
+
+margin-bottom:16px;
+
+}
+
+
+footer{
+
+padding:24px;
+
+text-align:center;
+
+color:#777;
+
+}
+
+
+/* COURSE CARD */
+.course-card{
+
+background:white;
+
+padding:22px;
+
+border-radius:28px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+transition:.4s;
+
+}
+
+.course-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.course-card h3{
+
+color:var(--blue);
+
+margin-bottom:10px;
+
+}
+
+.course-desc{
+
+font-size:.85rem;
+
+color:var(--text-secondary);
+
+margin-bottom:14px;
+
+line-height:1.5;
+
+}
+
+.course-badge{
+
+display:inline-block;
+
+padding:5px 12px;
+
+border-radius:18px;
+
+background:#e8fff0;
+
+font-size:11px;
+
+margin-bottom:10px;
+
+color:#2E7D32;
+
+}
+
+/* YCT LEVEL SECTION */
+.yct-level-section{
+
+background:white;
+
+border-radius:28px;
+
+padding:26px 20px;
+
+margin-bottom:28px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+animation:slide .8s;
+
+}
+
+.yct-level-header{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+margin-bottom:18px;
+
+padding-bottom:14px;
+
+border-bottom:1px solid var(--border);
+
+}
+
+.yct-level-emoji{
+
+font-size:1.8rem;
+
+width:48px;height:48px;
+
+display:flex;align-items:center;justify-content:center;
+
+border-radius:14px;
+
+flex-shrink:0;
+
+}
+
+.yct-level-meta{flex:1;}
+
+.yct-level-title{
+
+font-size:1.2rem;
+
+font-weight:700;
+
+color:var(--text-primary);
+
+margin-bottom:2px;
+
+}
+
+.yct-level-words{
+
+font-size:.78rem;
+
+color:var(--text-secondary);
+
+}
+
+.yct-level-ring{
+
+width:46px;height:46px;
+
+border-radius:50%;
+
+border:3.5px solid var(--green);
+
+display:flex;align-items:center;justify-content:center;
+
+font-size:.75rem;
+
+font-weight:700;
+
+color:var(--green);
+
+flex-shrink:0;
+
+}
+
+.yct-level-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+gap:16px;
+
+}
+
+
+/* ── MOBILE NAV OVERLAY ── */
+@media(max-width:900px){
+
+nav{
+  flex-wrap:wrap;
+  gap:8px;
+  padding:10px 4%;
+  border-radius:20px;
+}
+
+.nav-hamburger{
+  display:flex;
+  order:3;
+}
+
+/* hide nav items + auth buttons by default */
+nav > ul,
+nav > .btn-nav-auth,
+nav > .nav-profile-section{
+  display:none;
+}
+
+#navToggle:checked ~ ul,
+#navToggle:checked ~ .btn-nav-auth,
+#navToggle:checked ~ .nav-profile-section{
+  display:flex;
+}
+
+nav > ul{
+  order:5;
+  width:100%;
+  flex-direction:column;
+  gap:0;
+  background:white;
+  padding:8px 0 4px;
+  margin-top:4px;
+  border-top:1px solid #eee;
+}
+
+nav > ul li a{
+  display:block;
+  padding:10px 0;
+  border-bottom:1px solid #f0f0f0;
+  color:#444;
+  font-weight:500;
+  text-decoration:none;
+}
+
+nav > ul li a.active{
+  color:var(--red);
+  font-weight:700;
+}
+
+nav > .btn-nav-auth{
+  order:6;
+  width:100%;
+  justify-content:center;
+  margin-top:8px;
+  margin-bottom:8px;
+}
+
+#navToggle:checked ~ .nav-profile-section{
+  flex-direction:row;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:8px 0;
+  border-top:1px solid #f0f0f0;
+}
+
+.hero{
+  padding:40px 5%;
+}
+
+.hero h1{
+  font-size:34px;
+}
+
+.preview{
+  gap:12px;
+}
+
+.card{
+  min-width:110px;
+  padding:16px;
+}
+
+.card h2{
+  font-size:1.4rem;
+}
+
+.title{
+  font-size:28px;
+}
+
+.grid{
+  grid-template-columns:1fr;
+  gap:16px;
+}
+
+.lesson{
+  padding:18px;
+}
+
+.join{
+  padding:28px 20px;
+  margin-top:48px;
+}
+
+footer{
+  font-size:.78rem;
+  padding:20px;
+}
+
+.yct-level-section{
+  padding:22px 16px;
+}
+
+.yct-level-grid{
+  grid-template-columns:1fr;
 }
 
 }
@@ -703,10 +1248,15 @@ font-size:38px;
 
 </div>
 
-Hanverse
+<span class="logo-text">Hanverse</span>
 
 </div>
 
+<input type="checkbox" id="navToggle" class="nav-checkbox">
+
+<label for="navToggle" class="nav-hamburger" aria-label="Toggle navigation">
+  <span></span>
+</label>
 
 <ul>
 
@@ -740,17 +1290,25 @@ Parents
 
 </ul>
 
+<a
+href="login.html"
+class="btn btn-login btn-nav-auth"
+>Log In</a>
+
+<a
+href="signup.html"
+class="btn btn-signup btn-nav-auth"
+>Sign Up</a>
 
 
 <div class="nav-profile-section" id="navProfileSection" style="display:none;">
   <div class="nav-avatar-ring">
     <img id="navAvatarImg" src="" alt="You" class="nav-avatar-img" style="display:none;">
-    <span id="navAvatarFallback" class="nav-avatar-fallback">😊</span>
+    <span id="navAvatarFallback" class="nav-avatar-fallback"></span>
   </div>
-  <div class="nav-profile-name" id="navProfileName">—</div>
+  <div class="nav-profile-name" id="navProfileName"></div>
 </div>
 
-</nav>
 
 
 
@@ -1197,15 +1755,24 @@ async function loadUserCourses(userId) {
   const userId = user.user_id || user.userId;
   const isLoggedIn = !!userId;
 
+  /* toggle nav auth buttons: hide both when logged in */
+  document.querySelectorAll('.btn-nav-auth').forEach(function(b){
+    b.style.display = isLoggedIn ? 'none' : '';
+  });
+
   /* nav profile section */
   const navProfileSection = document.getElementById('navProfileSection');
   if (navProfileSection) {
     if (isLoggedIn) {
       navProfileSection.style.display = 'flex';
-      const imgEl  = document.getElementById('navAvatarImg');
-      const fbEl   = document.getElementById('navAvatarFallback');
-      const nameEl = document.getElementById('navProfileName');
+    } else {
+      navProfileSection.style.display = 'none';
+    }
+    const imgEl  = document.getElementById('navAvatarImg');
+    const fbEl   = document.getElementById('navAvatarFallback');
+    const nameEl = document.getElementById('navProfileName');
 
+    if (isLoggedIn) {
       if (user.profile_picture) {
         if (imgEl) { imgEl.src = user.profile_picture; imgEl.style.display = ''; }
         if (fbEl)  { fbEl.style.display = 'none'; }
@@ -1214,8 +1781,6 @@ async function loadUserCourses(userId) {
         if (fbEl)  { fbEl.style.display = ''; }
       }
       if (nameEl) nameEl.textContent = user.full_name || user.username || 'You';
-    } else {
-      navProfileSection.style.display = 'none';
     }
   }
 

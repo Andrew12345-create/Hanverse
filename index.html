@@ -85,7 +85,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 
-padding:18px 8%;
+padding:14px 8%;
 
 background:white;
 
@@ -97,6 +97,33 @@ z-index:1000;
 box-shadow:
 0 4px 20px rgba(0,0,0,.05);
 
+}
+
+/* ── Button base ── */
+.btn{
+padding:10px 22px;
+border:none;
+border-radius:40px;
+cursor:pointer;
+font-weight:600;
+font-size:.875rem;
+transition:.3s;
+}
+.btn-login{
+background:var(--red);
+color:white;
+}
+.btn-login:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(244,211,94,.25);
+}
+.btn-signup{
+background:var(--yellow);
+color:#333;
+}
+.btn-signup:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(230,57,70,.18);
 }
 
 .logo{
@@ -701,49 +728,172 @@ color:#777;
 }
 
 
-/* MOBILE */
+/* Hamburger – hidden on large screens */
+.nav-checkbox{display:none;}
+.nav-hamburger{
+display:none;
+flex-direction:column;
+gap:5px;
+cursor:pointer;
+padding:4px;
+z-index:1002;
+}
+.nav-hamburger span{
+display:block;
+width:24px;height:2.5px;
+background:#333;
+border-radius:2px;
+transition:transform .3s,opacity .3s;
+}
 
+/* CTA buttons in navbar */
+.btn-nav-auth{
+white-space:nowrap;
+flex-shrink:0;
+text-decoration:none;
+text-align:center;
+}
+
+/* ── MOBILE ── */
 @media(max-width:900px){
 
 nav{
-
-flex-direction:column;
-gap:20px;
-
+  flex-wrap:wrap;
+  gap:8px;
+  padding:10px 4%;
 }
 
-nav ul{
+.nav-hamburger{
+  display:flex;
+  order:3;
+}
 
-flex-wrap:wrap;
-justify-content:center;
+/* hide links + buttons by default, show overlay when checkbox checked */
+nav > ul,
+nav > .btn-nav-auth,
+nav > .nav-profile-section{
+  display:none;
+}
 
+#navToggle:checked ~ ul,
+#navToggle:checked ~ .btn-nav-auth,
+#navToggle:checked ~ .nav-profile-section{
+  display:flex;
+}
+
+nav > ul{
+  order:5;
+  width:100%;
+  flex-direction:column;
+  gap:0;
+  background:white;
+  border-top:1px solid #eee;
+  padding-top:8px;
+  margin-top:4px;
+}
+
+nav > ul li a{
+  display:block;
+  padding:10px 0;
+  border-bottom:1px solid #f0f0f0;
+  color:#444;
+  font-weight:500;
+  text-decoration:none;
+}
+
+nav > ul li a.active{
+  color:var(--red);
+  font-weight:700;
+}
+
+/* show auth buttons in overlay as a row */
+nav > .btn-nav-auth{
+  order:6;
+  width:100%;
+  justify-content:center;
+  margin-top:10px;
+}
+
+/* profile section shown in overlay when logged in */
+#navToggle:checked ~ .nav-profile-section{
+  flex-direction:row;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:10px 0;
+  border-bottom:1px solid #f0f0f0;
+}
+
+/* overlay backdrop */
+.nav-overlay{
+  display:none;
+}
+#navToggle:checked ~ .nav-overlay{
+  display:block;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  z-index:999;
 }
 
 .hero{
-
-flex-direction:column;
-
-text-align:center;
-
+  flex-direction:column;
+  text-align:center;
+  padding:60px 5%;
+  gap:40px;
 }
 
 .hero h1{
-
-font-size:42px;
-
+  font-size:38px;
 }
 
 .hero-buttons{
+  justify-content:center;
+}
 
-justify-content:center;
-
+.hero-right{
+  order:-1;
 }
 
 .learning-card{
+  height:260px;
+  width:260px;
+  font-size:90px;
+}
 
-height:280px;
-width:280px;
+.stats{
+  padding:40px 5%;
+  gap:16px;
+}
 
+.stat{
+  width:160px;
+  padding:24px;
+}
+
+.stat h2{
+  font-size:32px;
+}
+
+.features{
+  padding:60px 5%;
+}
+
+.title{
+  font-size:32px;
+}
+
+.end{
+  padding:60px 5%;
+}
+
+.end-card{
+  padding:32px 24px;
+}
+
+footer{
+  padding:24px;
+  font-size:.82rem;
 }
 
 }
@@ -777,10 +927,16 @@ to{transform:scale(4);opacity:0;}
 
 </div>
 
-Hanverse
+<span class="logo-text">Hanverse</span>
 
 </div>
 
+<!-- hamburger checkbox on touch screens -->
+<input type="checkbox" id="navToggle" class="nav-checkbox">
+
+<label for="navToggle" class="nav-hamburger" aria-label="Toggle navigation">
+  <span></span>
+</label>
 
 <ul>
 
@@ -812,6 +968,16 @@ Parents
 </li>
 
 </ul>
+
+<a
+href="login.html"
+class="btn btn-login btn-nav-auth"
+>Log In</a>
+
+<a
+href="signup.html"
+class="btn btn-signup btn-nav-auth"
+>Sign Up</a>
 
 
 <div class="nav-profile-section" id="navProfileSection" style="display:none;">
@@ -1201,28 +1367,34 @@ Notify.miniConfetti();
 
 setInterval(showStatsMilestones,200);
 
-/* ── Navbar: show profile pic + username when logged in ── */
+/* ── Navbar: show login/signup or profile pic + name ── */
 (function fillNavProfile(){
   try {
     var sess = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
-    if (!sess.user_id) return;
+    /* toggle nav auth buttons: hide both when logged in */
+    document.querySelectorAll('.btn-nav-auth').forEach(function(b){
+      b.style.display = sess.user_id ? 'none' : '';
+    });
 
+    /* toggle profile section: show when logged in */
     var section = document.getElementById('navProfileSection');
     if (!section) return;
-    section.style.display = 'flex';
-
-    var imgEl  = document.getElementById('navAvatarImg');
-    var fbEl   = document.getElementById('navAvatarFallback');
-    var nameEl = document.getElementById('navProfileName');
-
-    if (sess.profile_picture) {
-      if (imgEl) { imgEl.src = sess.profile_picture; imgEl.style.display = ''; }
-      if (fbEl)  { fbEl.style.display = 'none'; }
+    if (sess.user_id) {
+      section.style.display = 'flex';
+      var imgEl  = document.getElementById('navAvatarImg');
+      var fbEl   = document.getElementById('navAvatarFallback');
+      var nameEl = document.getElementById('navProfileName');
+      if (sess.profile_picture) {
+        if (imgEl) { imgEl.src = sess.profile_picture; imgEl.style.display = ''; }
+        if (fbEl)  { fbEl.style.display = 'none'; }
+      } else {
+        if (imgEl) { imgEl.style.display = 'none'; }
+        if (fbEl)  { fbEl.style.display = ''; }
+      }
+      if (nameEl) nameEl.textContent = sess.fullName || sess.username || 'You';
     } else {
-      if (imgEl) { imgEl.style.display = 'none'; }
-      if (fbEl)  { fbEl.style.display = ''; }
+      section.style.display = 'none';
     }
-    if (nameEl) nameEl.textContent = sess.fullName || sess.username || 'You';
   } catch(e) {}
 })();
 
