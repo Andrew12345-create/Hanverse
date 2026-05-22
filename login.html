@@ -513,131 +513,507 @@ Sign Up
 
 <script src="notifications.js"></script>
 
+<script src="notifications.js"></script>
+
 <script>
 
-function comingSoon(e){e&&e.preventDefault();Notify.toast('Coming soon! 🚀','info',3000);}
+/* ════════════════════════════════════
+   HELPERS
+════════════════════════════════════ */
+
+function comingSoon(e){
+
+e && e.preventDefault();
+
+Notify.toast(
+'Coming soon! 🚀',
+'info',
+3000
+);
+
+}
+
+/* RIPPLE EFFECT */
 
 function addRipple(e,color){
-  const btn=e.currentTarget;
-  const rect=btn.getBoundingClientRect();
-  const r=document.createElement('div');
-  r.className='n-ripple-container';
-  const ring=document.createElement('div');
-  ring.className='n-ripple';
-  ring.style.cssText=`width:30px;height:30px;left:${e.clientX-rect.left-15}px;top:${e.clientY-rect.top-15}px;background:${color||'rgba(78,168,222,.35)'};`;
-  btn.style.position='relative'; btn.style.overflow='hidden';
-  btn.appendChild(r); r.appendChild(ring);
-  setTimeout(()=>r.remove(),700);
+
+const btn = e.currentTarget;
+
+const rect =
+btn.getBoundingClientRect();
+
+const ripple =
+document.createElement('div');
+
+ripple.className = 'n-ripple-container';
+
+const ring =
+document.createElement('div');
+
+ring.className = 'n-ripple';
+
+ring.style.cssText = `
+width:30px;
+height:30px;
+left:${e.clientX - rect.left - 15}px;
+top:${e.clientY - rect.top - 15}px;
+background:${color || 'rgba(78,168,222,.35)'};
+`;
+
+btn.style.position = 'relative';
+btn.style.overflow = 'hidden';
+
+btn.appendChild(ripple);
+
+ripple.appendChild(ring);
+
+setTimeout(()=>{
+
+ripple.remove();
+
+},700);
+
 }
+
+/* SHAKE */
+
 function shake(el){
-  el.classList.remove('n-shake');
-  void el.offsetWidth;
-  el.classList.add('n-shake');
-  setTimeout(()=>el.classList.remove('n-shake'),600);
+
+el.classList.remove('n-shake');
+
+void el.offsetWidth;
+
+el.classList.add('n-shake');
+
+setTimeout(()=>{
+
+el.classList.remove('n-shake');
+
+},600);
+
 }
+
+/* PASSWORD TOGGLE */
+
 function toggle(){
-  const pw=document.getElementById('password');
-  pw.type=pw.type==='password'?'text':'password';
-  Notify.toast(pw.type==='text'?'Password visible 👁️':'Password hidden 🔒','info',1500);
+
+const pw =
+document.getElementById('password');
+
+pw.type =
+pw.type === 'password'
+? 'text'
+: 'password';
+
+Notify.toast(
+
+pw.type === 'text'
+? 'Password visible 👁️'
+: 'Password hidden 🔒',
+
+'info',
+1500
+
+);
+
 }
 
-const API_URL = '/api';
+/* ════════════════════════════════════
+   API URL
+════════════════════════════════════ */
 
-/* ── Input focus toasts ── */
-document.getElementById('email').addEventListener('focus',()=>Notify.toast('Enter your email address 📧','info',1800));
-document.getElementById('password').addEventListener('focus',()=>Notify.toast('Enter your password 🔐','info',1800));
+/*
+IF backend runs separately:
+http://localhost:3000/api
+
+IF same Express server:
+const API_URL = '/api';
+*/
+
+const API_URL =
+'http://localhost:3000/api';
+
+/* ════════════════════════════════════
+   INPUT TOASTS
+════════════════════════════════════ */
+
+document
+.getElementById('email')
+.addEventListener(
+'focus',
+()=>{
+
+Notify.toast(
+'Enter your email 📧',
+'info',
+1800
+);
+
+}
+);
+
+document
+.getElementById('password')
+.addEventListener(
+'focus',
+()=>{
+
+Notify.toast(
+'Enter your password 🔐',
+'info',
+1800
+);
+
+}
+);
+
+/* ════════════════════════════════════
+   LOGIN
+════════════════════════════════════ */
 
 async function login(){
-  const email=document.getElementById('email').value.trim();
-  const password=document.getElementById('password').value;
 
-  if(!email||!password){
-    Notify.toast('Please enter both email and password! 📧','error',3000);
-    shake(document.getElementById('email').parentElement);
-    return;
-  }
+const email =
+document
+.getElementById('email')
+.value
+.trim();
 
-  const btn=document.getElementById('loginBtn');
-  btn.disabled=true;
-  btn.textContent='Signing in… 🔄';
-  Notify.toast('Connecting to database… 🗄️','info',2500);
+const password =
+document
+.getElementById('password')
+.value;
 
-  try {
-    const resp=await fetch(API_URL+'/login',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email,password})
-    });
-    const data=await resp.json();
+/* VALIDATION */
 
-    if(!resp.ok||!data.success){
-      btn.disabled=false;
-      btn.textContent='Log In';
-      if(resp.status===503||resp.status===500){
-        Notify.toast('Database is connecting… please try again 💫','error',4500);
-      } else {
-        Notify.toast(data.error||'Login failed. Check your details. ❌','error',4000);
-      }
-      shake(btn);
-      return;
-    }
+if(!email || !password){
 
-    localStorage.setItem('hanverse_user', JSON.stringify({
-      user_id:data.user.user_id,
-      username:data.user.username,
-      fullName:data.user.full_name,
-      email:data.user.email,
-      xp:data.user.xp,
-      level:data.user.level,
-      streak:data.user.streak_days,
-      profile_picture:data.user.profile_picture,
-      created_at:data.user.created_at,
-    }));
+Notify.toast(
+'Please enter email and password ❌',
+'error',
+3000
+);
 
-    const user=data.user;
-    Notify.toast('Login successful! Welcome back! 🎉','success',2500);
-    Notify.showXP(50);
-    Notify.miniConfetti();
+shake(
+document.querySelector('.container')
+);
 
-    if(user.streak&&user.streak>=7) Notify.streakFire(user.streak);
-    if(user.level>=5) Notify.toast(`Level ${user.level} — amazing progress! 🏆`,'star',3000);
+return;
 
-    setTimeout(()=>window.location.href='profile.html',900);
-  } catch(e){
-    console.error(e);
-    btn.disabled=false;
-    btn.textContent='Log In';
-    Notify.toast('Cannot reach server. Check your connection. 🌐','error',5000);
-  }
 }
 
-document.getElementById('loginBtn').addEventListener('click',(e)=>{
-  e.preventDefault();
-  addRipple(e);
-  login();
-});
-document.querySelectorAll('.btn,.google').forEach(btn=>{
-  btn.addEventListener('click',e=>addRipple(e));
+/* BUTTON */
+
+const btn =
+document.getElementById('loginBtn');
+
+btn.disabled = true;
+
+btn.innerHTML =
+'Signing In... 🔄';
+
+Notify.toast(
+'Connecting to server... 🌐',
+'info',
+2500
+);
+
+try{
+
+/* FETCH */
+
+const response =
+await fetch(
+
+`${API_URL}/login`,
+
+{
+
+method:'POST',
+
+headers:{
+'Content-Type':'application/json'
+},
+
+body:JSON.stringify({
+
+email,
+password
+
+})
+
+}
+
+);
+
+/* JSON */
+
+const data =
+await response.json();
+
+/* LOGIN FAILED */
+
+if(!response.ok || !data.success){
+
+btn.disabled = false;
+
+btn.innerHTML =
+'Log In';
+
+Notify.toast(
+
+data.error ||
+'Incorrect email or password ❌',
+
+'error',
+4000
+
+);
+
+shake(btn);
+
+return;
+
+}
+
+/* SAVE USER */
+
+localStorage.setItem(
+
+'hanverse_user',
+
+JSON.stringify({
+
+user_id:
+data.user.user_id,
+
+username:
+data.user.username,
+
+full_name:
+data.user.full_name,
+
+email:
+data.user.email,
+
+xp:
+data.user.xp,
+
+level:
+data.user.level,
+
+streak_days:
+data.user.streak_days,
+
+profile_picture:
+data.user.profile_picture,
+
+created_at:
+data.user.created_at
+
+})
+
+);
+
+/* SUCCESS */
+
+Notify.toast(
+'Login successful! 🎉',
+'success',
+2500
+);
+
+Notify.showXP(50);
+
+Notify.miniConfetti();
+
+/* STREAK */
+
+if(
+data.user.streak_days &&
+data.user.streak_days >= 7
+){
+
+Notify.streakFire(
+data.user.streak_days
+);
+
+}
+
+/* LEVEL */
+
+if(
+data.user.level &&
+data.user.level >= 5
+){
+
+Notify.toast(
+
+`Level ${data.user.level} reached! 🏆`,
+
+'star',
+3000
+
+);
+
+}
+
+/* BUTTON */
+
+btn.innerHTML =
+'Success ✅';
+
+/* REDIRECT */
+
+setTimeout(()=>{
+
+window.location.href =
+'profile.html';
+
+},1200);
+
+}catch(error){
+
+console.error(error);
+
+btn.disabled = false;
+
+btn.innerHTML =
+'Log In';
+
+Notify.toast(
+
+'Cannot connect to backend server 🌐',
+
+'error',
+5000
+
+);
+
+}
+
+}
+
+/* ════════════════════════════════════
+   BUTTON EVENTS
+════════════════════════════════════ */
+
+document
+.getElementById('loginBtn')
+.addEventListener(
+'click',
+(e)=>{
+
+e.preventDefault();
+
+addRipple(e);
+
+login();
+
+}
+);
+
+/* ENTER KEY */
+
+document
+.addEventListener(
+'keypress',
+(e)=>{
+
+if(e.key === 'Enter'){
+
+login();
+
+}
+
+}
+);
+
+/* RIPPLE */
+
+document
+.querySelectorAll('.btn')
+.forEach(btn=>{
+
+btn.addEventListener(
+'click',
+e=>addRipple(e)
+);
+
 });
 
-const panda=document.querySelector('.panda');
+/* ════════════════════════════════════
+   PANDA
+════════════════════════════════════ */
+
+const panda =
+document.querySelector('.panda');
+
 if(panda){
-  panda.addEventListener('click',()=>{
-    Notify.toast('Panda loves Mandarin learners! 🐼💜','heart',2500);
-    Notify.showXP(5);
-  });
-}
-document.querySelector('.google').addEventListener('click',()=>{
-  Notify.toast('Google sign-in coming soon! 😊','info',3000);
-});
 
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    Notify.toast('Welcome back! Log in to continue learning ✨','star',3000);
-    Notify.miniConfetti();
-  },800);
-});
- </script>
+panda.addEventListener(
+'click',
+()=>{
+
+Notify.toast(
+'Panda loves Mandarin learners 🐼💜',
+'heart',
+2500
+);
+
+Notify.showXP(5);
+
+}
+);
+
+}
+
+/* GOOGLE */
+
+document
+.querySelector('.google')
+.addEventListener(
+'click',
+()=>{
+
+Notify.toast(
+'Google login coming soon 🚀',
+'info',
+3000
+);
+
+}
+);
+
+/* ════════════════════════════════════
+   LOAD
+════════════════════════════════════ */
+
+window.addEventListener(
+'load',
+()=>{
+
+setTimeout(()=>{
+
+Notify.toast(
+
+'Welcome back to Hanverse ✨',
+
+'star',
+3000
+
+);
+
+Notify.miniConfetti();
+
+},800);
+
+}
+);
+
+</script>
+
+<script src="notifications-client.js"></script> </script>
 <script src="notifications-client.js"></script>
 
 </body>

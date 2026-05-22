@@ -1055,8 +1055,16 @@ Hanverse
 </ul>
 
 <div class="nav-buttons">
-<button class="btn btn-login" onclick="window.location.href='login.html'">Log In</button>
-<button class="btn btn-signup" onclick="window.location.href='signup.html'">Sign Up</button>
+  <button class="btn btn-login" onclick="window.location.href='login.html'">Log In</button>
+  <button class="btn btn-signup" onclick="window.location.href='signup.html'">Sign Up</button>
+
+  <div class="nav-profile-section" id="navProfileSectionLearn" style="display:none;flex-direction:column;align-items:center;gap:3px;padding:2px 6px;border-radius:12px;cursor:pointer;text-decoration:none;" onclick="window.location.href='profile.html'">
+    <div style="width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid var(--orange);display:flex;align-items:center;justify-content:center;background:white;flex-shrink:0;">
+      <img id="navAvatarImgLearn" src="" style="display:none;width:100%;height:100%;object-fit:cover;" alt="You">
+      <span id="navAvatarFallbackLearn" style="display:block;font-size:1rem;">😊</span>
+    </div>
+    <span id="navProfileNameLearn" style="font-size:.65rem;font-weight:700;color:#444;white-space:nowrap;max-width:86px;overflow:hidden;text-overflow:ellipsis;">You</span>
+  </div>
 </div>
 
 </nav>
@@ -1536,6 +1544,48 @@ Choose a lesson to continue 🚀
 
 <script src="notifications.js"></script>
 <script src="notifications-client.js"></script>
+
+<script>
+/* nav: show logged-in account (PFP + username) */
+(function fillLearnNavAccount(){
+  try {
+    var s = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
+    var loginBtn = document.querySelector('.btn-login');
+    var signupBtn = document.querySelector('.btn-signup');
+
+    // Pre-rendered logged-in section (hidden by default)
+    var sec  = document.getElementById('navProfileSectionLearn');
+    var name = document.getElementById('navProfileNameLearn');
+    var img  = document.getElementById('navAvatarImgLearn');
+    var fb   = document.getElementById('navAvatarFallbackLearn');
+
+    if (!s.user_id) {
+      if (sec) sec.style.display = 'none';
+      if (loginBtn) loginBtn.style.display = '';
+      if (signupBtn) signupBtn.style.display = '';
+      return;
+    }
+
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (signupBtn) signupBtn.style.display = 'none';
+    if (sec) sec.style.display = 'flex';
+
+    if (name) name.textContent = s.fullName || s.username || 'You';
+
+    if (img && s.profile_picture) {
+      img.src = s.profile_picture;
+      img.style.display = 'block';
+      if (fb) fb.style.display = 'none';
+    } else {
+      if (img) img.style.display = 'none';
+      if (fb) fb.style.display = 'block';
+    }
+  } catch(e) {}
+})();
+</script>
+
+
+
 <script>
 /* ── lesson cards ── */
 document.querySelectorAll('.lesson-card').forEach(card => {

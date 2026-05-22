@@ -19,7 +19,7 @@ rel="stylesheet">
 
 /* ════════════════════════════════════
    ROOT
-   ════════════════════════════════════ */
+════════════════════════════════════ */
 
 :root{
 
@@ -38,7 +38,7 @@ rel="stylesheet">
 
 /* ════════════════════════════════════
    GLOBAL
-   ════════════════════════════════════ */
+════════════════════════════════════ */
 
 *{
 
@@ -59,17 +59,11 @@ color:var(--text);
 
 overflow-x:hidden;
 
-}
-
-html{
-
-scroll-behavior:smooth;
+padding:30px;
 
 }
 
-/* ════════════════════════════════════
-   BACKGROUND BLOBS
-   ════════════════════════════════════ */
+/* BLOBS */
 
 .blob{
 
@@ -77,7 +71,7 @@ position:fixed;
 
 border-radius:50%;
 
-filter:blur(80px);
+filter:blur(90px);
 
 opacity:.18;
 
@@ -95,7 +89,7 @@ height:320px;
 background:var(--blue);
 
 top:-120px;
-left:-80px;
+left:-100px;
 
 }
 
@@ -106,7 +100,7 @@ height:260px;
 
 background:var(--purple);
 
-right:-60px;
+right:-80px;
 top:240px;
 
 animation-delay:2s;
@@ -127,9 +121,7 @@ animation-delay:4s;
 
 }
 
-/* ════════════════════════════════════
-   NAVBAR
-   ════════════════════════════════════ */
+/* NAVBAR */
 
 nav{
 
@@ -137,7 +129,16 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 
-padding:24px 8%;
+padding:24px 30px;
+
+background:white;
+
+border-radius:34px;
+
+margin-bottom:30px;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.06);
 
 }
 
@@ -161,16 +162,13 @@ height:56px;
 
 border-radius:20px;
 
-background:white;
+background:#FFF4D6;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
 font-size:28px;
-
-box-shadow:
-0 12px 25px rgba(0,0,0,.06);
 
 }
 
@@ -202,46 +200,42 @@ color:var(--red);
 
 }
 
-/* ════════════════════════════════════
-   PROFILE HERO
-   ════════════════════════════════════ */
+/* MAIN */
 
-.profile-hero{
-
-padding:20px 8% 80px;
+.layout{
 
 display:grid;
 
 grid-template-columns:
 380px 1fr;
 
-gap:36px;
-
-align-items:start;
+gap:30px;
 
 }
 
-/* LEFT */
+/* PROFILE CARD */
 
 .profile-card{
 
 background:white;
 
-border-radius:42px;
-
 padding:34px;
 
+border-radius:40px;
+
 box-shadow:
-0 20px 50px rgba(0,0,0,.08);
+0 20px 50px rgba(0,0,0,.06);
 
 position:sticky;
-top:30px;
+top:20px;
+
+height:fit-content;
 
 overflow:hidden;
 
 }
 
-.profile-glow{
+.glow{
 
 position:absolute;
 
@@ -258,7 +252,7 @@ right:-40px;
 
 }
 
-.profile-top{
+.avatar-wrap{
 
 display:flex;
 flex-direction:column;
@@ -266,18 +260,18 @@ align-items:center;
 
 text-align:center;
 
-margin-bottom:28px;
+position:relative;
+
+z-index:2;
 
 }
 
-.avatar-ring{
+.avatar{
 
 width:130px;
 height:130px;
 
 border-radius:36px;
-
-padding:5px;
 
 background:
 linear-gradient(
@@ -286,32 +280,36 @@ var(--blue),
 var(--purple)
 );
 
-margin-bottom:18px;
-
-}
-
-.avatar{
-
-width:100%;
-height:100%;
-
-border-radius:32px;
-
-background:white;
-
 display:flex;
 justify-content:center;
 align-items:center;
 
-font-size:58px;
+font-size:60px;
+
+color:white;
+
+margin-bottom:20px;
 
 }
 
-.profile-top h2{
+.avatar img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+border-radius:36px;
+
+}
+
+.name{
 
 font-size:30px;
 
-margin-bottom:6px;
+font-weight:700;
+
+margin-bottom:8px;
 
 }
 
@@ -319,37 +317,60 @@ margin-bottom:6px;
 
 color:var(--muted);
 
-font-weight:500;
-
-margin-bottom:18px;
+margin-bottom:16px;
 
 }
 
-.level-badge{
+.level{
 
 background:var(--orange);
+
+color:white;
 
 padding:10px 18px;
 
 border-radius:30px;
 
-color:white;
-
+font-size:14px;
 font-weight:700;
 
-font-size:14px;
+display:inline-block;
+
+margin-bottom:14px;
+
+}
+
+.admin{
+
+background:
+linear-gradient(
+135deg,
+var(--red),
+#FF6B6B
+);
+
+color:white;
+
+padding:10px 18px;
+
+border-radius:30px;
+
+font-size:13px;
+font-weight:700;
+
+display:none;
 
 }
 
 /* XP */
 
-.xp-box{
+.xp-section{
 
-margin-top:28px;
+margin-top:30px;
 
 }
 
-.xp-label{
+.xp-top{
 
 display:flex;
 justify-content:space-between;
@@ -367,7 +388,7 @@ height:16px;
 
 background:#E5E7EB;
 
-border-radius:40px;
+border-radius:30px;
 
 overflow:hidden;
 
@@ -375,9 +396,11 @@ overflow:hidden;
 
 .xp-fill{
 
-width:72%;
-
 height:100%;
+
+width:0%;
+
+border-radius:30px;
 
 background:
 linear-gradient(
@@ -386,13 +409,13 @@ var(--green),
 var(--blue)
 );
 
-border-radius:40px;
+transition:1s;
 
 }
 
 /* STATS */
 
-.profile-stats{
+.stats{
 
 display:grid;
 
@@ -405,7 +428,7 @@ margin-top:28px;
 
 }
 
-.p-stat{
+.stat{
 
 background:#F8FAFC;
 
@@ -415,32 +438,19 @@ border-radius:24px;
 
 text-align:center;
 
-transition:.3s;
-
 }
 
-.p-stat:hover{
-
-transform:translateY(-5px);
-
-background:white;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
-
-}
-
-.p-stat h3{
+.stat h3{
 
 font-size:30px;
 
-margin-bottom:6px;
-
 color:var(--blue);
+
+margin-bottom:6px;
 
 }
 
-.p-stat p{
+.stat p{
 
 font-size:13px;
 
@@ -450,7 +460,7 @@ color:var(--muted);
 
 }
 
-/* RIGHT */
+/* DASHBOARD */
 
 .dashboard{
 
@@ -461,20 +471,20 @@ gap:28px;
 
 }
 
-/* WELCOME */
+/* HERO */
 
-.welcome{
+.hero{
 
 background:
 linear-gradient(
 135deg,
 var(--blue),
-#80D0FF
+#7FD0FF
 );
 
-padding:36px;
+padding:40px;
 
-border-radius:38px;
+border-radius:40px;
 
 color:white;
 
@@ -484,27 +494,23 @@ overflow:hidden;
 
 }
 
-.welcome h1{
+.hero h1{
 
-font-size:54px;
+font-size:56px;
 
-line-height:1;
-
-margin-bottom:18px;
+margin-bottom:16px;
 
 }
 
-.welcome p{
+.hero p{
 
 line-height:1.9;
 
 max-width:700px;
 
-opacity:.95;
-
 }
 
-.welcome-circle{
+.circle{
 
 position:absolute;
 
@@ -516,98 +522,14 @@ border-radius:50%;
 background:
 rgba(255,255,255,.12);
 
-right:-80px;
-top:-80px;
+right:-70px;
+top:-70px;
 
 }
 
-/* QUESTS */
+/* LESSONS */
 
-.quest-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
-
-gap:22px;
-
-}
-
-.quest{
-
-background:white;
-
-padding:26px;
-
-border-radius:30px;
-
-box-shadow:
-0 12px 30px rgba(0,0,0,.06);
-
-transition:.35s;
-
-cursor:pointer;
-
-}
-
-.quest:hover{
-
-transform:
-translateY(-8px);
-
-}
-
-.quest-top{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-margin-bottom:18px;
-
-}
-
-.quest-icon{
-
-font-size:34px;
-
-}
-
-.quest-xp{
-
-background:var(--orange);
-
-padding:8px 14px;
-
-border-radius:30px;
-
-font-size:12px;
-font-weight:700;
-
-color:white;
-
-}
-
-.quest h3{
-
-margin-bottom:12px;
-
-font-size:22px;
-
-}
-
-.quest p{
-
-line-height:1.7;
-
-color:var(--muted);
-
-}
-
-/* CONTINUE LEARNING */
-
-.learning-box{
+.box{
 
 background:white;
 
@@ -624,7 +546,7 @@ box-shadow:
 
 font-size:34px;
 
-margin-bottom:26px;
+margin-bottom:24px;
 
 }
 
@@ -643,26 +565,11 @@ background:#F8FAFC;
 
 padding:20px;
 
-border-radius:26px;
+border-radius:24px;
 
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-transition:.35s;
-
-cursor:pointer;
-
-}
-
-.lesson:hover{
-
-transform:translateX(6px);
-
-background:white;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
 
 }
 
@@ -695,22 +602,6 @@ color:white;
 .icon2{background:var(--purple);}
 .icon3{background:var(--orange);}
 
-.lesson h4{
-
-font-size:18px;
-
-margin-bottom:4px;
-
-}
-
-.lesson p{
-
-font-size:14px;
-
-color:var(--muted);
-
-}
-
 .progress{
 
 width:120px;
@@ -735,72 +626,49 @@ border-radius:30px;
 
 }
 
-.fill1{width:90%;background:var(--green);}
-.fill2{width:65%;background:var(--blue);}
+.fill1{width:100%;background:var(--green);}
+.fill2{width:70%;background:var(--blue);}
 .fill3{width:40%;background:var(--purple);}
 
-/* ACHIEVEMENTS */
+/* LOADER */
 
-.badges{
+.loader{
 
-display:grid;
+position:fixed;
 
-grid-template-columns:
-repeat(auto-fit,minmax(140px,1fr));
+inset:0;
+
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+z-index:99999;
+
+flex-direction:column;
 
 gap:20px;
 
 }
 
-.badge{
+.spinner{
 
-background:white;
+width:70px;
+height:70px;
 
-padding:24px;
+border:8px solid #eee;
 
-border-radius:28px;
+border-top:
+8px solid var(--blue);
 
-text-align:center;
+border-radius:50%;
 
-box-shadow:
-0 12px 30px rgba(0,0,0,.06);
-
-transition:.35s;
-
-cursor:pointer;
+animation:spin 1s linear infinite;
 
 }
 
-.badge:hover{
-
-transform:
-translateY(-8px);
-
-}
-
-.badge-icon{
-
-font-size:42px;
-
-margin-bottom:14px;
-
-}
-
-.badge h4{
-
-margin-bottom:6px;
-
-}
-
-.badge p{
-
-font-size:13px;
-
-color:var(--muted);
-
-}
-
-/* AI ASSISTANT */
+/* AI */
 
 .ai-helper{
 
@@ -825,8 +693,6 @@ box-shadow:
 
 z-index:9999;
 
-animation:bubbleFloat 3s infinite;
-
 }
 
 .ai-avatar{
@@ -846,35 +712,19 @@ font-size:28px;
 
 color:white;
 
-flex-shrink:0;
-
-}
-
-.ai-message{
-
-font-size:14px;
-
-line-height:1.7;
-
-font-weight:600;
-
-color:#444;
-
-}
-
-/* FOOTER */
-
-footer{
-
-padding:50px;
-
-text-align:center;
-
-color:#777;
-
 }
 
 /* ANIMATIONS */
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
 
 @keyframes floatBlob{
 
@@ -888,19 +738,21 @@ translateX(20px);
 
 }
 
-@keyframes bubbleFloat{
-
-50%{
-
-transform:translateY(-5px);
-
-}
-
-}
-
 /* MOBILE */
 
 @media(max-width:950px){
+
+.layout{
+
+grid-template-columns:1fr;
+
+}
+
+.profile-card{
+
+position:relative;
+
+}
 
 nav ul{
 
@@ -908,33 +760,9 @@ display:none;
 
 }
 
-.profile-hero{
-
-grid-template-columns:1fr;
-
-padding:20px 6% 80px;
-
-}
-
-.profile-card{
-
-position:relative;
-top:0;
-
-}
-
-.welcome h1{
+.hero h1{
 
 font-size:42px;
-
-}
-
-.ai-helper{
-
-left:14px;
-right:14px;
-
-max-width:none;
 
 }
 
@@ -945,6 +773,20 @@ max-width:none;
 </head>
 
 <body>
+
+<!-- LOADER -->
+
+<div class="loader" id="loader">
+
+<div class="spinner"></div>
+
+<h2>
+
+Loading Profile...
+
+</h2>
+
+</div>
 
 <!-- BLOBS -->
 
@@ -969,82 +811,63 @@ Hanverse
 </div>
 
 <ul>
-
-<li>
-<a href="index.html">
-Home
-</a>
-</li>
-
-<li>
-<a href="learn.html">
-Learn
-</a>
-</li>
-
-<li>
-<a
-href="profile.html"
-class="active">
-Profile
-</a>
-</li>
-
-<li>
-<a href="#">
-Leaderboard
-</a>
-</li>
-
+<li><a href="index.html">Home</a></li>
+<li><a href="learn.html">Learn</a></li>
+<li><a href="practice.html">Practice</a></li>
+<li><a href="worksheets.html">Worksheets</a></li>
+<li><a href="parents.html">Parents</a></li>
+<li><a href="profile.html" class="active">Profile</a></li>
 </ul>
 
 </nav>
 
+<!-- MAIN -->
+
+<div class="layout">
+
 <!-- PROFILE -->
-
-<section class="profile-hero">
-
-<!-- LEFT -->
 
 <div class="profile-card">
 
-<div class="profile-glow"></div>
+<div class="glow"></div>
 
-<div class="profile-top">
+<div class="avatar-wrap">
 
-<div class="avatar-ring">
-
-<div class="avatar">
+<div class="avatar" id="avatar">
 
 😊
 
 </div>
 
-</div>
+<div class="name" id="name">
 
-<h2>
-
-Kyle Mwangi
-
-</h2>
-
-<div class="username">
-
-@kylelearns
+Loading...
 
 </div>
 
-<div class="level-badge">
+<div class="username" id="username">
 
-⭐ Level 7 Scholar
+@loading
+
+</div>
+
+<div class="level" id="level">
+
+Level 1
+
+</div>
+
+<div class="admin" id="adminTag">
+
+🛡️ ADMIN
 
 </div>
 
 </div>
 
-<div class="xp-box">
+<div class="xp-section">
 
-<div class="xp-label">
+<div class="xp-top">
 
 <span>
 
@@ -1052,9 +875,9 @@ XP Progress
 
 </span>
 
-<span>
+<span id="xpText">
 
-720 / 1000 XP
+0 / 1000 XP
 
 </span>
 
@@ -1062,19 +885,71 @@ XP Progress
 
 <div class="xp-bar">
 
-<div class="xp-fill"></div>
+<div
+class="xp-fill"
+id="xpFill">
 
 </div>
 
 </div>
 
-<div class="profile-stats">
+</div>
 
-<div class="p-stat">
+<div class="stats">
 
-<h3>
+<div class="stat">
 
-43
+<h3 id="xpStat">
+
+0
+
+</h3>
+
+<p>
+
+XP
+
+</p>
+
+</div>
+
+<div class="stat">
+
+<h3 id="levelStat">
+
+1
+
+</h3>
+
+<p>
+
+Level
+
+</p>
+
+</div>
+
+<div class="stat">
+
+<h3 id="streakStat">
+
+0
+
+</h3>
+
+<p>
+
+Streak
+
+</p>
+
+</div>
+
+<div class="stat">
+
+<h3 id="lessonsStat">
+
+0
 
 </h3>
 
@@ -1086,318 +961,43 @@ Lessons
 
 </div>
 
-<div class="p-stat">
-
-<h3>
-
-12
-
-</h3>
-
-<p>
-
-Badges
-
-</p>
-
-</div>
-
-<div class="p-stat">
-
-<h3>
-
-18
-
-</h3>
-
-<p>
-
-Day Streak
-
-</p>
-
-</div>
-
-<div class="p-stat">
-
-<h3>
-
-820
-
-</h3>
-
-<p>
-
-XP Earned
-
-</p>
-
 </div>
 
 </div>
 
-</div>
-
-<!-- RIGHT -->
+<!-- DASHBOARD -->
 
 <div class="dashboard">
 
-<!-- WELCOME -->
+<div class="hero">
 
-<div class="welcome">
+<div class="circle"></div>
 
-<div class="welcome-circle"></div>
-
-<h1>
+<h1 id="welcomeText">
 
 Welcome Back 👋
 
 </h1>
 
-<p>
+<p id="heroText">
 
-Your AI tutor says you are only 280 XP away from reaching Level 8.
-Complete today’s lessons to keep your streak alive and unlock new achievements.
-
-</p>
-
-</div>
-
-<!-- QUESTS -->
-
-<div class="quest-grid">
-
-<div class="quest">
-
-<div class="quest-top">
-
-<div class="quest-icon">
-
-🔥
-
-</div>
-
-<div class="quest-xp">
-
-+25 XP
-
-</div>
-
-</div>
-
-<h3>
-
-Daily Streak
-
-</h3>
-
-<p>
-
-Complete one lesson today to continue your 18 day streak.
+Loading your progress...
 
 </p>
 
 </div>
 
-<div class="quest">
-
-<div class="quest-top">
-
-<div class="quest-icon">
-
-🎮
-
-</div>
-
-<div class="quest-xp">
-
-+40 XP
-
-</div>
-
-</div>
-
-<h3>
-
-Play Games
-
-</h3>
-
-<p>
-
-Finish two Mandarin mini games today.
-
-</p>
-
-</div>
-
-<div class="quest">
-
-<div class="quest-top">
-
-<div class="quest-icon">
-
-🏆
-
-</div>
-
-<div class="quest-xp">
-
-Badge
-
-</div>
-
-</div>
-
-<h3>
-
-Unlock Panda Badge
-
-</h3>
-
-<p>
-
-Finish all YCT 1 greetings lessons.
-
-</p>
-
-</div>
-
-</div>
-
-<!-- CONTINUE LEARNING -->
-
-<div class="learning-box">
+<div class="box">
 
 <h2 class="section-title">
 
-Continue Learning
+Recent Lessons
 
 </h2>
 
-<div class="lesson-list">
-
-<div class="lesson">
-
-<div class="lesson-left">
-
-<div class="lesson-icon icon1">
-
-👋
-
-</div>
-
-<div>
-
-<h4>
-
-Greetings
-
-</h4>
-
-<p>
-
-90% completed
-
-</p>
-
-<div class="progress">
-
-<div class="fill fill1"></div>
-
-</div>
-
-</div>
-
-</div>
-
-<div>
-
-⭐ 120 XP
-
-</div>
-
-</div>
-
-<div class="lesson">
-
-<div class="lesson-left">
-
-<div class="lesson-icon icon2">
-
-🔢
-
-</div>
-
-<div>
-
-<h4>
-
-Numbers
-
-</h4>
-
-<p>
-
-65% completed
-
-</p>
-
-<div class="progress">
-
-<div class="fill fill2"></div>
-
-</div>
-
-</div>
-
-</div>
-
-<div>
-
-⭐ 90 XP
-
-</div>
-
-</div>
-
-<div class="lesson">
-
-<div class="lesson-left">
-
-<div class="lesson-icon icon3">
-
-🏠
-
-</div>
-
-<div>
-
-<h4>
-
-Family Members
-
-</h4>
-
-<p>
-
-40% completed
-
-</p>
-
-<div class="progress">
-
-<div class="fill fill3"></div>
-
-</div>
-
-</div>
-
-</div>
-
-<div>
-
-⭐ 70 XP
+<div
+class="lesson-list"
+id="lessonList">
 
 </div>
 
@@ -1407,115 +1007,7 @@ Family Members
 
 </div>
 
-<!-- BADGES -->
-
-<div>
-
-<h2 class="section-title">
-
-Achievements
-
-</h2>
-
-<div class="badges">
-
-<div class="badge">
-
-<div class="badge-icon">
-
-🏆
-
-</div>
-
-<h4>
-
-Champion
-
-</h4>
-
-<p>
-
-Earned 500 XP
-
-</p>
-
-</div>
-
-<div class="badge">
-
-<div class="badge-icon">
-
-🔥
-
-</div>
-
-<h4>
-
-On Fire
-
-</h4>
-
-<p>
-
-10 Day Streak
-
-</p>
-
-</div>
-
-<div class="badge">
-
-<div class="badge-icon">
-
-🎮
-
-</div>
-
-<h4>
-
-Game Master
-
-</h4>
-
-<p>
-
-Won 20 games
-
-</p>
-
-</div>
-
-<div class="badge">
-
-<div class="badge-icon">
-
-🐼
-
-</div>
-
-<h4>
-
-Panda Scholar
-
-</h4>
-
-<p>
-
-Finished YCT 1
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- AI ASSISTANT -->
+<!-- AI -->
 
 <div class="ai-helper">
 
@@ -1525,100 +1017,119 @@ Finished YCT 1
 
 </div>
 
-<div class="ai-message"
-id="aiMessage">
+<div>
 
-You are close to Level 8 🚀
-
-</div>
+Your AI tutor is online 🚀
 
 </div>
 
-<footer>
-
-© Hanverse 2026
-
-</footer>
-
-<script>
-
-/* ════════════════════════════════════
-   PROFILE LOADING
-   ════════════════════════════════════ */
-
-(function loadProfile(){
-  const user = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
-  const users = JSON.parse(localStorage.getItem('hanverse_users') || '{}');
-  
-  // Update profile header
-  const profileName = document.querySelector('.profile-header h2');
-  const username = document.querySelector('.username');
-  const levelBadge = document.querySelector('.level-badge');
-  const xpFill = document.querySelector('.xp-fill');
-  const xpLabel = document.querySelector('.xp-label span:last-child');
-  
-  if (user.fullName && profileName) {
-    profileName.textContent = user.fullName;
-  }
-  if (user.username && username) {
-    username.textContent = '@' + user.username;
-  }
-  if (user.level && levelBadge) {
-    levelBadge.textContent = '⭐ Level ' + user.level + ' Scholar';
-  }
-  if (typeof user.xp === 'number') {
-    const nextLevelXp = (user.level || 1) * 100;
-    if (xpFill) xpFill.style.width = Math.min(100, (user.xp / nextLevelXp) * 100) + '%';
-    if (xpLabel) xpLabel.textContent = user.xp + ' / ' + nextLevelXp + ' XP';
-  }
-  
-  // Update stats
-  const stats = document.querySelectorAll('.p-stat h3');
-  if (stats.length >= 3) {
-    if (user.lessons) stats[0].textContent = user.lessons;
-    if (user.badges) stats[1].textContent = user.badges;
-    if (user.streak) stats[2].textContent = user.streak;
-  }
-})();
-
-/* AI MESSAGES */
-
-const aiMessages = [
-
-"You are close to Level 8 🚀",
-
-"Complete one lesson for +25 XP ⭐",
-
-"Your streak is still alive 🔥",
-
-"Try the Numbers lesson 🔢"
-
-];
-
-const aiMessage =
-document.getElementById("aiMessage");
-
-let aiIndex = 0;
-
-setInterval(()=>{
-
-aiIndex++;
-
-if(aiIndex >= aiMessages.length){
-
-aiIndex = 0;
-
-}
-
-aiMessage.innerHTML =
-aiMessages[aiIndex];
-
-},4000);
-
-</script>
+</div>
 
 <script src="notifications.js"></script>
-<script src="notifications-client.js"></script>
+<script>
+async function loadProfile() {
+  const localUser = JSON.parse(localStorage.getItem('hanverse_user') || 'null');
+  if (!localUser || !localUser.user_id) { window.location.href = 'login.html'; return; }
+
+  try {
+    const res  = await fetch(`/api/user/${localUser.user_id}`);
+    const data = await res.json();
+    if (!res.ok || !data.user) throw new Error(data.error || 'Failed');
+
+    const u = data.user;
+    const isAdmin = u.is_admin === true;
+
+    // Update localStorage with fresh DB data
+    localStorage.setItem('hanverse_user', JSON.stringify({ ...localUser, ...u, loggedIn: true }));
+
+    // Name & username
+    document.getElementById('name').textContent     = u.full_name || u.username || 'Learner';
+    document.getElementById('username').textContent = '@' + (u.username || '');
+
+    // Avatar
+    if (u.profile_picture) {
+      document.getElementById('avatar').innerHTML = `<img src="${u.profile_picture}" alt="avatar">`;
+    }
+
+    // Admin tag + max stats
+    if (isAdmin) {
+      document.getElementById('adminTag').style.display = 'inline-block';
+      document.getElementById('level').innerHTML   = '&#128081; MAX LEVEL &bull; ADMIN';
+      document.getElementById('xpText').textContent = '&#8734; MAX XP';
+      document.getElementById('xpFill').style.width = '100%';
+      document.getElementById('xpStat').textContent    = '&#8734;';
+      document.getElementById('levelStat').textContent = 'MAX';
+    } else {
+      document.getElementById('level').textContent    = '⭐ Level ' + u.level;
+      const xpForNext = u.level * 100;
+      document.getElementById('xpText').textContent   = u.xp + ' / ' + xpForNext + ' XP';
+      document.getElementById('xpFill').style.width   = Math.min((u.xp / xpForNext) * 100, 100) + '%';
+      document.getElementById('xpStat').textContent   = u.xp;
+      document.getElementById('levelStat').textContent = u.level;
+    }
+
+    document.getElementById('streakStat').textContent  = u.streak_days || 0;
+    document.getElementById('lessonsStat').textContent = (data.progress || []).length;
+
+    // Hero
+    document.getElementById('welcomeText').textContent = 'Welcome Back, ' + (u.full_name || u.username) + ' 👋';
+    document.getElementById('heroText').textContent    = isAdmin
+      ? '🛡️ You have full admin access. Max XP and Level unlocked.'
+      : 'You are Level ' + u.level + ' with ' + u.xp + ' XP. Keep going!';
+
+    // Recent lessons from progress
+    const lessonList = document.getElementById('lessonList');
+    const progress   = data.progress || [];
+    if (progress.length) {
+      const icons = ['icon1','icon2','icon3'];
+      lessonList.innerHTML = progress.slice(0, 5).map((p, i) => {
+        const title = (p.course_type || 'YCT') + ' ' + (p.course_level || 1) + ' — Lesson ' + (p.lesson_id || i+1);
+        const pct   = p.score || (p.completed ? 100 : 0);
+        return `<div class="lesson">
+          <div class="lesson-left">
+            <div class="lesson-icon ${icons[i % 3]}">📚</div>
+            <div>
+              <h4>${title}</h4>
+              <p>${pct}% complete</p>
+              <div class="progress"><div class="fill fill1" style="width:${pct}%"></div></div>
+            </div>
+          </div>
+          <div>⭐ ${p.score || 0} XP</div>
+        </div>`;
+      }).join('');
+    } else {
+      lessonList.innerHTML = '<p style="color:#888">No lessons completed yet. <a href="learn.html">Start learning!</a></p>';
+    }
+
+    // Notifications toast
+    const unread = (data.notifications || []).filter(n => !n.is_read).length;
+    if (unread > 0) Notify.toast(`You have ${unread} unread notification${unread > 1 ? 's' : ''} 🔔`, 'info', 3500);
+    if (isAdmin) setTimeout(() => { Notify.toast('Admin access active 🛡️', 'star', 3000); Notify.miniConfetti(); }, 800);
+
+  } catch (err) {
+    console.error(err);
+    Notify.toast('Could not load profile from DB — showing cached data', 'warn', 4000);
+    // Fallback to localStorage
+    const u = localUser;
+    document.getElementById('name').textContent      = u.fullName || u.username || 'Learner';
+    document.getElementById('username').textContent  = '@' + (u.username || '');
+    document.getElementById('level').textContent     = '⭐ Level ' + (u.level || 1);
+    document.getElementById('xpStat').textContent    = u.xp || 0;
+    document.getElementById('levelStat').textContent = u.level || 1;
+    document.getElementById('streakStat').textContent = u.streak || 0;
+    document.getElementById('xpText').textContent    = (u.xp || 0) + ' XP';
+    document.getElementById('xpFill').style.width    = Math.min(((u.xp||0) / ((u.level||1)*100))*100, 100) + '%';
+    document.getElementById('welcomeText').textContent = 'Welcome Back 👋';
+    document.getElementById('heroText').textContent   = 'Your profile is loading from cache.';
+    document.getElementById('lessonList').innerHTML   = '<p style="color:#888">No lessons data available.</p>';
+  }
+
+  setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 600);
+}
+
+loadProfile();
+</script>
 
 </body>
+
 </html>

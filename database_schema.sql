@@ -12,9 +12,13 @@ CREATE TABLE users (
     streak_days INTEGER DEFAULT 0,
     last_active DATE,
     profile_picture VARCHAR(255),
+    is_admin BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Run this on existing DB to add the column:
+-- ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT FALSE;
 
 CREATE INDEX idx_email ON users(email);
 CREATE INDEX idx_username ON users(username);

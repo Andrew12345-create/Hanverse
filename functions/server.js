@@ -58,9 +58,14 @@ exports.handler = async (event) => {
         pool.query('SELECT * FROM vocabulary_progress WHERE user_id=$1', [user.user_id]),
       ]);
 
+      // Admins get max XP and level
+      const isAdmin = user.is_admin === true;
+      const finalXp   = isAdmin ? 999999 : newXp;
+      const finalLevel = isAdmin ? 99 : newLevel;
+
       return json(200, {
         success: true,
-        user: { user_id: user.user_id, username: user.username, email: user.email, full_name: user.full_name, xp: newXp, level: newLevel, streak_days: newStreak, profile_picture: user.profile_picture, created_at: user.created_at },
+        user: { user_id: user.user_id, username: user.username, email: user.email, full_name: user.full_name, xp: finalXp, level: finalLevel, streak_days: newStreak, profile_picture: user.profile_picture, created_at: user.created_at, is_admin: isAdmin },
         progress: progress.rows,
         achievements: achievements.rows,
         notifications: notifications.rows,
@@ -107,7 +112,7 @@ exports.handler = async (event) => {
       ]);
 
       return json(200, {
-        user: rows[0],
+        user: { ...rows[0], is_admin: rows[0].is_admin === true },
         progress: progress.rows,
         achievements: achievements.rows,
         notifications: notifications.rows,

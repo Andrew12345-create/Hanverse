@@ -1088,6 +1088,14 @@ Hanverse
 <button class="btn btn-main" onclick="window.location.href='signup.html'">Get Started</button>
 </div>
 
+<div class="nav-profile-section" id="navProfileSection" style="display:none;flex-direction:column;align-items:center;gap:2px;padding:2px 6px;border-radius:12px;cursor:pointer;" onclick="window.location.href='profile.html'">
+<div class="nav-avatar-ring" style="width:32px;height:32px;border-width:2px;">
+<img id="navAvatarImg" src="" alt="You" class="nav-avatar-img" style="display:none;">
+<span id="navAvatarFallback" class="nav-avatar-fallback"></span>
+</div>
+<span id="navProfileName" style="font-size:.65rem;font-weight:600;color:#444;"></span>
+</div>
+
 </nav>
 
 <!-- HERO -->
@@ -1554,6 +1562,32 @@ document.querySelectorAll('.lesson').forEach(l=>{
     Notify.showXP(10);
   });
 });
+
+/* ── nav profile section ── */
+(function(){
+  const loginBtn = document.querySelector('.btn-login');
+  const mainBtn = document.querySelector('.btn-main, .btn-secondary');
+  const sec = document.getElementById('navProfileSection');
+  const avatarImg = document.getElementById('navAvatarImg');
+  const avatarFallback = document.getElementById('navAvatarFallback');
+  const nameSpan = document.getElementById('navProfileName');
+  function getInitials(str){
+    return str ? str.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : 'U';
+  }
+  try {
+    const s = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
+    if (s.user_id) {
+      if (loginBtn) loginBtn.style.display = 'none';
+      if (mainBtn) mainBtn.style.display = 'none';
+      if (sec) sec.style.display = 'flex';
+      if (nameSpan) nameSpan.textContent = s.fullName || s.username || 'You';
+      if (avatarImg && s.avatar_url) { avatarImg.src = s.avatar_url; avatarImg.style.display = 'block'; }
+      else if (avatarFallback) avatarFallback.textContent = getInitials(s.fullName || s.username || '');
+    } else {
+      if (sec) sec.style.display = 'none';
+    }
+  } catch(e){}
+})();
 </script>
 
 </body>

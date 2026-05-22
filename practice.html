@@ -1,424 +1,1308 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice - Hanverse</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- SEO -->
-    <meta name="description" content="Practice your Mandarin with Hanverse. Vocabulary drills, pronunciation exercises, and writing practice to strengthen your Chinese skills.">
-    <meta name="keywords" content="Mandarin Chinese, YCT, Chinese language learning, kids Chinese, Chinese practice, vocabulary drills">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Hanverse">
+<meta charset="UTF-8">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Hanverse">
-    <meta property="og:url" content="https://hanverse.netlify.app/practice.html">
-    <meta property="og:title" content="Practice - Hanverse">
-    <meta property="og:description" content="Practice your Mandarin with Hanverse. Vocabulary drills, pronunciation exercises, and writing practice to strengthen your Chinese skills.">
-    <meta property="og:locale" content="en_US">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Practice - Hanverse">
-    <meta name="twitter:description" content="Practice your Mandarin with Hanverse. Vocabulary drills, pronunciation exercises, and writing practice to strengthen your Chinese skills.">
+<title>Hanverse Practice</title>
 
-    <!-- Canonical -->
-    <link rel="canonical" href="https://hanverse.netlify.app/practice.html">
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Hanverse",
-  "url": "https://hanverse.netlify.app",
-  "description": "Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and stories for young learners.",
-  "inLanguage": "en",
-  "applicationCategory": "EducationalApplication",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  }
+<style>
+
+/* ════════════════════════════════════
+   ROOT
+════════════════════════════════════ */
+
+:root{
+
+--bg:#FFF9F3;
+
+--orange:#FFB703;
+--red:#E63946;
+--blue:#4EA8DE;
+--green:#74C69D;
+--purple:#9B5DE5;
+
+--text:#1E293B;
+--muted:#64748B;
+
 }
+
+/* GLOBAL */
+
+*{
+
+margin:0;
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+background:var(--bg);
+
+color:var(--text);
+
+overflow-x:hidden;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+/* BACKGROUND */
+
+.grid{
+
+position:fixed;
+
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(0,0,0,.03) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(0,0,0,.03) 1px,
+transparent 1px
+);
+
+background-size:40px 40px;
+
+z-index:-2;
+
+}
+
+.blob{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(90px);
+
+opacity:.18;
+
+z-index:-1;
+
+animation:floatBlob 10s infinite ease-in-out;
+
+}
+
+.blob1{
+
+width:320px;
+height:320px;
+
+background:var(--blue);
+
+top:-120px;
+left:-100px;
+
+}
+
+.blob2{
+
+width:260px;
+height:260px;
+
+background:var(--purple);
+
+right:-80px;
+top:240px;
+
+animation-delay:2s;
+
+}
+
+.blob3{
+
+width:220px;
+height:220px;
+
+background:var(--orange);
+
+bottom:-60px;
+left:40%;
+
+animation-delay:4s;
+
+}
+
+/* NAVBAR */
+
+nav{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:24px 8%;
+
+}
+
+.logo{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+font-size:34px;
+font-weight:800;
+
+color:var(--orange);
+
+}
+
+.logo-icon{
+
+width:56px;
+height:56px;
+
+border-radius:20px;
+
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+box-shadow:
+0 12px 25px rgba(0,0,0,.06);
+
+}
+
+nav ul{
+
+display:flex;
+gap:34px;
+
+list-style:none;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#444;
+
+transition:.3s;
+
+}
+
+nav a:hover,
+nav a.active{
+
+color:var(--red);
+
+}
+
+/* HERO */
+
+.hero{
+
+padding:20px 8% 80px;
+
+display:grid;
+
+grid-template-columns:
+1fr 450px;
+
+gap:60px;
+
+align-items:center;
+
+}
+
+.hero-left{
+
+animation:slideUp .8s ease;
+
+}
+
+.badge{
+
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+background:white;
+
+padding:12px 18px;
+
+border-radius:40px;
+
+font-weight:600;
+
+margin-bottom:24px;
+
+box-shadow:
+0 12px 25px rgba(0,0,0,.06);
+
+}
+
+.hero h1{
+
+font-size:78px;
+
+line-height:.95;
+
+margin-bottom:26px;
+
+}
+
+.hero h1 span{
+
+background:
+linear-gradient(
+90deg,
+var(--blue),
+var(--purple)
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+#typing-text{
+
+font-size:20px;
+
+line-height:1.9;
+
+max-width:650px;
+
+min-height:90px;
+
+margin-bottom:34px;
+
+color:var(--muted);
+
+font-weight:500;
+
+}
+
+#typing-text::after{
+
+content:"|";
+
+margin-left:4px;
+
+animation:blink .7s infinite;
+
+color:var(--red);
+
+}
+
+/* PRACTICE CONSOLE */
+
+.console{
+
+background:white;
+
+padding:28px;
+
+border-radius:40px;
+
+box-shadow:
+0 30px 70px rgba(0,0,0,.08);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.console-top{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:24px;
+
+}
+
+.console-title{
+
+font-size:24px;
+font-weight:700;
+
+}
+
+.console-xp{
+
+background:var(--orange);
+
+padding:10px 16px;
+
+border-radius:30px;
+
+font-size:14px;
+font-weight:700;
+
+color:white;
+
+}
+
+.practice-box{
+
+background:
+linear-gradient(
+135deg,
+#0F172A,
+#1E293B
+);
+
+padding:34px;
+
+border-radius:30px;
+
+color:white;
+
+position:relative;
+
+overflow:hidden;
+
+margin-bottom:22px;
+
+}
+
+.practice-box h3{
+
+font-size:34px;
+
+margin-bottom:16px;
+
+}
+
+.practice-box p{
+
+line-height:1.8;
+
+max-width:280px;
+
+color:#CBD5E1;
+
+}
+
+.panda{
+
+position:absolute;
+
+right:20px;
+bottom:10px;
+
+font-size:90px;
+
+animation:bounce 2s infinite;
+
+}
+
+/* PRACTICE TYPES */
+
+.practice-grid{
+
+padding:0 8% 100px;
+
+}
+
+.section-title{
+
+font-size:48px;
+
+margin-bottom:40px;
+
+}
+
+.grid-cards{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:28px;
+
+}
+
+.card{
+
+background:white;
+
+padding:30px;
+
+border-radius:36px;
+
+box-shadow:
+0 14px 35px rgba(0,0,0,.06);
+
+transition:.35s;
+
+cursor:pointer;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.card:hover{
+
+transform:
+translateY(-10px)
+rotate(1deg);
+
+}
+
+.card-icon{
+
+width:76px;
+height:76px;
+
+border-radius:26px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:36px;
+
+color:white;
+
+margin-bottom:24px;
+
+}
+
+.icon1{background:var(--green);}
+.icon2{background:var(--purple);}
+.icon3{background:var(--orange);}
+.icon4{background:var(--blue);}
+
+.card h3{
+
+font-size:28px;
+
+margin-bottom:14px;
+
+}
+
+.card p{
+
+line-height:1.8;
+
+color:var(--muted);
+
+margin-bottom:24px;
+
+}
+
+.card-bottom{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+font-weight:600;
+
+}
+
+.start{
+
+display:flex;
+align-items:center;
+gap:8px;
+
+color:var(--red);
+
+}
+
+/* LIVE PRACTICE */
+
+.live{
+
+padding:0 8% 100px;
+
+}
+
+.live-box{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#B388FF
+);
+
+padding:50px;
+
+border-radius:42px;
+
+color:white;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.live-box h2{
+
+font-size:54px;
+
+margin-bottom:20px;
+
+}
+
+.live-box p{
+
+max-width:700px;
+
+line-height:1.9;
+
+margin-bottom:34px;
+
+opacity:.95;
+
+}
+
+.live-circle{
+
+position:absolute;
+
+width:240px;
+height:240px;
+
+border-radius:50%;
+
+background:
+rgba(255,255,255,.12);
+
+top:-80px;
+right:-60px;
+
+}
+
+/* BUTTON */
+
+.btn{
+
+padding:16px 28px;
+
+border:none;
+
+border-radius:40px;
+
+cursor:pointer;
+
+font-weight:700;
+
+font-size:15px;
+
+transition:.35s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+
+}
+
+.btn-main{
+
+background:white;
+
+color:#333;
+
+}
+
+/* AI */
+
+.ai-helper{
+
+position:fixed;
+
+bottom:24px;
+right:24px;
+
+background:white;
+
+padding:14px 18px;
+
+border-radius:26px;
+
+display:flex;
+gap:14px;
+
+max-width:340px;
+
+box-shadow:
+0 18px 40px rgba(0,0,0,.14);
+
+z-index:9999;
+
+animation:bubbleFloat 3s infinite;
+
+}
+
+.ai-avatar{
+
+width:54px;
+height:54px;
+
+border-radius:18px;
+
+background:var(--blue);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+color:white;
+
+flex-shrink:0;
+
+}
+
+.ai-message{
+
+font-size:14px;
+
+line-height:1.7;
+
+font-weight:600;
+
+color:#444;
+
+}
+
+/* FOOTER */
+
+footer{
+
+padding:50px;
+
+text-align:center;
+
+color:#777;
+
+}
+
+/* ANIMATIONS */
+
+@keyframes floatBlob{
+
+50%{
+
+transform:
+translateY(-30px)
+translateX(20px);
+
+}
+
+}
+
+@keyframes slideUp{
+
+from{
+
+opacity:0;
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+@keyframes blink{
+
+50%{
+
+opacity:0;
+
+}
+
+}
+
+@keyframes bounce{
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+}
+
+@keyframes bubbleFloat{
+
+50%{
+
+transform:translateY(-5px);
+
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+
+nav ul{
+
+display:none;
+
+}
+
+.hero{
+
+grid-template-columns:1fr;
+
+padding:20px 6% 80px;
+
+}
+
+.hero-left{
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-size:56px;
+
+}
+
+.practice-grid,
+.live{
+
+padding-left:6%;
+padding-right:6%;
+
+}
+
+.live-box h2{
+
+font-size:40px;
+
+}
+
+.ai-helper{
+
+left:14px;
+right:14px;
+
+max-width:none;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+
+<div class="grid"></div>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<!-- NAV -->
+
+<nav>
+
+<div class="logo">
+
+<div class="logo-icon">
+
+🐼
+
+</div>
+
+Hanverse
+
+</div>
+
+<ul>
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="learn.html">
+Learn
+</a>
+</li>
+
+<li>
+<a
+href="practice.html"
+class="active">
+Practice
+</a>
+</li>
+
+<li>
+<a href="games.html">
+Games
+</a>
+</li>
+
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-left">
+
+<div class="badge">
+
+⚡ Smart Mandarin Practice
+
+</div>
+
+<h1>
+
+Practice Makes
+
+<span>
+
+Fluent
+
+</span>
+
+</h1>
+
+<p id="typing-text"></p>
+
+</div>
+
+<div class="console">
+
+<div class="console-top">
+
+<div class="console-title">
+
+Practice Arena
+
+</div>
+
+<div class="console-xp">
+
+⭐ +40 XP
+
+</div>
+
+</div>
+
+<div class="practice-box">
+
+<h3>
+
+Daily Challenge 🎯
+
+</h3>
+
+<p>
+
+Translate 5 Mandarin words correctly before time runs out.
+
+</p>
+
+<div class="panda">
+
+🐼
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PRACTICE TYPES -->
+
+<section class="practice-grid">
+
+<h2 class="section-title">
+
+Choose Practice Mode
+
+</h2>
+
+<div class="grid-cards">
+
+<div class="card">
+
+<div class="card-icon icon1">
+
+✍️
+
+</div>
+
+<h3>
+
+Writing Practice
+
+</h3>
+
+<p>
+
+Practice Chinese characters and improve stroke order accuracy.
+
+</p>
+
+<div class="card-bottom">
+
+<span>
+
+⭐ +80 XP
+
+</span>
+
+<div class="start">
+
+▶ Start
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon icon2">
+
+🎧
+
+</div>
+
+<h3>
+
+Listening Practice
+
+</h3>
+
+<p>
+
+Listen to Mandarin audio and identify the correct meaning.
+
+</p>
+
+<div class="card-bottom">
+
+<span>
+
+⭐ +70 XP
+
+</span>
+
+<div class="start">
+
+▶ Start
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon icon3">
+
+🗣️
+
+</div>
+
+<h3>
+
+Speaking Practice
+
+</h3>
+
+<p>
+
+Train pronunciation and improve speaking confidence.
+
+</p>
+
+<div class="card-bottom">
+
+<span>
+
+⭐ +120 XP
+
+</span>
+
+<div class="start">
+
+▶ Start
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon icon4">
+
+🧠
+
+</div>
+
+<h3>
+
+Vocabulary Drill
+
+</h3>
+
+<p>
+
+Memorize Mandarin words through rapid interactive challenges.
+
+</p>
+
+<div class="card-bottom">
+
+<span>
+
+⭐ +90 XP
+
+</span>
+
+<div class="start">
+
+▶ Start
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- LIVE -->
+
+<section class="live">
+
+<div class="live-box">
+
+<div class="live-circle"></div>
+
+<h2>
+
+Train Daily. Improve Faster. 🚀
+
+</h2>
+
+<p>
+
+Build fluency through daily Mandarin practice sessions powered by AI,
+interactive challenges and instant feedback.
+
+</p>
+
+<button class="btn btn-main">
+
+Start Practicing
+
+</button>
+
+</div>
+
+</section>
+
+<!-- AI -->
+
+<div class="ai-helper">
+
+<div class="ai-avatar">
+
+🤖
+
+</div>
+
+<div class="ai-message"
+id="aiMessage">
+
+Try Vocabulary Drill 🧠
+
+</div>
+
+</div>
+
+<footer>
+
+© Hanverse 2026
+
+</footer>
+
+<script>
+
+/* TYPING */
+
+const phrases = [
+
+"Improve Mandarin with interactive daily practice.",
+
+"Train listening, speaking and writing skills.",
+
+"Earn XP while mastering Chinese vocabulary.",
+
+"Build fluency through smart AI powered exercises."
+
+];
+
+const typingText =
+document.getElementById("typing-text");
+
+let phraseIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function typeEffect(){
+
+const current =
+phrases[phraseIndex];
+
+if(!deleting){
+
+typingText.innerHTML =
+current.substring(0,charIndex);
+
+charIndex++;
+
+if(charIndex >
+current.length){
+
+deleting = true;
+
+setTimeout(typeEffect,1500);
+
+return;
+
+}
+
+}else{
+
+typingText.innerHTML =
+current.substring(0,charIndex);
+
+charIndex--;
+
+if(charIndex < 0){
+
+deleting = false;
+
+phraseIndex++;
+
+if(phraseIndex >= phrases.length){
+
+phraseIndex = 0;
+
+}
+
+}
+
+}
+
+setTimeout(typeEffect,deleting ? 35 : 55);
+
+}
+
+typeEffect();
+
+/* AI */
+
+const aiMessages = [
+
+"Try Vocabulary Drill 🧠",
+
+"Listening Practice improves tones 🎧",
+
+"Practice daily for more XP ⭐",
+
+"Speaking Practice boosts pronunciation 🗣️"
+
+];
+
+const aiMessage =
+document.getElementById("aiMessage");
+
+let aiIndex = 0;
+
+setInterval(()=>{
+
+aiIndex++;
+
+if(aiIndex >= aiMessages.length){
+
+aiIndex = 0;
+
+}
+
+aiMessage.innerHTML =
+aiMessages[aiIndex];
+
+},4000);
+
 </script>
 
-    <script src="notifications.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #F4D35E;
-            --primary-light: #FF6B6B;
-            --background: #FAFBFC;
-            --surface: #FFFFFF;
-            --text-primary: #1A1A2E;
-            --text-secondary: #6B7280;
-            --border: #E5E7EB;
-            --radius-lg: 24px;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background);
-            min-height: 100vh;
-            min-height: 100dvh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .app-container {
-            max-width: 430px;
-            margin: 0 auto;
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: var(--surface);
-        }
-        .app-header {
-            background: rgba(255, 255, 255, 0.95);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            padding: 1rem 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .app-logo {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.25rem;
-            color: white;
-        }
-        .app-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-        .main-content {
-            padding: 1.25rem;
-            padding-bottom: 110px;
-            padding-bottom: max(110px, env(safe-area-inset-bottom));
-        }
-        .stats-banner {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 20px;
-            padding: 1.5rem;
-            color: white;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .stats-banner h2 {
-            font-size: 2rem;
-            margin-bottom: 0.25rem;
-        }
-        .stats-banner p {
-            opacity: 0.9;
-            font-size: 0.875rem;
-        }
-        .practice-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border: 2px solid var(--border);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .practice-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-        .practice-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .practice-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .practice-desc {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 430px;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 0.75rem 1rem;
-            padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-            z-index: 100;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text-secondary);
-            min-width: 60px;
-            -webkit-tap-highlight-color: transparent;
-        }
+</body>
 
-        .nav-item:active {
-            transform: scale(0.98);
-        }
-        .nav-item.active {
-            color: var(--primary);
-        }
-        .nav-item.active .nav-icon {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-        }
-        .nav-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            background: var(--background);
-        }
-        .nav-label {
-            font-size: 0.6875rem;
-            font-weight: 500;
-        }
-
-        /* Nav/auth buttons (logged out) */
-        .btn-login,
-        .btn-signup {
-            padding: 7px 16px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: .78rem;
-            transition: transform .2s, box-shadow .2s;
-            text-decoration: none;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        .btn-login {
-            background: var(--primary);
-            color: white;
-        }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(244,211,94,.3);
-        }
-        .btn-signup {
-            background: var(--primary-light);
-            color: white;
-        }
-        .btn-signup:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255,107,107,.3);
-        }
-    </style>
-</head>
-<body>
-    <div class="app-container">
-        <header class="app-header">
-            <div class="app-logo">汉</div>
-            <div class="app-title" style="display:flex;flex-direction:column;align-items:center;gap:3px;margin:0;flex:1;">
-                <span style="font-size:.95rem;font-weight:600;" id="navProfileName">Practice</span>
-            </div>
-
-            <!-- Logged-out: Login/Signup buttons -->
-            <a href="login.html" class="btn-login btn-nav-auth2" id="navLoginBtn" style="display:none;">Log In</a>
-            <a href="signup.html" class="btn-signup btn-nav-auth2" id="navSignupBtn" style="display:none;">Sign Up</a>
-
-            <!-- Logged-in: PFP + name -->
-            <div class="nav-profile-section" id="navProfileSection2" style="display:none;flex-direction:column;align-items:center;gap:2px;padding:2px 6px;border-radius:12px;cursor:pointer;text-decoration:none;" onclick="
-  try {
-    var s = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
-    if (s.user_id) { window.location.href = 'profile.html'; }
-    else { window.location.href = 'login.html'; }
-  } catch(e) { window.location.href = 'login.html'; }
-">
-                <div class="nav-avatar-ring" style="width:32px;height:32px;border-width:2px;font-size:.9rem;">
-                    <img id="navAvatarImg2" src="" alt="You" class="nav-avatar-img" style="display:none;">
-                    <span id="navAvatarFallback2" class="nav-avatar-fallback"></span>
-                </div>
-                <span id="navProfileName2" style="font-size:.65rem;font-weight:600;color:#444;white-space:nowrap;"></span>
-            </div>
-        </header>
-        <main class="main-content">
-            <div class="stats-banner">
-                <h2>156</h2>
-                <p>Words Practiced This Week</p>
-            </div>
-            <div class="practice-card">
-                <div class="practice-icon" style="background: linear-gradient(135deg, #FFE5E5 0%, #FFCDD2 100%);">📝</div>
-                <h3 class="practice-title">Flashcards</h3>
-                <p class="practice-desc">Review vocabulary with interactive flashcards</p>
-            </div>
-            <div class="practice-card">
-                <div class="practice-icon" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);">🎮</div>
-                <h3 class="practice-title">Quiz Mode</h3>
-                <p class="practice-desc">Test your knowledge with timed quizzes</p>
-            </div>
-            <div class="practice-card">
-                <div class="practice-icon" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);">✍️</div>
-                <h3 class="practice-title">Writing Practice</h3>
-                <p class="practice-desc">Practice writing Chinese characters</p>
-            </div>
-            <div class="practice-card">
-                <div class="practice-icon" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);">🗣️</div>
-                <h3 class="practice-title">Speaking Practice</h3>
-                <p class="practice-desc">Improve pronunciation with voice recognition</p>
-            </div>
-        </main>
-        <nav class="bottom-nav">
-            <a href="index.html" class="nav-item">
-                <div class="nav-icon">🏠</div>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="learn.html" class="nav-item">
-                <div class="nav-icon">📚</div>
-                <span class="nav-label">Learn</span>
-            </a>
-            <a href="practice.html" class="nav-item active">
-                <div class="nav-icon">🎯</div>
-                <span class="nav-label">Practice</span>
-            </a>
-            <a href="worksheets.html" class="nav-item">
-                <div class="nav-icon">📄</div>
-                <span class="nav-label">Worksheets</span>
-            </a>
-            <a href="parents.html" class="nav-item">
-                <div class="nav-icon">👨‍👩‍👧</div>
-                <span class="nav-label">Parents</span>
-            </a>
-            <a href="profile.html" class="nav-item">
-                <div class="nav-icon">👤</div>
-                <span class="nav-label">Profile</span>
-            </a>
-        </nav>
-    </div>
-
-    <!-- ── Notifications ── -->
-    <script src="notifications.js"></script>
-    <script>
-    /* ── Practice card click ── */
-    const cardMessages = {
-      'Flashcards':    {msg:'Great practice session! +20 XP', emoji:'📝'},
-      'Quiz Mode':     {msg:'Quiz unlocked! Test your skills!', emoji:'🎮'},
-      'Writing Practice': {msg:'Practice mode ready!', emoji:'✍️'},
-      'Speaking Practice': {msg:'Let\'s get speaking!', emoji:'🗣️'},
-    };
-
-    document.querySelectorAll('.practice-card').forEach(card=>{
-      card.addEventListener('click', function(e){
-        const titleEl = this.querySelector('.practice-title');
-        const title   = titleEl ? titleEl.textContent : '';
-        const info    = cardMessages[title] || {msg:'Practice mode coming soon!','xp':10,emoji:'🎯'};
-
-        /* ripple */
-        const rect = this.getBoundingClientRect();
-        const r = document.createElement('div');
-        r.className = 'n-ripple-container';
-        const ring = document.createElement('div');
-        ring.className = 'n-ripple';
-        ring.style.cssText = `width:30px;height:30px;
-          left:${e.clientX-rect.left-15}px;
-          top:${e.clientY-rect.top-15}px;
-          background:rgba(78,168,222,.35);`;
-        this.style.position='relative';
-        this.style.overflow='hidden';
-        this.appendChild(r);
-        r.appendChild(ring);
-        setTimeout(()=>r.remove(),700);
-
-        Notify.toast(info.msg,'xp',2800);
-        Notify.showXP(info.xp || 10);
-        Notify.miniConfetti();
-      });
-    });
-
-    /* ── Hover sparkle ── */
-    document.querySelectorAll('.practice-card').forEach(card=>{
-      card.addEventListener('mouseenter',()=>{
-        Notify.badgePulse(card.querySelector('.practice-icon'));
-      });
-    });
-
-    /* ── Bottom nav item ── */
-    document.querySelectorAll('.nav-item').forEach(item=>{
-      item.addEventListener('click',function(){
-        Notify.toast('Navigating... ✨','info',1500);
-      });
-    });
-
-    /* ── Stats banner ── */
-    setTimeout(()=>{
-      Notify.toast('You\'ve practiced 156 words this week! 🎯','xp',3500);
-      Notify.miniConfetti();
-    },1200);
-
-    /* ── Navbar: show login/signup or profile pic + username ── */
-    (function fillPracticeNav(){
-      try {
-        var s = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
-        var isLoggedIn = !!s.user_id;
-
-        var loginBtn = document.getElementById('navLoginBtn');
-        var signBtn  = document.getElementById('navSignupBtn');
-        var sec      = document.getElementById('navProfileSection2');
-
-        if (isLoggedIn) {
-          /* logged in → show profile, hide login/signup */
-          if (loginBtn) loginBtn.style.display = 'none';
-          if (signBtn)  signBtn.style.display  = 'none';
-          if (sec) {
-            sec.style.display = 'flex';
-            var img  = document.getElementById('navAvatarImg2');
-            var fb   = document.getElementById('navAvatarFallback2');
-            var name = document.getElementById('navProfileName2');
-            if (s.profile_picture) {
-              if (img) { img.src = s.profile_picture; img.style.display = 'block'; }
-              if (fb)  { fb.style.display = 'none'; }
-            } else {
-              if (img) { img.style.display = 'none'; }
-              if (fb)  { fb.style.display = ''; }
-            }
-            if (name) name.textContent = s.fullName || s.username || 'You';
-          }
-        } else {
-          /* logged out → show login/signup, hide profile */
-          if (loginBtn) loginBtn.style.display = '';
-          if (signBtn)  signBtn.style.display  = '';
-          if (sec)      sec.style.display       = 'none';
-        }
-      } catch(e) {}
-    })();
-
-    </script>
-
-    <script src="notifications-client.js"></script>
-    </body>
 </html>
