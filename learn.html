@@ -182,6 +182,50 @@ gap:10px;
 }
 
 
+/* NAV PROFILE */
+
+.nav-profile-section{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:3px;
+cursor:pointer;
+text-decoration:none;
+padding:4px 8px;
+border-radius:14px;
+transition:background .2s;
+
+}
+
+.nav-profile-section:hover{background:#f5f5f5;}
+
+.nav-avatar-ring{
+
+width:38px;height:38px;
+border-radius:50%;
+overflow:hidden;
+border:2.5px solid var(--yellow);
+display:flex;align-items:center;justify-content:center;
+background:white;
+flex-shrink:0;
+
+}
+
+.nav-avatar-img{width:100%;height:100%;object-fit:cover;}
+
+.nav-avatar-fallback{font-size:1.1rem;}
+
+.nav-profile-name{
+
+font-size:.75rem;
+font-weight:600;
+color:#444;
+white-space:nowrap;
+
+}
+
+
 .btn{
 
 padding:13px 24px;
@@ -698,27 +742,12 @@ Parents
 
 
 
-<div class="nav-buttons" id="navButtons">
-
-
-<button class="btn btn-secondary" id="btnLogin" onclick="location.href='login.html'" style="display:none;">
-
-Log In
-
-</button>
-
-<button class="btn btn-main" id="btnSignup" onclick="location.href='signup.html'" style="display:none;">
-
-Sign Up
-
-</button>
-
-<button class="btn btn-main" id="btnLoggedIn" onclick="logout()" style="display:none;">
-
-<span id="navLoggedInLabel">Logged in</span>
-
-</button>
-
+<div class="nav-profile-section" id="navProfileSection" style="display:none;">
+  <div class="nav-avatar-ring">
+    <img id="navAvatarImg" src="" alt="You" class="nav-avatar-img" style="display:none;">
+    <span id="navAvatarFallback" class="nav-avatar-fallback">😊</span>
+  </div>
+  <div class="nav-profile-name" id="navProfileName">—</div>
 </div>
 
 </nav>
@@ -1168,21 +1197,26 @@ async function loadUserCourses(userId) {
   const userId = user.user_id || user.userId;
   const isLoggedIn = !!userId;
 
-  /* nav buttons */
-  const btnLogin   = document.getElementById('btnLogin');
-  const btnSignup  = document.getElementById('btnSignup');
-  const btnLoggedIn = document.getElementById('btnLoggedIn');
-  const label = document.getElementById('navLoggedInLabel');
+  /* nav profile section */
+  const navProfileSection = document.getElementById('navProfileSection');
+  if (navProfileSection) {
+    if (isLoggedIn) {
+      navProfileSection.style.display = 'flex';
+      const imgEl  = document.getElementById('navAvatarImg');
+      const fbEl   = document.getElementById('navAvatarFallback');
+      const nameEl = document.getElementById('navProfileName');
 
-  if (isLoggedIn) {
-    btnLogin.style.display   = 'none';
-    btnSignup.style.display  = 'none';
-    btnLoggedIn.style.display = 'inline-block';
-    if (label) label.textContent = `Logged in — ${user.full_name || user.username || 'Learner'}`;
-  } else {
-    btnLogin.style.display   = 'inline-block';
-    btnSignup.style.display  = 'inline-block';
-    btnLoggedIn.style.display = 'none';
+      if (user.profile_picture) {
+        if (imgEl) { imgEl.src = user.profile_picture; imgEl.style.display = ''; }
+        if (fbEl)  { fbEl.style.display = 'none'; }
+      } else {
+        if (imgEl) { imgEl.style.display = 'none'; }
+        if (fbEl)  { fbEl.style.display = ''; }
+      }
+      if (nameEl) nameEl.textContent = user.full_name || user.username || 'You';
+    } else {
+      navProfileSection.style.display = 'none';
+    }
   }
 
   /* hide sign-up CTA when logged in */

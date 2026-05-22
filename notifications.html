@@ -165,7 +165,16 @@
         <header class="app-header">
             <button class="back-btn" onclick="window.location.href='index.html'">←</button>
             <h1 class="header-title">Notifications</h1>
-            <button class="mark-all-btn" onclick="markAllRead()">Mark all read</button>
+            <button class="mark-all-btn" onclick="markAllRead()" style="margin-right:auto;"></button>
+            <div class="nav-profile-section" id="navProfileSectionNotif" style="display:none;flex-direction:column;align-items:center;gap:2px;padding:2px 6px;border-radius:12px;cursor:pointer;text-decoration:none;" onclick="
+  try { var s=JSON.parse(localStorage.getItem('hanverse_user')||'{}'); window.location.href=s.user_id?'profile.html':'login.html'; } catch(e){ window.location.href='login.html'; }
+">
+                <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;background:white;flex-shrink:0;">
+                    <img id="navAvatarImgNotif" src="" style="display:none;width:100%;height:100%;object-fit:cover;" alt="You">
+                    <span id="navAvatarFallbackNotif">😊</span>
+                </div>
+                <span id="navProfileNameNotif" style="font-size:.65rem;font-weight:600;color:#444;white-space:nowrap;"></span>
+            </div>
         </header>
         <main class="main-content" id="notificationsList">
             <div class="notification-card unread">
@@ -208,6 +217,28 @@
                 card.classList.remove('unread');
             });
         }
+
+        /* ── Navbar: show profile pic + username when logged in ── */
+        (function fillNotifNav(){
+          try {
+            var s = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
+            if (!s.user_id) return;
+            var sec = document.getElementById('navProfileSectionNotif');
+            if (!sec) return;
+            sec.style.display = 'flex';
+            var img  = document.getElementById('navAvatarImgNotif');
+            var fb   = document.getElementById('navAvatarFallbackNotif');
+            var name = document.getElementById('navProfileNameNotif');
+            if (s.profile_picture) {
+              if (img) { img.src = s.profile_picture; img.style.display = 'block'; }
+              if (fb)  { fb.style.display = 'none'; }
+            } else {
+              if (img) { img.style.display = 'none'; }
+              if (fb)  { fb.style.display = ''; }
+            }
+            if (name) name.textContent = s.fullName || s.username || 'You';
+          } catch(e) {}
+        })();
     </script>
 </body>
 </html>

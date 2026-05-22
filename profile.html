@@ -552,6 +552,176 @@ border-radius:12px;
 
 
 
+/* NAV PROFILE (in navbar) */
+.nav-profile-section{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:3px;
+cursor:pointer;
+text-decoration:none;
+padding:4px 8px;
+border-radius:14px;
+transition:background .2s;
+
+}
+
+.nav-profile-section:hover{background:#f5f5f5;}
+
+.nav-avatar-ring{
+
+width:38px;height:38px;
+border-radius:50%;
+overflow:hidden;
+border:2.5px solid var(--yellow);
+display:flex;align-items:center;justify-content:center;
+background:white;
+flex-shrink:0;
+
+}
+
+.nav-avatar-img{width:100%;height:100%;object-fit:cover;}
+
+.nav-avatar-fallback{font-size:1.1rem;}
+
+.nav-profile-name{
+
+font-size:.75rem;
+font-weight:600;
+color:#444;
+white-space:nowrap;
+
+}
+
+/* PFP EDIT OVERLAY */
+.avatar-wrap{position:relative;display:inline-flex;}
+
+.pfp-edit-btn{
+
+position:absolute;
+bottom:2px;right:2px;
+width:30px;height:30px;
+border-radius:50%;
+background:var(--red);
+color:white;
+border:2px solid white;
+cursor:pointer;
+font-size:.85rem;
+display:flex;align-items:center;justify-content:center;
+box-shadow:0 2px 8px rgba(230,57,70,.35);
+transition:transform .2s;
+z-index:2;
+
+}
+
+.pfp-edit-btn:hover{transform:scale(1.15);}
+
+.pfp-save-bar{
+
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:12px;
+
+}
+
+.pfp-save-btn{
+
+padding:8px 20px;
+border:none;border-radius:20px;
+cursor:pointer;
+font-weight:600;
+font-size:.85rem;
+transition:.3s;
+
+}
+
+.pfp-save-btn.primary{background:var(--blue);color:white;}
+.pfp-save-btn.primary:hover{opacity:.9;}
+
+.pfp-save-btn.secondary{background:#eee;color:#555;cursor:not-allowed;opacity:.5;}
+
+.pfp-save-btn.danger{background:var(--red);color:white;}
+
+.pfp-cancel-btn{
+
+padding:8px 20px;
+border:1px solid var(--border);
+background:none;border-radius:20px;
+cursor:pointer;
+font-weight:600;
+font-size:.85rem;
+color:#888;
+transition:.2s;
+
+}
+
+.pfp-cancel-btn:hover{background:#f5f5f5;}
+
+#pfpFileInput{display:none;}
+
+.pfp-capture-labels{
+
+display:flex;
+gap:12px;
+margin-top:12px;
+
+}
+
+.pfp-camera-btn{
+
+flex:1;
+padding:12px;
+border:1px solid var(--border);
+border-radius:16px;
+cursor:pointer;
+background:white;
+text-align:center;
+font-size:.82rem;
+color:#555;
+font-weight:500;
+transition:.2s;
+
+}
+
+.pfp-camera-btn:hover{border-color:var(--blue);color:var(--blue);}
+
+.pfp-remove-row{
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+margin-top:10px;
+
+}
+
+.pfp-remove-link{
+
+background:none;
+border:none;
+color:var(--red);
+cursor:pointer;
+font-size:.82rem;
+font-weight:500;
+text-decoration:underline;
+
+}
+
+.pfp-remove-link:hover{opacity:.7;}
+
+.pfp-preview-img{
+
+width:110px;height:110px;
+border-radius:50%;
+object-fit:cover;
+display:block;
+border:3px solid var(--blue);
+
+}
+
+
 /* BOTTOM NAV */
 .bottom-nav{
 
@@ -628,7 +798,15 @@ nav ul{flex-wrap:wrap;justify-content:center;gap:16px;}
   <li><a href="profile.html" class="active">Profile</a></li>
 </ul>
 
-<button class="btn btn-main" onclick="logout()">Logout</button>
+<button class="btn btn-main" id="btnProfileLogout" onclick="logout()"></button>
+
+<div class="nav-profile-section" id="navProfileSection" style="display:none;">
+  <div class="nav-avatar-ring" id="navAvatarRing">
+    <img id="navAvatarImg" src="" alt="You" class="nav-avatar-img">
+    <span id="navAvatarFallback" class="nav-avatar-fallback">😊</span>
+  </div>
+  <span class="nav-profile-name" id="navProfileName">—</span>
+</div>
 
 </nav>
 
@@ -636,7 +814,41 @@ nav ul{flex-wrap:wrap;justify-content:center;gap:16px;}
 <!-- ═══ PROFILE HERO ═══ -->
 <section class="profile-hero" id="profileHero" style="display:none;">
 
-  <div class="avatar" id="avatar">😊</div>
+  <div style="display:flex;flex-direction:column;align-items:center;">
+
+    <div class="avatar-wrap">
+      <div class="avatar" id="avatar">😊</div>
+      <button class="pfp-edit-btn" id="pfpEditBtn" title="Change profile picture">📷</button>
+
+      <!-- preview (hidden until image selected) -->
+      <img id="pfpPreview" class="pfp-preview-img"
+           style="display:none;position:absolute;top:-70px;left:50%;transform:translateX(-50%);z-index:5;"
+           alt="Preview">
+
+      <input type="file" id="pfpFileInput" accept="image/*">
+
+    </div>
+
+    <!-- save / cancel bar (hidden) -->
+    <div class="pfp-save-bar" id="pfpSaveBar" style="display:none;">
+      <button class="pfp-save-btn primary"   id="pfpSaveBtn">Save Photo</button>
+      <button class="pfp-cancel-btn"         id="pfpCancelBtn">Cancel</button>
+      <span id="pfpStatus" style="font-size:.78rem;color:#888;"></span>
+    </div>
+
+    <div class="pfp-capture-labels" id="pfpCaptureLabels" style="display:none;">
+      <label class="pfp-camera-btn" for="pfpCameraInput">📸 Camera</label>
+      <label class="pfp-camera-btn" for="pfpGalleryInput">🖼️ Gallery</label>
+    </div>
+
+    <input type="file" id="pfpCameraInput" accept="image/*" capture="environment" style="display:none;">
+    <input type="file" id="pfpGalleryInput" accept="image/*" style="display:none;">
+
+    <div class="pfp-remove-row" id="pfpRemoveRow" style="display:none;">
+      <button class="pfp-remove-link" id="pfpRemoveBtn">Remove current picture</button>
+    </div>
+
+  </div>
 
   <div class="profile-info">
 
@@ -809,49 +1021,58 @@ async function loadFromDB(userId) {
 /* ─────────────── RENDER ╀ RENDER ╀ RENDER ─────────────── */
 function renderProfile(data) {
 
-  const user       = data.user || {};
-  const achievements = (data.achievements || []).slice(0, 10);
-  const notifications = (data.notifications || []).slice(0, 5);
-  const progress   = (data.progress || []);
+  var user          = data.user         || {};
+  var progress      = data.progress     || [];
+  var achievements  = (data.achievements || []).slice(0, 10);
+  var notifications = (data.notifications || []).slice(0, 5);
+
+  var vocabRows = data.vocabulary || (data.settings && data.settings.vocab_rows) || [];
 
   /* ── profile hero ── */
   document.getElementById('loadingHero').style.display = 'none';
-  const hero = document.getElementById('profileHero');
+  var hero = document.getElementById('profileHero');
   hero.style.display = 'flex';
 
-  document.getElementById('name').textContent      = user.full_name || user.username || 'Learner';
-  document.getElementById('avatar').textContent    = '🐼';
-  document.getElementById('levelNum').textContent  = user.level || 1;
+  document.getElementById('name').textContent     = user.full_name || user.username || 'Learner';
+
+  /* profile picture — use file URL / data URL if available, else emoji */
+  if (user.profile_picture) {
+    document.getElementById('avatar').innerHTML =
+      '<img src="' + user.profile_picture + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="You">';
+  } else {
+    document.getElementById('avatar').textContent = '🐼';
+  }
+  document.getElementById('levelNum').textContent = user.level || 1;
   document.getElementById('levelArrow').textContent = user.streak_days >= 7 ? ' 🔥' : '';
 
-  if (data.progress && data.progress.length > 0) {
+  if (progress.length > 0) {
     document.getElementById('tagline').textContent =
-      `${data.progress.length} YCT lessons started — keep going!`;
+      progress.length + ' YCT lessons started — keep going!';
   } else {
     document.getElementById('tagline').textContent = 'Start your Mandarin adventure today!';
   }
 
   /* ── stats ── */
   document.getElementById('statsGrid').style.display = 'grid';
-  document.getElementById('xp').textContent     = user.xp     || 0;
-  document.getElementById('streak').textContent = user.streak_days || 0;
-  document.getElementById('lessons').textContent = data.progress ? data.progress.length : 0;
-  document.getElementById('words').textContent   = user.words   || progress.reduce((s,p) => s + (p.words_count || 0), 0);
+  document.getElementById('xp').textContent     = user.xp            || 0;
+  document.getElementById('streak').textContent = user.streak_days   || 0;
+  document.getElementById('lessons').textContent = progress.length;
+  document.getElementById('words').textContent   = vocabRows.length;
 
   /* streak message */
-  const streakMsg = document.getElementById('streakMsg');
-  const sd = user.streak_days || 0;
-  streakMsg.textContent  = sd >= 7 ? '🔥 Hot streak!' : sd >= 3 ? '💪 Great streak!' : '';
-  streakMsg.style.color  = sd >= 7 ? 'var(--red)' : sd >= 3 ? 'var(--yellow)' : 'var(--green)';
+  var streakMsg = document.getElementById('streakMsg');
+  var sd = user.streak_days || 0;
+  streakMsg.textContent  = sd >= 7 ? '🔥 Hot streak!'           : sd >= 3 ? '💪 Great streak!'  :  '';
+  streakMsg.style.color  = sd >= 7 ? 'var(--red)'                : sd >= 3 ? 'var(--yellow)'      : 'var(--green)';
 
   /* ── YCT progress ── */
-  const totalWords = 80; // YCT 1 target
-  const wordsKnown = user.words || 0;
-  const pct = Math.min(100, Math.round((wordsKnown / totalWords) * 100));
+  var totalWords    = 80;
+  var wordsKnown    = vocabRows.length;
+  var pct           = Math.min(100, Math.round((wordsKnown / totalWords) * 100));
 
   document.getElementById('yctSection').style.display = 'block';
-  document.getElementById('yctLabel').textContent = `YCT 1 — ${wordsKnown}/${totalWords} words`;
-  document.getElementById('yctSub').textContent  = pct >= 100 ? 'YCT 1 Complete! 🎉' : `${100 - pct} more words to YCT 1!`;
+  document.getElementById('yctLabel').textContent      = 'YCT 1 — ' + wordsKnown + '/' + totalWords + ' words';
+  document.getElementById('yctSub').textContent        = pct >= 100 ? 'YCT 1 Complete! 🎉' : (100 - pct) + ' more words to YCT 1!';
   document.getElementById('ringText').textContent = pct + '%';
   document.getElementById('yctFill').style.width  = pct + '%';
 
@@ -873,19 +1094,22 @@ function renderProfile(data) {
   }
 
   /* ── recent activity ── */
-  if (data.progress && data.progress.length > 0) {
+  if (progress.length > 0) {
     document.getElementById('activitySection').style.display = 'block';
-    const list = document.getElementById('activityList');
-    const rows = data.progress.slice(0, 5).map((p, i) => {
-      const pts = p.points_earned || 0;
-      const pct2 = p.progress_pct || 0;
-      const title = p.lesson_title || p.lesson_name || `Lesson ${p.lesson_id || i+1}`;
-      const dot   = pts >= 90 ? 'green' : pts >= 50 ? 'blue' : 'red';
-      return `<div class="act-item">
-        <div class="act-dot ${dot}"></div>
-        <span class="act-text">Completed: ${title}</span>
-        <span class="act-time">${pct2}%</span>
-      </div>`;
+    var list = document.getElementById('activityList');
+    var rows = progress.slice(0, 5).map(function(p, i) {
+      var scr   = p.score || 0;
+      var done  = p.completed === true || p.completed === 't';
+      var cType = p.course_type || 'YCT';
+      var cLvl  = p.course_level || 1;
+      var lid   = p.lesson_id || i + 1;
+      var title = cType + ' ' + cLvl + ' — Lesson ' + lid;
+      var dot   = scr >= 90 ? 'green' : scr >= 50 ? 'blue' : 'red';
+      return '<div class="act-item">' +
+               '<div class="act-dot ' + dot + '"></div>' +
+               '<span class="act-text">' + (done ? 'Completed' : 'In progress') + ': ' + title + '</span>' +
+               '<span class="act-time">' + scr + '%</span>' +
+             '</div>';
     }).join('');
     list.innerHTML = rows || '<div class="act-item"><span class="act-text">No activity yet</span></div>';
   }
@@ -893,21 +1117,34 @@ function renderProfile(data) {
   /* ── notifications ── */
   if (notifications.length > 0) {
     document.getElementById('notifSection').style.display = 'block';
-    const nList = document.getElementById('notifList');
-    nList.innerHTML = notifications.map(n => {
-      const icon  = n.icon  || n.emoji  || '🔔';
-      const title = n.title || n.message || 'Notification';
-      const msg   = n.message || n.body   || '';
-      const time  = n.time_ago || n.created_at || '';
-      const isNew = !n.is_read;
-      return `<div class="notif-card ${isNew ? 'unread' : ''}" data-id="${n.notification_id || n.id || ''}">
-        <div class="notif-icon" style="background:linear-gradient(135deg,#FFFDF0,#F4D35E);">${icon}</div>
-        <div class="notif-body">
-          <div class="notif-title">${title}</div>
-          <div class="notif-msg">${msg}</div>
-          <div class="notif-time">${time}</div>
-        </div>
-      </div>`;
+    var nList = document.getElementById('notifList');
+    nList.innerHTML = notifications.map(function(n) {
+      var icon  = n.emoji || n.icon  || '🔔';
+      var title = n.title || n.message || 'Notification';
+      var msg   = n.message || n.body   || '';
+      var time  = n.created_at || '';
+      if (time) {
+        try {
+          var d = new Date(time);
+          if (!isNaN(d.getTime())) {
+            var now = new Date();
+            if (d.toDateString() === now.toDateString()) {
+              time = d.toLocaleTimeString('en', { timeZoneName: 'long' });
+            } else {
+              time = d.toLocaleString('en', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'long' });
+            }
+          }
+        } catch(e) {}
+      }
+      var isNew = (n.is_read === false || n.is_read === 'f');
+      return '<div class="notif-card ' + (isNew ? 'unread' : '') + '">' +
+               '<div class="notif-icon" style="background:linear-gradient(135deg,#FFFDF0,#F4D35E);">' + icon + '</div>' +
+               '<div class="notif-body">' +
+                 '<div class="notif-title">' + title + '</div>' +
+                 '<div class="notif-msg">' + msg + '</div>' +
+                 '<div class="notif-time">' + time + '</div>' +
+               '</div>' +
+             '</div>';
     }).join('');
   }
 
@@ -948,12 +1185,13 @@ function renderProfile(data) {
   }, 500);
 
   /* stat hover pulse */
-  document.querySelectorAll('.stat-card').forEach(c=>{
-    c.addEventListener('mouseenter',()=>{
-      const h2 = c.querySelector('h2');
-    if(h2){ h2.style.color='var(--blue)'; }
-    c.addEventListener('mouseleave',()=>{
-      const h2 = c.querySelector('h2');
+  document.querySelectorAll('.stat-card').forEach(function(c){
+    c.addEventListener('mouseenter',function(){
+      var h2=this.querySelector('h2');
+      if(h2){ h2.style.color='var(--blue)'; }
+    });
+    c.addEventListener('mouseleave',function(){
+      var h2=this.querySelector('h2');
       if(h2){ h2.style.color='var(--yellow)'; }
     });
   });
@@ -982,6 +1220,209 @@ function logout(){
     localStorage.removeItem(SESSION_KEY);
     window.location.href = 'login.html';
   },600);
+}
+
+/* ══════════════════════════════════════════
+   PROFILE PICTURE — edit / save / remove
+══════════════════════════════════════════ */
+const SESSION_KEY = 'hanverse_user';
+
+function getSession(){
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+/* fill hero avatar from session on fallback */
+(function applySessionPfp(){
+  var sess = getSession();
+  if (!sess.profile_picture) return;
+  var hero = document.getElementById('profileHero');
+  if (!hero) return;
+  var avatar = document.getElementById('avatar');
+  if (!avatar) return;
+  if (sess.profile_picture) {
+    avatar.innerHTML = '<img src="' + sess.profile_picture + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="You">';
+  }
+})();
+
+/* ── fill navbar profile on this page ── */
+(function buildNavProfile(){
+  var sess = getSession();
+  if (!sess.user_id) return;
+
+  var section = document.getElementById('navProfileSection');
+  var btnLogout = document.getElementById('btnProfileLogout');
+  if (!section) return;
+
+  /* on the profile page itself hide the nav profile section
+     — the hero section already shows the pfp prominently */
+  var onProfilePage = /profile\.html$/.test(window.location.pathname || '');
+  if (onProfilePage) {
+    section.style.display = 'none';
+    if (btnLogout) btnLogout.style.display = '';
+    return;
+  }
+
+  section.style.display = 'flex';
+  if (btnLogout) btnLogout.style.display = 'none';
+
+  var imgEl   = document.getElementById('navAvatarImg');
+  var fbEl    = document.getElementById('navAvatarFallback');
+  var nameEl  = document.getElementById('navProfileName');
+
+  if (sess.profile_picture) {
+    if (imgEl) { imgEl.src = sess.profile_picture; imgEl.style.display = ''; }
+    if (fbEl)  { fbEl.style.display = 'none'; }
+  } else {
+    if (imgEl) { imgEl.style.display = 'none'; }
+    if (fbEl)  { fbEl.style.display = ''; }
+  }
+  if (nameEl) nameEl.textContent = sess.fullName || sess.username || 'You';
+})();
+
+/* ── toolbar refs ── */
+var btnEdit    = document.getElementById('pfpEditBtn');
+var fileInput  = document.getElementById('pfpFileInput');
+var saveBar    = document.getElementById('pfpSaveBar');
+var saveBtn    = document.getElementById('pfpSaveBtn');
+var cancelBtn  = document.getElementById('pfpCancelBtn');
+var preview    = document.getElementById('pfpPreview');
+var camInput   = document.getElementById('pfpCameraInput');
+var galInput   = document.getElementById('pfpGalleryInput');
+var capLabels  = document.getElementById('pfpCaptureLabels');
+var removeRow  = document.getElementById('pfpRemoveRow');
+var removeBtn  = document.getElementById('pfpRemoveBtn');
+var pfpStatus  = document.getElementById('pfpStatus');
+
+/* ── show delete option if there's an existing pfp ── */
+(function checkExistingPfp(){
+  var existing = getSession();
+  if (existing.profile_picture && removeRow) {
+    removeRow.style.display = 'flex';
+  }
+})();
+
+btnEdit.addEventListener('click', () => {
+  var isOpen = saveBar.style.display !== 'none';
+  if (!isOpen) {
+    fileInput.click();
+  }
+});
+
+fileInput && fileInput.addEventListener('change', e => { handleFileSelect(e.target.files[0]); });
+camInput  && camInput.addEventListener('change',  e => { handleFileSelect(e.target.files[0]); });
+galInput  && galInput.addEventListener('change',  e => { handleFileSelect(e.target.files[0]); });
+
+
+function handleFileSelect(file){
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    Notify.toast('Please choose an image file 📷','error',3000);
+    return;
+  }
+
+  var reader = new FileReader();
+  reader.onload = function(ev){
+    /* show preview */
+    preview.src = ev.target.result;
+    preview.style.display = 'block';
+
+    /* swap camera/gallery labels for save/cancel */
+    saveBar.style.display  = 'flex';
+    capLabels.style.display = 'none';
+    removeRow.style.display = 'none';
+
+    /* save from data URL */
+    saveBtn.onclick = savePfpDataUrl;
+  };
+  reader.readAsDataURL(file);
+}
+
+function savePfpDataUrl(){
+  var dataUrl = preview.src;
+  if (!dataUrl) return;
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving…';
+  if (pfpStatus) pfpStatus.textContent = '';
+
+  var sess = getSession();
+  fetch('/api/upload-pfp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: sess.user_id, image: dataUrl })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d && d.error) throw new Error(d.error);
+
+    /* update hero avatar */
+    var avatar = document.getElementById('avatar');
+    avatar.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="You">';
+
+    /* update session */
+    sess.profile_picture = dataUrl;
+    localStorage.setItem(SESSION_KEY, JSON.stringify(sess));
+
+    /* update navbar avatar */
+    var imgEl  = document.getElementById('navAvatarImg');
+    var fbEl   = document.getElementById('navAvatarFallback');
+    if (imgEl) { imgEl.src = dataUrl; imgEl.style.display = ''; }
+    if (fbEl)  { fbEl.style.display = 'none'; }
+
+    Notify.toast('Profile picture updated! ✨','star',3000);
+
+    /* reset toolbar */
+    resetPfpToolbar();
+  })
+  .catch(err => {
+    pfpStatus.textContent = '⚠ ' + err.message;
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Save Photo';
+    Notify.toast('Could not save picture. Please try again.','error',4000);
+  });
+}
+
+removeBtn && removeBtn.addEventListener('click', () => {
+  var sess = getSession();
+  fetch('/api/remove-pfp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: sess.user_id })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d && d.error) throw new Error(d.error);
+
+    sess.profile_picture = null;
+    localStorage.setItem(SESSION_KEY, JSON.stringify(sess));
+
+    /* reset hero avatar to emoji */
+    var avatar = document.getElementById('avatar');
+    if (avatar) { avatar.textContent = '🐼'; removeRow.style.display = 'none'; }
+
+    /* reset nav avatar */
+    var imgEl = document.getElementById('navAvatarImg');
+    var fbEl  = document.getElementById('navAvatarFallback');
+    if (imgEl) { imgEl.style.display = 'none'; }
+    if (fbEl)  { fbEl.style.display = ''; }
+
+    Notify.toast('Profile picture removed','info',2500);
+  })
+  .catch(err => Notify.toast('Error: ' + err.message,'error',3000));
+});
+
+cancelBtn && cancelBtn.addEventListener('click', resetPfpToolbar);
+
+function resetPfpToolbar(){
+  fileInput.value = '';
+  preview.src = '';
+  preview.style.display = 'none';
+  saveBar.style.display = 'none';
+  capLabels.style.display = '';
+  if (pfpStatus) pfpStatus.textContent = '';
+  var sess = getSession();
+  removeRow.style.display = (sess.profile_picture) ? 'flex' : 'none';
 }
 
 </script>

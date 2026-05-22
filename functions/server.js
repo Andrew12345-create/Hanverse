@@ -469,7 +469,7 @@ module.exports.handler = async (event, context) => {
       const user = userResult.rows[0];
 
       const [progressResult, achievementsResult, notificationsResult, settingsResult, vocabResult] = await Promise.all([
-        pool.query('SELECT * FROM user_progress WHERE user_id = $1', [userId]),
+        pool.query('SELECT * FROM user_progress WHERE user_id = $1 ORDER BY completed_at DESC', [userId]),
         pool.query('SELECT * FROM achievements WHERE user_id = $1', [userId]),
         pool.query('SELECT * FROM notifications WHERE user_id = $1 ORDER BY created_at DESC LIMIT 20', [userId]),
         pool.query('SELECT * FROM user_settings WHERE user_id = $1', [userId]),

@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Hanverse</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
-    <!-- SEO -->
-    <meta name="description" content="Create a free Hanverse account. Start learning Mandarin Chinese with interactive lessons, games, and YCT certification courses.">
-    <meta name="keywords" content="Mandarin Chinese, YCT, Chinese language learning, kids Chinese, sign up, free Chinese lessons">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Hanverse">
+<title>Hanverse Sign Up</title>
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Hanverse">
-    <meta property="og:url" content="https://hanverse.netlify.app/signup.html">
-    <meta property="og:title" content="Sign Up - Hanverse">
-    <meta property="og:description" content="Create a free Hanverse account. Start learning Mandarin Chinese with interactive lessons, games, and YCT certification courses.">
-    <meta property="og:locale" content="en_US">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Sign Up - Hanverse">
-    <meta name="twitter:description" content="Create a free Hanverse account. Start learning Mandarin Chinese with interactive lessons, games, and YCT certification courses.">
+<!-- SEO -->
+<meta name="description" content="Create a free Hanverse account. Start learning Mandarin Chinese with interactive lessons, games, and YCT certification courses.">
+<meta name="keywords" content="Mandarin Chinese, YCT, Chinese language learning, kids Chinese, sign up, free Chinese lessons">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Hanverse">
 
-    <!-- Canonical -->
-    <link rel="canonical" href="https://hanverse.netlify.app/signup.html">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hanverse">
+<meta property="og:url" content="https://hanverse.netlify.app/signup.html">
+<meta property="og:title" content="Sign Up - Hanverse">
+<meta property="og:description" content="Create a free Hanverse account. Start learning Mandarin Chinese with interactive lessons, games, and YCT certification courses.">
+<meta property="og:locale" content="en_US">
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sign Up - Hanverse">
+<meta name="twitter:description" content="Create a free Hanverse account. Start learning Mandarin Chinese with interactive lessons, games, and YCT certification courses.">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://hanverse.netlify.app/signup.html">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Hanverse",
   "url": "https://hanverse.netlify.app",
-  "description": "Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and stories for young learners.",
+  "description": "Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and engaging stories designed for young learners.",
   "inLanguage": "en",
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Any",
@@ -43,202 +46,374 @@
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD"
-  }
-}
-</script>
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #F4D35E;
-            --primary-light: #FF6B6B;
-            --secondary: #1D3557;
-            --background: #FAFBFC;
-            --surface: #FFFFFF;
-            --text-primary: #1A1A2E;
-            --text-secondary: #6B7280;
-            --border: #E5E7EB;
-            --radius-lg: 24px;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1D3557 0%, #457B9D 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .signup-container {
-            max-width: 400px;
-            width: 90%;
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem 2rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        .logo-section {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Noto Serif SC', serif;
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            box-shadow: 0 8px 24px rgba(244,211,94, 0.4);
-        }
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-        label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-        input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.2s;
-        }
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(244,211,94, 0.1);
-        }
-        .btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 1rem;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(244,211,94, 0.4);
-        }
-        .btn:active {
-            transform: translateY(0);
-        }
-        .login-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-        .login-link a {
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-        }
-        .error-message {
-            background: #FFEBEE;
-            color: #C62828;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-            display: none;
-        }
-    </style>
+</script>
+<style>
+
+:root{
+--red:#E63946;
+--yellow:#F4D35E;
+--blue:#4EA8DE;
+--green:#74C69D;
+--bg:#FFFDF7;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+
+background:var(--bg);
+
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:25px;
+
+}
+
+.container{
+
+width:100%;
+max-width:1100px;
+
+background:white;
+
+border-radius:40px;
+
+overflow:hidden;
+
+display:flex;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.08);
+
+animation:fade .8s;
+
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+
+/* LEFT */
+
+.left{
+
+flex:1;
+
+background:
+linear-gradient(
+135deg,
+var(--blue),
+#7bc7f4
+);
+
+padding:60px;
+
+color:white;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+
+}
+
+.left h1{
+
+font-size:48px;
+
+margin:20px 0;
+
+}
+
+.left p{
+
+line-height:1.8;
+
+}
+
+.panda{
+
+font-size:120px;
+
+margin-top:30px;
+
+animation:float 4s infinite;
+
+}
+
+@keyframes float{
+
+50%{
+transform:translateY(-15px);
+}
+
+}
+
+
+/* RIGHT */
+
+.right{
+
+flex:1;
+
+padding:60px;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+
+}
+
+.logo{
+
+font-size:36px;
+
+font-weight:700;
+
+color:var(--red);
+
+margin-bottom:10px;
+
+}
+
+.subtitle{
+
+color:#777;
+
+margin-bottom:35px;
+
+}
+
+
+.input-group{
+
+margin-bottom:20px;
+
+}
+
+input{
+
+width:100%;
+
+padding:18px;
+
+border:none;
+
+border-radius:18px;
+
+background:#f4f4f4;
+
+font-size:16px;
+
+}
+
+input:focus{
+
+outline:2px solid var(--blue);
+
+}
+
+
+.btn{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:40px;
+
+cursor:pointer;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.signup{
+
+background:var(--red);
+
+color:white;
+
+}
+
+.signup:hover{
+
+transform:translateY(-3px);
+
+}
+
+
+.bottom{
+
+margin-top:25px;
+
+text-align:center;
+
+}
+
+.bottom a{
+
+color:var(--red);
+
+text-decoration:none;
+
+font-weight:600;
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.container{
+
+flex-direction:column;
+
+}
+
+.left,
+.right{
+
+padding:40px;
+
+text-align:center;
+
+}
+
+}
+
+</style>
+
 </head>
 <body>
-    <div class="signup-container">
-        <div class="logo-section">
-            <div class="logo">汉</div>
-            <h1>Create Account</h1>
-            <p class="subtitle">Start your Chinese learning journey</p>
-        </div>
-        <form id="signupForm">
-            <div class="error-message" id="errorMessage"></div>
-            <div class="form-group">
-                <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" placeholder="John Doe" required>
-            </div>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="johndoe" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="your@email.com" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="••••••••" required>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="btn">Create Account</button>
-        </form>
-        <div class="login-link">
-            Already have an account? <a href="login.html">Sign in</a>
-        </div>
+
+<div class="container">
+
+  <!-- LEFT PANEL -->
+  <div class="left">
+    <div class="tagline-pill"><span>✨</span> Mandarin Learning &amp; More</div>
+    <h1>Join<br>Hanverse</h1>
+    <p>Create your free account and start learning Mandarin through stories, games, and structured YCT lessons.</p>
+    <div class="panda-hero" id="pandaHero">🐼</div>
+  </div>
+
+  <!-- RIGHT PANEL — form -->
+  <div class="right">
+    <div class="logo">
+      <span class="logo-badge">🐼</span>
+      Hanverse
     </div>
+    <h2>Create Account</h2>
+    <p class="subtitle">Start your Chinese learning journey — it's free!</p>
+
+    <div class="err-bar" id="errorBar" role="alert"></div>
+
+    <form id="signupForm" novalidate>
+      <div class="f-row">
+        <div class="field">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="Jane Doe" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="jane_doe" autocomplete="username" required>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px;">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="jane@example.com" autocomplete="email" required>
+      </div>
+
+      <div class="f-row">
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="6+ characters" autocomplete="new-password" required>
+        </div>
+        <div class="field">
+          <label for="confirmPassword">Confirm</label>
+          <input type="password" id="confirmPassword" placeholder="Re-type" autocomplete="new-password" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-signup" id="signupBtn">Create Account</button>
+    </form>
+
+    <p class="already">Already have an account? <a href="login.html">Log in</a></p>
+
+  </div>
+
+</div>
+
     <script src="notifications.js"></script>
     <script>
-        const API_URL = '/api';
+        var SESSION_KEY = 'hanverse_user';
+        var API_URL = '/api';
+
+        function requireSession() {
+            var raw = localStorage.getItem(SESSION_KEY);
+            if (!raw) { window.location.href = 'login.html'; return null; }
+            try { return JSON.parse(raw); } catch { window.location.href = 'login.html'; return null; }
+        }
 
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            var fullName = document.getElementById('fullName').value.trim();
-            var username = document.getElementById('username').value.trim();
-            var email = document.getElementById('email').value.trim();
-            var password = document.getElementById('password').value;
+            var fullName        = document.getElementById('fullName').value.trim();
+            var username        = document.getElementById('username').value.trim();
+            var email           = document.getElementById('email').value.trim();
+            var password        = document.getElementById('password').value;
             var confirmPassword = document.getElementById('confirmPassword').value;
-            var errorMsg = document.getElementById('errorMessage');
-            var btn = document.querySelector('.btn');
+            var errorBar        = document.getElementById('errorBar');
+            var btn             = document.getElementById('signupBtn');
 
-            // Client-side validation with toast feedback
+            errorBar.className = 'err-bar';
+
             if (!fullName || !username || !email || !password || !confirmPassword) {
-                Notify.toast('Please fill in all fields', 'warn', 4000);
+                errorBar.textContent = 'Please fill in all fields.';
+                errorBar.className = 'err-bar show';
+                Notify.toast('Please fill in all fields.', 'warn', 4000);
                 return;
             }
-
             if (password.length < 6) {
-                Notify.toast('Password must be at least 6 characters', 'warn', 4000);
+                errorBar.textContent = 'Password must be at least 6 characters.';
+                errorBar.className = 'err-bar show';
+                Notify.toast('Password must be at least 6 characters.', 'warn', 4000);
                 return;
             }
-
             if (password !== confirmPassword) {
-                Notify.toast('Passwords do not match', 'warn', 4000);
+                errorBar.textContent = 'Passwords do not match.';
+                errorBar.className = 'err-bar show';
+                Notify.toast('Passwords do not match.', 'warn', 4000);
                 return;
             }
 
-            // Disable button during signup
             btn.disabled = true;
-            btn.textContent = 'Creating account...';
-            errorMsg.style.display = 'none';
+            btn.textContent = 'Creating account…';
 
             try {
                 var response = await fetch(API_URL + '/signup', {
@@ -250,26 +425,62 @@
                 var data = await response.json();
 
                 if (!response.ok) {
+                    errorBar.textContent = data.error || 'Signup failed. Please try again.';
+                    errorBar.className = 'err-bar show';
                     Notify.toast(data.error || 'Signup failed. Please try again.', 'error', 4000);
                     btn.disabled = false;
                     btn.textContent = 'Create Account';
                     return;
                 }
 
-                Notify.toast('Account created successfully! 🎉', 'success', 4000);
-                Notify.miniConfetti();
+                if (data.success) {
+                    Notify.toast('Account created successfully! Welcome to Hanverse! 🎉', 'success', 4000);
+                    Notify.miniConfetti();
 
-                setTimeout(function() {
-                    window.location.href = 'login.html';
-                }, 1500);
+                    // Store signed-up user in session
+                    if (data.user) {
+                        localStorage.setItem(SESSION_KEY, JSON.stringify({
+                            user_id:   data.user.user_id,
+                            username:  data.user.username,
+                            fullName:  data.user.full_name,
+                            email:     data.user.email,
+                            xp:        data.user.xp,
+                            level:     data.user.level,
+                            streak:    data.user.streak_days,
+                        }));
+                    }
+
+                    // Navigate to profile after brief celebration
+                    setTimeout(function() {
+                        window.location.href = 'profile.html';
+                    }, 2000);
+                }
 
             } catch (err) {
                 console.error('Signup error:', err);
+                errorBar.textContent = 'Connection error. Is the server running?';
+                errorBar.className = 'err-bar show';
                 Notify.toast('Connection error. Is the server running?', 'error', 5000);
                 btn.disabled = false;
                 btn.textContent = 'Create Account';
             }
         });
+
+        // Panda hover delight
+        document.addEventListener('DOMContentLoaded', function() {
+            var panda = document.getElementById('pandaHero');
+            if (panda) {
+                panda.addEventListener('click', function() {
+                    Notify.toast('Panda is excited to meet you! 🐼', 'heart', 2500);
+                    Notify.showXP(10);
+                });
+            }
+
+            window.addEventListener('load', function() {
+                Notify.toast('Ready to create your account! Let\'s go! 🐼', 'star', 3000);
+            });
+        });
     </script>
+
 </body>
 </html>

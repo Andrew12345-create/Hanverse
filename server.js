@@ -3,11 +3,25 @@ import pkg from 'pg';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const { Pool } = pkg;
 const app = express();
+
+// Resolve uploads directory relative to project root
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+const UPLOAD_DIR = path.join(__dirname, 'uploads');
+const BASE_URL   = '/uploads';
+
+// Ensure uploads directory exists
+try { fs.mkdirSync(UPLOAD_DIR, { recursive: true }); } catch (e) { /* ignore */ }
+// Serve uploaded files
+app.use(BASE_URL, express.static(UPLOAD_DIR, { maxAge: '7d', immutable: true }));
 
 // Middleware
 app.use(cors());
@@ -215,7 +229,7 @@ app.get('/api/user/:userId', async (req, res) => {
     const user = userResult.rows[0];
 
     const progressResult = await pool.query(
-      'SELECT * FROM user_progress WHERE user_id = $1',
+      'SELECT * FROM user_progress WHERE user_id = $1 ORDER BY completed_at DESC',
       [userId]
     );
 
@@ -234,17 +248,108 @@ app.get('/api/user/:userId', async (req, res) => {
       [userId]
     );
 
+    const vocabResult = await pool.query(
+      'SELECT * FROM vocabulary_progress WHERE user_id = $1',
+      [userId]
+    );
+
     res.json({
       user,
       progress: progressResult.rows,
       achievements: achievementsResult.rows,
       notifications: notificationsResult.rows,
-      settings: settingsResult.rows[0]
+      settings: settingsResult.rows[0] || null,
+      vocabulary: vocabResult.rows
     });
 
   } catch (error) {
     console.error('Get user error:', error);
     res.status(500).json({ error: 'Server error fetching user data' });
+  }
+});
+
+// ─── Upload / update profile picture ───
+app.post('/api/upload-pfp', async (req, res) => {
+  try {
+    const userId = req.body.user_id;
+    if (!userId) return res.status(400).json({ error: 'user_id is required' });
+
+    /* Detect multipart vs JSON body */
+    const ct = req.get('content-type') || '';
+
+    if (ct.includes('multipart/form-data')) {
+      /* ── multipart file upload ── */
+      const boundary = ct.split('boundary=')[1];
+      if (!boundary) return res.status(400).json({ error: 'No multipart boundary' });
+
+      const chunks = [];
+      await new Promise((resolve) => {
+        req.on('data', c => chunks.push(c));
+        req.on('end', resolve);
+      });
+      const buf = Buffer.concat(chunks);
+
+      /* Parse body text for user_id */
+      const bodyText = buf.toString('utf8');
+      const uidMatch = bodyText.match(/name="user_id"\s*(?:;\s*filename="[^"]*")?\s*\r?\n(?:Content-Type:.*\r?\n)?\r?\n([^\r\n]+)/);
+      const uid = uidMatch ? uidMatch[1].trim() : String(userId);
+
+      /* Escape boundary chars for use inside a RegExp */
+      var esc  = boundary.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      var endB = '--\\s*' + esc;
+      /* Parse filename + file bytes */
+      var fileHeaderRe = new RegExp(
+        'name="file"\\s*;?\\s*filename="([^"]+)"\\s*\\r?\\nContent-Type:\\s*([^\\r\\n]+)\\r?\\n\\r?\\n([\\s\\S]*?)(?=\\r?\\n--\\s*' + endB + ')',
+        'i'
+      );
+      const fileMatch = bodyText.match(fileHeaderRe);
+      if (!fileMatch) return res.status(400).json({ error: 'No file field found' });
+
+      const [, rawName, mimeType, rawData] = fileMatch;
+      if (!rawData) return res.status(400).json({ error: 'Empty file' });
+
+      const ext = path.extname(rawName).toLowerCase();
+      const allowed = ['.jpg','.jpeg','.png','.gif','.webp'];
+      if (!allowed.includes(ext)) {
+        return res.status(400).json({ error: 'Unsupported image type. Use JPG, PNG, GIF or WebP.' });
+      }
+
+      const fname = `pfp_${uid}_${Date.now()}${ext}`;
+      const fpath = path.join(UPLOAD_DIR, fname);
+      fs.writeFileSync(fpath, Buffer.from(rawData, 'binary'));
+
+      /* Update DB */
+      await pool.query('UPDATE users SET profile_picture = $1, updated_at = CURRENT_TIMESTAMP WHERE user_id = $2', [`${BASE_URL}/${fname}`, uid]);
+
+      return res.json({ success: true, message: 'Profile picture uploaded', url: `${BASE_URL}/${fname}` });
+    }
+
+    /* ── JSON body: { user_id, image: dataUrl|url } ── */
+    if (ct.includes('application/json')) {
+      const { image } = req.body;
+      if (!image) return res.status(400).json({ error: 'image field required' });
+
+      await pool.query('UPDATE users SET profile_picture = $1, updated_at = CURRENT_TIMESTAMP WHERE user_id = $2', [image, userId]);
+      return res.json({ success: true, message: 'Profile picture updated' });
+    }
+
+    return res.status(400).json({ error: 'Unsupported content-type' });
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({ error: 'Server error uploading image' });
+  }
+});
+
+// ─── Remove profile picture ───
+app.post('/api/remove-pfp', async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    if (!user_id) return res.status(400).json({ error: 'user_id is required' });
+    await pool.query('UPDATE users SET profile_picture = NULL, updated_at = CURRENT_TIMESTAMP WHERE user_id = $1', [user_id]);
+    res.json({ success: true, message: 'Profile picture removed' });
+  } catch (error) {
+    console.error('Remove pfp error:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 

@@ -213,7 +213,22 @@
     <div class="app-container">
         <header class="app-header">
             <div class="app-logo">汉</div>
-            <span class="app-title">Practice</span>
+            <div class="app-title" style="display:flex;flex-direction:column;align-items:center;gap:3px;margin:0;flex:1;">
+                <span style="font-size:.95rem;font-weight:600;" id="navProfileName">Practice</span>
+            </div>
+            <div class="nav-profile-section" id="navProfileSection2" style="display:none;flex-direction:column;align-items:center;gap:2px;padding:2px 6px;border-radius:12px;cursor:pointer;text-decoration:none;" onclick="
+  try {
+    var s = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
+    if (s.user_id) { window.location.href = 'profile.html'; }
+    else { window.location.href = 'login.html'; }
+  } catch(e) { window.location.href = 'login.html'; }
+">
+                <div class="nav-avatar-ring" style="width:32px;height:32px;border-width:2px;font-size:.9rem;">
+                    <img id="navAvatarImg2" src="" alt="You" class="nav-avatar-img" style="display:none;">
+                    <span id="navAvatarFallback2" class="nav-avatar-fallback">😊</span>
+                </div>
+                <span id="navProfileName2" style="font-size:.65rem;font-weight:600;color:#444;white-space:nowrap;"></span>
+            </div>
         </header>
         <main class="main-content">
             <div class="stats-banner">
@@ -319,6 +334,28 @@
       Notify.toast('You\'ve practiced 156 words this week! 🎯','xp',3500);
       Notify.miniConfetti();
     },1200);
+
+    /* ── Navbar: show profile pic + username when logged in ── */
+    (function fillPracticeNav(){
+      try {
+        var s = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
+        if (!s.user_id) return;
+        var sec = document.getElementById('navProfileSection2');
+        if (!sec) return;
+        sec.style.display = 'flex';
+        var img  = document.getElementById('navAvatarImg2');
+        var fb   = document.getElementById('navAvatarFallback2');
+        var name = document.getElementById('navProfileName2');
+        if (s.profile_picture) {
+          if (img) { img.src = s.profile_picture; img.style.display = 'block'; }
+          if (fb)  { fb.style.display = 'none'; }
+        } else {
+          if (img) { img.style.display = 'none'; }
+          if (fb)  { fb.style.display = ''; }
+        }
+        if (name) name.textContent = s.fullName || s.username || 'You';
+      } catch(e) {}
+    })();
 
     </script>
     </body>

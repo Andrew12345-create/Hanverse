@@ -181,8 +181,50 @@ gap:10px;
 }
 
 
+ 
+/* NAV PROFILE */
 
-/* BUTTONS */
+.nav-profile-section{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:3px;
+cursor:pointer;
+text-decoration:none;
+padding:4px 8px;
+border-radius:14px;
+transition:background .2s;
+
+}
+
+.nav-profile-section:hover{background:#f5f5f5;}
+
+.nav-avatar-ring{
+
+width:38px;height:38px;
+border-radius:50%;
+overflow:hidden;
+border:2.5px solid var(--yellow);
+display:flex;align-items:center;justify-content:center;
+background:white;
+flex-shrink:0;
+
+}
+
+.nav-avatar-img{width:100%;height:100%;object-fit:cover;}
+
+.nav-avatar-fallback{font-size:1.1rem;}
+
+.nav-profile-name{
+
+font-size:.75rem;
+font-weight:600;
+color:#444;
+white-space:nowrap;
+
+}
+
 
 .btn{
 
@@ -772,26 +814,14 @@ Parents
 </ul>
 
 
-<div class="nav-buttons">
-
-<button
-class="btn btn-secondary"
-onclick="location.href='login.html'">
-
-Log In
-
-</button>
-
-
-<button
-class="btn btn-main"
-onclick="location.href='signup.html'">
-
-Sign Up
-
-</button>
-
+<div class="nav-profile-section" id="navProfileSection" style="display:none;">
+  <div class="nav-avatar-ring">
+    <img id="navAvatarImg" src="" alt="You" class="nav-avatar-img" style="display:none;">
+    <span id="navAvatarFallback" class="nav-avatar-fallback">😊</span>
+  </div>
+  <div class="nav-profile-name" id="navProfileName">—</div>
 </div>
+
 
 </nav>
 
@@ -1170,6 +1200,31 @@ Notify.miniConfetti();
 });
 
 setInterval(showStatsMilestones,200);
+
+/* ── Navbar: show profile pic + username when logged in ── */
+(function fillNavProfile(){
+  try {
+    var sess = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
+    if (!sess.user_id) return;
+
+    var section = document.getElementById('navProfileSection');
+    if (!section) return;
+    section.style.display = 'flex';
+
+    var imgEl  = document.getElementById('navAvatarImg');
+    var fbEl   = document.getElementById('navAvatarFallback');
+    var nameEl = document.getElementById('navProfileName');
+
+    if (sess.profile_picture) {
+      if (imgEl) { imgEl.src = sess.profile_picture; imgEl.style.display = ''; }
+      if (fbEl)  { fbEl.style.display = 'none'; }
+    } else {
+      if (imgEl) { imgEl.style.display = 'none'; }
+      if (fbEl)  { fbEl.style.display = ''; }
+    }
+    if (nameEl) nameEl.textContent = sess.fullName || sess.username || 'You';
+  } catch(e) {}
+})();
 
 </script>
 
