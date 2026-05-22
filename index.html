@@ -1,83 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Hanverse</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- SEO -->
-<meta name="description" content="Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and engaging stories designed for young learners. Start your Chinese language adventure today.">
-<meta name="keywords" content="Mandarin Chinese, YCT, Chinese language learning, kids Chinese, Chinese for kids, YCT exam prep">
-<meta name="robots" content="index, follow">
-<meta name="author" content="Hanverse">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Hanverse">
-<meta property="og:url" content="https://hanverse.netlify.app/">
-<meta property="og:title" content="Hanverse">
-<meta property="og:description" content="Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and engaging stories designed for young learners.">
-<meta property="og:locale" content="en_US">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hanverse">
-<meta name="twitter:description" content="Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and engaging stories designed for young learners.">
-
-<!-- Canonical -->
-<link rel="canonical" href="https://hanverse.netlify.app/">
-
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Hanverse",
-  "url": "https://hanverse.netlify.app",
-  "description": "Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and stories for young learners.",
-  "inLanguage": "en",
-  "applicationCategory": "EducationalApplication",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  }
-}
-</script>
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 <style>
 
+/* ════════════════════════════════════
+   ROOT
+   ════════════════════════════════════ */
+
 :root{
---red:#F4D35E;
---yellow:#E63946;
+
+--bg:#FFF9F3;
+
+--orange:#FFB703;
+--red:#E63946;
 --blue:#4EA8DE;
 --green:#74C69D;
---bg:#FFFDF7;
+--purple:#9B5DE5;
+
+--text:#1E293B;
+--muted:#64748B;
+
 }
 
+/* ════════════════════════════════════
+   GLOBAL
+   ════════════════════════════════════ */
+
 *{
+
 margin:0;
 padding:0;
 box-sizing:border-box;
+
 font-family:'Poppins',sans-serif;
+
 }
 
 body{
+
 background:var(--bg);
-color:#333;
+
+color:var(--text);
+
 overflow-x:hidden;
+
 }
 
 html{
+
 scroll-behavior:smooth;
+
 }
 
+/* ════════════════════════════════════
+   FLOATING SHAPES
+   ════════════════════════════════════ */
 
-/* NAVBAR */
+.shape{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(70px);
+
+opacity:.18;
+
+z-index:-1;
+
+animation:blobFloat 12s infinite ease-in-out;
+
+}
+
+.shape1{
+
+width:340px;
+height:340px;
+
+background:var(--blue);
+
+top:-120px;
+left:-100px;
+
+}
+
+.shape2{
+
+width:260px;
+height:260px;
+
+background:var(--orange);
+
+right:-60px;
+top:260px;
+
+animation-delay:2s;
+
+}
+
+.shape3{
+
+width:220px;
+height:220px;
+
+background:var(--purple);
+
+bottom:-80px;
+left:40%;
+
+animation-delay:4s;
+
+}
+
+/* ════════════════════════════════════
+   NAVBAR
+   ════════════════════════════════════ */
 
 nav{
 
@@ -85,74 +136,47 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 
-padding:14px 8%;
+padding:24px 8%;
 
-background:white;
-
-position:sticky;
-top:0;
-
-z-index:1000;
-
-box-shadow:
-0 4px 20px rgba(0,0,0,.05);
-
-}
-
-/* ── Button base ── */
-.btn{
-padding:10px 22px;
-border:none;
-border-radius:40px;
-cursor:pointer;
-font-weight:600;
-font-size:.875rem;
-transition:.3s;
-}
-.btn-login{
-background:var(--red);
-color:white;
-}
-.btn-login:hover{
-transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(244,211,94,.25);
-}
-.btn-signup{
-background:var(--yellow);
-color:#333;
-}
-.btn-signup:hover{
-transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(230,57,70,.18);
 }
 
 .logo{
 
 display:flex;
 align-items:center;
-gap:10px;
+gap:14px;
 
-font-size:28px;
-font-weight:700;
+font-size:34px;
+font-weight:800;
 
-color:var(--red);
+color:var(--orange);
 
 }
 
-.logo-badge{
+.logo-icon{
 
-background:var(--yellow);
+width:56px;
+height:56px;
 
-padding:8px;
+border-radius:20px;
 
-border-radius:50%;
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+box-shadow:
+0 12px 25px rgba(0,0,0,.06);
 
 }
 
 nav ul{
 
 display:flex;
-gap:30px;
+gap:36px;
 
 list-style:none;
 
@@ -161,40 +185,17 @@ list-style:none;
 nav a{
 
 text-decoration:none;
+
+font-weight:600;
+
 color:#444;
-font-weight:500;
-position:relative;
+
+transition:.3s;
 
 }
 
+nav a:hover,
 nav a.active{
-
-color:var(--red);
-
-font-weight:700;
-
-}
-
-nav a.active::after{
-
-content:"";
-
-position:absolute;
-
-height:4px;
-
-width:100%;
-
-left:0;
-bottom:-8px;
-
-background:var(--yellow);
-
-border-radius:30px;
-
-}
-
-nav a:hover{
 
 color:var(--red);
 
@@ -203,59 +204,13 @@ color:var(--red);
 .nav-buttons{
 
 display:flex;
-gap:10px;
+gap:14px;
 
 }
-
-
- 
-/* NAV PROFILE */
-
-.nav-profile-section{
-
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:3px;
-cursor:pointer;
-text-decoration:none;
-padding:4px 8px;
-border-radius:14px;
-transition:background .2s;
-
-}
-
-.nav-profile-section:hover{background:#f5f5f5;}
-
-.nav-avatar-ring{
-
-width:38px;height:38px;
-border-radius:50%;
-overflow:hidden;
-border:2.5px solid var(--yellow);
-display:flex;align-items:center;justify-content:center;
-background:white;
-flex-shrink:0;
-
-}
-
-.nav-avatar-img{width:100%;height:100%;object-fit:cover;}
-
-.nav-avatar-fallback{font-size:1.1rem;}
-
-.nav-profile-name{
-
-font-size:.75rem;
-font-weight:600;
-color:#444;
-white-space:nowrap;
-
-}
-
 
 .btn{
 
-padding:13px 24px;
+padding:14px 24px;
 
 border:none;
 
@@ -263,9 +218,28 @@ border-radius:40px;
 
 cursor:pointer;
 
-font-weight:600;
+font-weight:700;
 
-transition:.3s;
+font-size:15px;
+
+transition:.35s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+
+}
+
+.btn-login{
+
+background:white;
+
+color:#333;
+
+box-shadow:
+0 10px 20px rgba(0,0,0,.06);
 
 }
 
@@ -275,50 +249,668 @@ background:var(--red);
 
 color:white;
 
+box-shadow:
+0 14px 28px rgba(230,57,70,.22);
+
 }
 
-.btn-main:hover{
+/* ════════════════════════════════════
+   HERO
+   ════════════════════════════════════ */
 
-transform:translateY(-3px);
+.hero{
+
+padding:30px 8% 100px;
+
+display:grid;
+
+grid-template-columns:
+1.1fr .9fr;
+
+gap:60px;
+
+align-items:center;
+
+}
+
+.hero-left{
+
+animation:slideUp .8s ease;
+
+}
+
+.hero-badge{
+
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+padding:12px 18px;
+
+background:white;
+
+border-radius:40px;
+
+font-weight:600;
+
+margin-bottom:24px;
 
 box-shadow:
-0 10px 25px rgba(244,211,94,.25);
+0 12px 25px rgba(0,0,0,.06);
+
+}
+
+.live-dot{
+
+width:10px;
+height:10px;
+
+background:var(--green);
+
+border-radius:50%;
+
+animation:pulse 1.5s infinite;
+
+}
+
+.hero h1{
+
+font-size:82px;
+
+line-height:.95;
+
+margin-bottom:26px;
+
+}
+
+.hero h1 span{
+
+background:
+linear-gradient(
+90deg,
+var(--blue),
+var(--purple)
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+#typing-text{
+
+font-size:21px;
+
+line-height:1.9;
+
+max-width:650px;
+
+min-height:90px;
+
+margin-bottom:40px;
+
+color:var(--muted);
+
+font-weight:500;
+
+}
+
+#typing-text::after{
+
+content:"|";
+
+margin-left:4px;
+
+animation:blink .7s infinite;
+
+color:var(--red);
+
+}
+
+.hero-buttons{
+
+display:flex;
+gap:18px;
+
+flex-wrap:wrap;
 
 }
 
 .btn-secondary{
 
-background:var(--yellow);
+background:white;
 
 color:#333;
 
+box-shadow:
+0 10px 20px rgba(0,0,0,.06);
+
 }
 
+/* ════════════════════════════════════
+   HERO RIGHT
+   ════════════════════════════════════ */
 
-/* HERO */
-
-.hero{
-
-padding:90px 8%;
+.hero-right{
 
 display:flex;
+justify-content:center;
 
+}
+
+.hero-ui{
+
+width:440px;
+height:560px;
+
+background:white;
+
+border-radius:42px;
+
+padding:26px;
+
+position:relative;
+
+box-shadow:
+0 30px 70px rgba(0,0,0,.08);
+
+overflow:hidden;
+
+}
+
+/* TOP BAR */
+
+.ui-top{
+
+display:flex;
 justify-content:space-between;
 align-items:center;
 
-gap:60px;
+margin-bottom:30px;
 
 }
 
-.hero-text{
+.ui-title{
 
-flex:1;
-
-animation:slide .8s;
+font-size:22px;
+font-weight:700;
 
 }
 
-@keyframes slide{
+.ui-xp{
+
+background:var(--orange);
+
+padding:10px 16px;
+
+border-radius:30px;
+
+font-size:14px;
+font-weight:700;
+
+color:white;
+
+}
+
+/* AI CARD */
+
+.ai-card{
+
+background:
+linear-gradient(
+135deg,
+var(--blue),
+#7EC8F8
+);
+
+padding:24px;
+
+border-radius:28px;
+
+color:white;
+
+margin-bottom:24px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.ai-card h3{
+
+font-size:24px;
+
+margin-bottom:10px;
+
+}
+
+.ai-card p{
+
+line-height:1.7;
+
+opacity:.95;
+
+}
+
+.ai-orb{
+
+position:absolute;
+
+right:-20px;
+bottom:-20px;
+
+width:120px;
+height:120px;
+
+background:
+rgba(255,255,255,.2);
+
+border-radius:50%;
+
+}
+
+/* LESSON STACK */
+
+.lesson-stack{
+
+display:flex;
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.lesson{
+
+background:#F8FAFC;
+
+padding:18px;
+
+border-radius:24px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+transition:.35s;
+
+cursor:pointer;
+
+}
+
+.lesson:hover{
+
+transform:translateX(6px);
+
+background:white;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.06);
+
+}
+
+.lesson-left{
+
+display:flex;
+align-items:center;
+gap:16px;
+
+}
+
+.lesson-icon{
+
+width:58px;
+height:58px;
+
+border-radius:18px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+color:white;
+
+}
+
+.icon1{background:var(--green);}
+.icon2{background:var(--purple);}
+.icon3{background:var(--orange);}
+
+.lesson h4{
+
+margin-bottom:4px;
+
+font-size:16px;
+
+}
+
+.lesson p{
+
+font-size:13px;
+
+color:var(--muted);
+
+}
+
+.lesson-arrow{
+
+font-size:22px;
+
+color:#999;
+
+}
+
+/* ════════════════════════════════════
+   FEATURES
+   ════════════════════════════════════ */
+
+.features{
+
+padding:0 8% 100px;
+
+}
+
+.section-title{
+
+font-size:48px;
+
+margin-bottom:50px;
+
+text-align:center;
+
+}
+
+.feature-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(280px,1fr));
+
+gap:26px;
+
+}
+
+.feature{
+
+background:white;
+
+padding:34px;
+
+border-radius:34px;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.06);
+
+transition:.35s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.feature:hover{
+
+transform:
+translateY(-10px);
+
+}
+
+.feature-icon{
+
+font-size:44px;
+
+margin-bottom:20px;
+
+}
+
+.feature h3{
+
+font-size:24px;
+
+margin-bottom:14px;
+
+}
+
+.feature p{
+
+line-height:1.8;
+
+color:var(--muted);
+
+}
+
+.feature-glow{
+
+position:absolute;
+
+right:-40px;
+bottom:-40px;
+
+width:120px;
+height:120px;
+
+border-radius:50%;
+
+background:
+rgba(78,168,222,.08);
+
+}
+
+/* ════════════════════════════════════
+   STATS STRIP
+   ════════════════════════════════════ */
+
+.stats{
+
+padding:0 8% 100px;
+
+}
+
+.stats-box{
+
+background:white;
+
+padding:40px;
+
+border-radius:38px;
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(200px,1fr));
+
+gap:20px;
+
+box-shadow:
+0 16px 40px rgba(0,0,0,.06);
+
+}
+
+.stat{
+
+text-align:center;
+
+}
+
+.stat h2{
+
+font-size:52px;
+
+margin-bottom:10px;
+
+color:var(--blue);
+
+}
+
+.stat p{
+
+font-weight:600;
+
+color:var(--muted);
+
+}
+
+/* ════════════════════════════════════
+   CTA
+   ════════════════════════════════════ */
+
+.cta{
+
+padding:0 8% 100px;
+
+}
+
+.cta-card{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#B388FF
+);
+
+padding:60px;
+
+border-radius:40px;
+
+color:white;
+
+text-align:center;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.cta-card h2{
+
+font-size:54px;
+
+margin-bottom:20px;
+
+}
+
+.cta-card p{
+
+max-width:700px;
+
+margin:auto;
+
+line-height:1.9;
+
+margin-bottom:34px;
+
+opacity:.95;
+
+}
+
+.cta-circle{
+
+position:absolute;
+
+width:220px;
+height:220px;
+
+border-radius:50%;
+
+background:
+rgba(255,255,255,.12);
+
+top:-70px;
+right:-60px;
+
+}
+
+/* ════════════════════════════════════
+   AI ASSISTANT
+   ════════════════════════════════════ */
+
+.ai-helper{
+
+position:fixed;
+
+bottom:24px;
+right:24px;
+
+background:white;
+
+padding:14px 18px;
+
+border-radius:26px;
+
+display:flex;
+gap:14px;
+
+max-width:340px;
+
+box-shadow:
+0 18px 40px rgba(0,0,0,.14);
+
+z-index:9999;
+
+animation:bubbleFloat 3s infinite;
+
+}
+
+.ai-avatar{
+
+width:54px;
+height:54px;
+
+border-radius:18px;
+
+background:var(--blue);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+color:white;
+
+flex-shrink:0;
+
+}
+
+.ai-message{
+
+font-size:14px;
+
+line-height:1.7;
+
+font-weight:600;
+
+color:#444;
+
+}
+
+/* ════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════ */
+
+footer{
+
+padding:50px;
+
+text-align:center;
+
+color:#777;
+
+}
+
+/* ════════════════════════════════════
+   ANIMATIONS
+   ════════════════════════════════════ */
+
+@keyframes slideUp{
 
 from{
 
@@ -336,716 +928,207 @@ transform:translateY(0);
 
 }
 
+@keyframes pulse{
 
-.tag{
+50%{
 
-display:inline-block;
+transform:scale(1.5);
 
-padding:8px 18px;
-
-background:
-rgba(78,168,222,.15);
-
-color:var(--blue);
-
-border-radius:30px;
-
-margin-bottom:20px;
-
-font-weight:600;
+opacity:.5;
 
 }
 
-.hero h1{
+}
 
-font-size:64px;
+@keyframes blink{
 
-line-height:1.1;
+50%{
 
-margin-bottom:20px;
+opacity:0;
 
 }
 
-.red{
+}
 
-color:var(--red);
+@keyframes bubbleFloat{
+
+50%{
+
+transform:translateY(-5px);
 
 }
 
-.blue{
-
-color:var(--blue);
-
 }
 
-.hero p{
-
-font-size:18px;
-
-line-height:1.8;
-
-color:#666;
-
-max-width:600px;
-
-margin-bottom:35px;
-
-}
-
-.hero-buttons{
-
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-
-}
-
-
-
-/* PANDA CARD */
-
-.hero-right{
-
-flex:1;
-
-display:flex;
-justify-content:center;
-
-}
-
-.learning-card{
-
-height:360px;
-width:360px;
-
-background:white;
-
-border-radius:40px;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-font-size:120px;
-
-position:relative;
-
-box-shadow:
-0 15px 30px rgba(0,0,0,.05);
-
-animation:float 4s infinite;
-
-transition:box-shadow .4s ease, transform .4s ease;
-
-}
-
-.learning-card:hover{
-box-shadow:
-0 20px 45px rgba(0,0,0,.1),
-0 0 32px rgba(78,168,222,.18);
-transform:translateY(-6px) scale(1.01) !important;
-}
-
-@keyframes float{
+@keyframes blobFloat{
 
 50%{
 
 transform:
-translateY(-15px);
+translateY(-30px)
+translateX(20px);
 
 }
 
 }
 
-.badge{
+/* ════════════════════════════════════
+   MOBILE
+   ════════════════════════════════════ */
 
-position:absolute;
+@media(max-width:950px){
 
-padding:10px 16px;
+nav ul{
 
-border-radius:20px;
-
-font-size:14px;
-font-weight:600;
-
-}
-
-.yct{
-
-top:-10px;
-left:-10px;
-
-background:var(--yellow);
-
-}
-
-.progress{
-
-bottom:20px;
-right:-10px;
-
-background:var(--green);
-
-}
-
-.star{
-
-position:absolute;
-
-top:35px;
-right:35px;
-
-font-size:35px;
-
-color:var(--yellow);
-
-}
-
-
-
-/* STATS */
-
-.stats{
-
-padding:60px 8%;
-
-display:flex;
-justify-content:center;
-
-gap:25px;
-
-flex-wrap:wrap;
-
-}
-
-.stat{
-
-background:white;
-
-padding:35px;
-
-width:220px;
-
-border-radius:30px;
-
-text-align:center;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
-
-border-top:
-5px solid var(--blue);
-
-transition:transform .3s ease, box-shadow .3s ease;
-
-}
-
-.stat:hover{
-
-transform:translateY(-5px);
-box-shadow:0 16px 36px rgba(0,0,0,.08);
-
-}
-
-.stat h2{
-
-font-size:42px;
-
-color:var(--red);
-
-margin-bottom:10px;
-
-transition:color .3s ease;
-
-}
-
-
-
-/* FEATURES */
-
-.features{
-
-padding:90px 8%;
-
-text-align:center;
-
-}
-
-.title{
-
-font-size:42px;
-
-margin-bottom:20px;
-
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(240px,1fr));
-
-gap:25px;
-
-margin-top:50px;
-
-}
-
-.box{
-
-background:white;
-
-padding:35px;
-
-border-radius:25px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
-
-transition:.3s;
-
-cursor:pointer;
-
-.position:relative;
-overflow:hidden;
-
-}
-
-.box::before{
-
-content:'';
-
-position:absolute;
-inset:0;
-border-radius:25px;
-
-background:linear-gradient(135deg,rgba(78,168,222,.08),rgba(116,198,157,.08));
-opacity:0;
-transition:opacity .3s ease;
-
-}
-
-.box:hover::before{
-opacity:1;
-}
-
-.box:hover{
-
-transform:
-translateY(-8px);
-box-shadow:0 20px 40px rgba(0,0,0,.1);
-
-}
-
-.icon{
-
-font-size:40px;
-
-transition:transform .4s cubic-bezier(.34,1.56,.64,1);
-
-}
-
-.box:hover .icon{
-
-transform:scale(1.18) rotate(-6deg);
-
-}
-
-.box h3{
-
-margin:15px 0;
-
-color:var(--blue);
-
-transition:color .3s ease;
-
-}
-
-.box:hover h3{
-color:var(--red);
-}
-
-
-
-/* FOOTER CARD */
-
-.end{
-
-padding:80px 8%;
-
-display:flex;
-justify-content:center;
-
-}
-
-.end-card{
-
-background:white;
-
-padding:45px;
-
-border-radius:35px;
-
-text-align:center;
-
-width:100%;
-max-width:850px;
-
-border:
-3px dashed var(--yellow);
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
-
-transition:transform .3s ease, box-shadow .3s ease;
-
-}
-
-.end-card:hover{
-
-transform:translateY(-5px);
-box-shadow:0 16px 36px rgba(0,0,0,.1);
-
-}
-
-.end-card h2{
-
-color:var(--blue);
-
-margin-bottom:20px;
-
-}
-
-footer{
-
-padding:30px;
-
-text-align:center;
-
-color:#777;
-
-}
-
-
-/* Hamburger – hidden on large screens */
-.nav-checkbox{display:none;}
-.nav-hamburger{
 display:none;
-flex-direction:column;
-gap:5px;
-cursor:pointer;
-padding:4px;
-z-index:1002;
-}
-.nav-hamburger span{
-display:block;
-width:24px;height:2.5px;
-background:#333;
-border-radius:2px;
-transition:transform .3s,opacity .3s;
-}
 
-/* CTA buttons in navbar */
-.btn-nav-auth{
-white-space:nowrap;
-flex-shrink:0;
-text-decoration:none;
-text-align:center;
-}
-
-/* ── MOBILE ── */
-@media(max-width:900px){
-
-nav{
-  flex-wrap:wrap;
-  gap:8px;
-  padding:10px 4%;
-}
-
-.nav-hamburger{
-  display:flex;
-  order:3;
-}
-
-/* hide links + buttons by default, show overlay when checkbox checked */
-nav > ul,
-nav > .btn-nav-auth,
-nav > .nav-profile-section{
-  display:none;
-}
-
-#navToggle:checked ~ ul,
-#navToggle:checked ~ .btn-nav-auth,
-#navToggle:checked ~ .nav-profile-section{
-  display:flex;
-}
-
-nav > ul{
-  order:5;
-  width:100%;
-  flex-direction:column;
-  gap:0;
-  background:white;
-  border-top:1px solid #eee;
-  padding-top:8px;
-  margin-top:4px;
-}
-
-nav > ul li a{
-  display:block;
-  padding:10px 0;
-  border-bottom:1px solid #f0f0f0;
-  color:#444;
-  font-weight:500;
-  text-decoration:none;
-}
-
-nav > ul li a.active{
-  color:var(--red);
-  font-weight:700;
-}
-
-/* show auth buttons in overlay as a row */
-nav > .btn-nav-auth{
-  order:6;
-  width:100%;
-  justify-content:center;
-  margin-top:10px;
-}
-
-/* profile section shown in overlay when logged in */
-#navToggle:checked ~ .nav-profile-section{
-  flex-direction:row;
-  justify-content:center;
-  gap:8px;
-  width:100%;
-  padding:10px 0;
-  border-bottom:1px solid #f0f0f0;
-}
-
-/* overlay backdrop */
-.nav-overlay{
-  display:none;
-}
-#navToggle:checked ~ .nav-overlay{
-  display:block;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.35);
-  z-index:999;
 }
 
 .hero{
-  flex-direction:column;
-  text-align:center;
-  padding:60px 5%;
-  gap:40px;
+
+grid-template-columns:1fr;
+
+padding:20px 6% 90px;
+
 }
 
-.hero h1{
-  font-size:38px;
+.hero-left{
+
+text-align:center;
+
 }
 
 .hero-buttons{
-  justify-content:center;
-}
 
-.hero-right{
-  order:-1;
-}
-
-.learning-card{
-  height:260px;
-  width:260px;
-  font-size:90px;
-}
-
-.stats{
-  padding:40px 5%;
-  gap:16px;
-}
-
-.stat{
-  width:160px;
-  padding:24px;
-}
-
-.stat h2{
-  font-size:32px;
-}
-
-.features{
-  padding:60px 5%;
-}
-
-.title{
-  font-size:32px;
-}
-
-.end{
-  padding:60px 5%;
-}
-
-.end-card{
-  padding:32px 24px;
-}
-
-footer{
-  padding:24px;
-  font-size:.82rem;
-}
+justify-content:center;
 
 }
 
-/* ── CARD CLICK RIPPLE ── */
-.ripple-ring{
-position:absolute;border-radius:50%;
-border:3px solid rgba(244,211,94,.5);
-transform:scale(0);
-animation:ripple-out .5s ease-out forwards;
-pointer-events:none;
+.hero h1{
+
+font-size:58px;
+
 }
-@keyframes ripple-out{
-to{transform:scale(4);opacity:0;}
+
+.hero-ui{
+
+width:100%;
+
+max-width:400px;
+
+height:auto;
+
+}
+
+.features,
+.stats,
+.cta{
+
+padding-left:6%;
+padding-right:6%;
+
+}
+
+.cta-card h2{
+
+font-size:40px;
+
+}
+
+.ai-helper{
+
+left:14px;
+right:14px;
+
+max-width:none;
+
+}
+
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
+<!-- SHAPES -->
+
+<div class="shape shape1"></div>
+<div class="shape shape2"></div>
+<div class="shape shape3"></div>
+
+<!-- NAVBAR -->
 
 <nav>
 
 <div class="logo">
 
-<div class="logo-badge">
+<div class="logo-icon">
 
 🐼
 
 </div>
 
-<span class="logo-text">Hanverse</span>
+Hanverse
 
 </div>
-
-<!-- hamburger checkbox on touch screens -->
-<input type="checkbox" id="navToggle" class="nav-checkbox">
-
-<label for="navToggle" class="nav-hamburger" aria-label="Toggle navigation">
-  <span></span>
-</label>
 
 <ul>
-
-<li>
-<a href="index.html"
-class="active">
-Home
-</a>
-</li>
-
-<li>
-<a href="learn.html">
-Learn
-</a>
-</li>
-
-<li>
-<a href="#"
-onclick="comingSoon(event)">
-Worksheets
-</a>
-</li>
-
-<li>
-<a href="#"
-onclick="comingSoon(event)">
-Parents
-</a>
-</li>
-
+<li><a href="index.html" class="active">Home</a></li>
+<li><a href="learn.html">Learn</a></li>
+<li><a href="practice.html">Practice</a></li>
+<li><a href="worksheets.html">Worksheets</a></li>
+<li><a href="parents.html">Parents</a></li>
+<li><a href="#">Leaderboard</a></li>
 </ul>
 
-<a
-href="login.html"
-class="btn btn-login btn-nav-auth"
->Log In</a>
-
-<a
-href="signup.html"
-class="btn btn-signup btn-nav-auth"
->Sign Up</a>
-
-
-<div class="nav-profile-section" id="navProfileSection" style="display:none;">
-  <div class="nav-avatar-ring">
-    <img id="navAvatarImg" src="" alt="You" class="nav-avatar-img" style="display:none;">
-    <span id="navAvatarFallback" class="nav-avatar-fallback">😊</span>
-  </div>
-  <div class="nav-profile-name" id="navProfileName">—</div>
+<div class="nav-buttons">
+<button class="btn btn-login" onclick="window.location.href='login.html'">Log In</button>
+<button class="btn btn-main" onclick="window.location.href='signup.html'">Get Started</button>
 </div>
-
 
 </nav>
 
-
+<!-- HERO -->
 
 <section class="hero">
 
-<div class="hero-text">
+<div class="hero-left">
 
-<div class="tag">
+<div class="hero-badge">
 
-✨ Structured YCT Learning
+<div class="live-dot"></div>
+
+AI Guided Mandarin Learning
 
 </div>
 
 <h1>
 
-Learn Mandarin Through
+Chinese Learning
 
-<span class="red">
+<span>
 
-Stories
-
-</span>,
-
-<span class="blue">
-
-Games
+Reimagined
 
 </span>
 
-& AI
-
 </h1>
 
-<p>
-
-Built for African children using videos, stories and structured YCT learning.
-
-</p>
-
+<p id="typing-text"></p>
 
 <div class="hero-buttons">
 
-<button
-class="btn btn-main"
-onclick="location.href='learn.html'">
+<button class="btn btn-main">
 
 Start Learning
 
 </button>
 
+<button class="btn btn-secondary">
 
-<button
-class="btn btn-secondary"
-onclick="location.href='signup.html'">
-
-Join Free
+Watch Demo
 
 </button>
 
@@ -1053,29 +1136,154 @@ Join Free
 
 </div>
 
-
-
 <div class="hero-right">
 
-<div class="learning-card" id="pandaCard">
+<div class="hero-ui">
 
-🐼
+<div class="ui-top">
 
-<div class="badge yct">
+<div class="ui-title">
 
-YCT 1–4
-
-</div>
-
-<div class="badge progress">
-
-Progress +
+Your AI Journey
 
 </div>
 
-<div class="star">
+<div class="ui-xp">
 
-⭐
+⭐ 820 XP
+
+</div>
+
+</div>
+
+<div class="ai-card">
+
+<h3>
+
+AI Tutor Online 🤖
+
+</h3>
+
+<p>
+
+Today’s goal:
+Complete the Greetings lesson and earn a new badge.
+
+</p>
+
+<div class="ai-orb"></div>
+
+</div>
+
+<div class="lesson-stack">
+
+<div class="lesson">
+
+<div class="lesson-left">
+
+<div class="lesson-icon icon1">
+
+👋
+
+</div>
+
+<div>
+
+<h4>
+
+Greetings
+
+</h4>
+
+<p>
+
+90% completed
+
+</p>
+
+</div>
+
+</div>
+
+<div class="lesson-arrow">
+
+→
+
+</div>
+
+</div>
+
+<div class="lesson">
+
+<div class="lesson-left">
+
+<div class="lesson-icon icon2">
+
+🔢
+
+</div>
+
+<div>
+
+<h4>
+
+Numbers
+
+</h4>
+
+<p>
+
+70% completed
+
+</p>
+
+</div>
+
+</div>
+
+<div class="lesson-arrow">
+
+→
+
+</div>
+
+</div>
+
+<div class="lesson">
+
+<div class="lesson-left">
+
+<div class="lesson-icon icon3">
+
+🏠
+
+</div>
+
+<div>
+
+<h4>
+
+Family Members
+
+</h4>
+
+<p>
+
+50% completed
+
+</p>
+
+</div>
+
+</div>
+
+<div class="lesson-arrow">
+
+→
+
+</div>
+
+</div>
 
 </div>
 
@@ -1085,15 +1293,105 @@ Progress +
 
 </section>
 
+<!-- FEATURES -->
 
+<section class="features">
+
+<h2 class="section-title">
+
+Why Students Love Hanverse
+
+</h2>
+
+<div class="feature-grid">
+
+<div class="feature">
+
+<div class="feature-icon">
+
+🎮
+
+</div>
+
+<h3>
+
+Interactive Learning
+
+</h3>
+
+<p>
+
+Turn lessons into games with XP, streaks and achievements.
+
+</p>
+
+<div class="feature-glow"></div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+
+🤖
+
+</div>
+
+<h3>
+
+AI Guided Experience
+
+</h3>
+
+<p>
+
+An intelligent tutor helps learners every step of the way.
+
+</p>
+
+<div class="feature-glow"></div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+
+📖
+
+</div>
+
+<h3>
+
+Structured YCT Paths
+
+</h3>
+
+<p>
+
+Follow a modern roadmap from YCT 1 all the way to YCT 4.
+
+</p>
+
+<div class="feature-glow"></div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- STATS -->
 
 <section class="stats">
 
-<div class="stat" id="studentsStat">
+<div class="stats-box">
 
-<h2 id="students">
+<div class="stat">
 
-0
+<h2>
+
+500+
 
 </h2>
 
@@ -1105,12 +1403,11 @@ Students
 
 </div>
 
+<div class="stat">
 
-<div class="stat" id="lessonsStat">
+<h2>
 
-<h2 id="lessons">
-
-0
+120+
 
 </h2>
 
@@ -1122,153 +1419,66 @@ Lessons
 
 </div>
 
-
-<div class="stat" id="gamesStat">
-
-<h2 id="games">
-
-0
-
-</h2>
-
-<p>
-
-Games
-
-</p>
-
-</div>
-
-</section>
-
-
-
-<section class="features">
-
-<h2 class="title">
-
-Why Hanverse?
-
-</h2>
-
-
-<div class="grid">
-
-<div class="box" onclick="featureClick(this)">
-
-<div class="icon">
-
-🎮
-
-</div>
-
-<h3>
-
-Interactive Games
-
-</h3>
-
-<p>
-
-Learn while having fun
-
-</p>
-
-</div>
-
-
-
-<div class="box" onclick="featureClick(this)">
-
-<div class="icon">
-
-📺
-
-</div>
-
-<h3>
-
-Video Lessons
-
-</h3>
-
-<p>
-
-Stories and visual learning
-
-</p>
-
-</div>
-
-
-
-<div class="box" onclick="featureClick(this)">
-
-<div class="icon">
-
-🏆
-
-</div>
-
-<h3>
-
-Achievements
-
-</h3>
-
-<p>
-
-Earn rewards and badges
-
-</p>
-
-</div>
-
-
-
-<div class="box" onclick="featureClick(this)">
-
-<div class="icon">
-
-📈
-
-</div>
-
-<h3>
-
-Progress Tracking
-
-</h3>
-
-<p>
-
-Continue where you stopped
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="end">
-
-<div class="end-card">
+<div class="stat">
 
 <h2>
 
-Start your Mandarin adventure 🌟
+20+
 
 </h2>
 
-<button
-class="btn btn-main"
-onclick="location.href='signup.html'">
+<p>
 
-Create Account
+Mini Games
+
+</p>
+
+</div>
+
+<div class="stat">
+
+<h2>
+
+4
+
+</h2>
+
+<p>
+
+YCT Levels
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="cta">
+
+<div class="cta-card">
+
+<div class="cta-circle"></div>
+
+<h2>
+
+Start Your Mandarin Adventure 🚀
+
+</h2>
+
+<p>
+
+Join hundreds of learners exploring Mandarin through stories,
+games, AI tutoring and interactive challenges.
+
+</p>
+
+<button class="btn btn-main">
+
+Create Free Account
 
 </button>
 
@@ -1276,129 +1486,76 @@ Create Account
 
 </section>
 
+<!-- AI HELPER -->
+
+<div class="ai-helper">
+
+<div class="ai-avatar">
+
+🤖
+
+</div>
+
+<div class="ai-message"
+id="aiMessage">
+
+Need help? Click Start Learning 🚀
+
+</div>
+
+</div>
+
 <footer>
 
 © Hanverse 2026
 
 </footer>
 
-
-
-<!-- ════════════════════════════════════
-     NOTIFICATION SYSTEM
-     ════════════════════════════════════ -->
 <script src="notifications.js"></script>
-
 <script>
-
-function comingSoon(e){
-e.preventDefault();
-Notify.toast('This feature is coming soon! Stay tuned 🚀','info',3500);
+/* ── typing effect ── */
+const phrases = [
+  "Master Mandarin through games, stories and AI tutoring.",
+  "Earn XP, complete quests and unlock achievements.",
+  "Built for curious young learners across Africa.",
+  "Experience a modern way to learn Chinese."
+];
+const typingText = document.getElementById("typing-text");
+let phraseIndex=0,charIndex=0,deleting=false;
+function typeEffect(){
+  const current=phrases[phraseIndex];
+  if(!deleting){typingText.innerHTML=current.substring(0,charIndex);charIndex++;if(charIndex>current.length){deleting=true;setTimeout(typeEffect,1500);return;}}
+  else{typingText.innerHTML=current.substring(0,charIndex);charIndex--;if(charIndex<0){deleting=false;phraseIndex++;if(phraseIndex>=phrases.length)phraseIndex=0;}}
+  setTimeout(typeEffect,deleting?35:55);
 }
+typeEffect();
 
-/* ── Feature click flash ── */
-function featureClick(el){
-Notify.toast('Awesome feature coming! 🎮','xp',2000);
-Notify.miniConfetti();
-}
+/* ── AI helper ── */
+const aiMessages=["Need help? Click Start Learning 🚀","Your AI tutor is online 🤖","Try the Greetings lesson 👋","Earn XP by completing lessons ⭐"];
+const aiMessage=document.getElementById("aiMessage");
+let aiIndex=0;
+setInterval(()=>{aiIndex++;if(aiIndex>=aiMessages.length)aiIndex=0;aiMessage.innerHTML=aiMessages[aiIndex];},4000);
 
-/* ── Panda card click ── */
-document.getElementById('pandaCard').addEventListener('click',function(){
-Notify.toast('You are doing great! Keep going! 🐼','heart',2500);
-Notify.miniConfetti();
-Notify.showXP(10);
+/* ── login / signup buttons ── */
+document.querySelectorAll('.btn-login').forEach(b=>b.addEventListener('click',()=>window.location.href='login.html'));
+document.querySelectorAll('.btn-main, .btn-secondary').forEach(b=>{
+  b.addEventListener('click', function(){
+    const txt = this.textContent.trim();
+    if(txt.includes('Start') || txt.includes('Get Started')) window.location.href='signup.html';
+    else Notify.toast('Loading... 🚀','info',2000);
+  });
 });
 
-/* ── Stat hover color effects ── */
-const statIds = ['studentsStat','lessonsStat','gamesStat'];
-statIds.forEach((id,i)=>{
-const el = document.getElementById(id);
-if(!el) return;
-el.addEventListener('mouseenter',()=>{
-Notify.badgePulse(el);
+/* ── hero lesson items ── */
+document.querySelectorAll('.lesson').forEach(l=>{
+  l.addEventListener('click',function(){
+    const title=this.querySelector('h4')?.textContent.trim()||'Lesson';
+    Notify.toast(`Opening: ${title}`,'xp',2500);
+    Notify.showXP(10);
+  });
 });
-});
-
-/* ── Animated counter ── */
-let s=0,l=0,g=0,done={s:false,l:false,g:false};
-
-let count=setInterval(()=>{
-if(s<500 && !done.s){
-s+=5;
-document.getElementById('students').innerText=s+'+';
-if(s>=500){ done.s=true; }
-}
-
-if(l<240 && !done.l){
-l+=3;
-document.getElementById('lessons').innerText=l+'+';
-if(l>=240){ done.l=true; }
-}
-
-if(g<30 && !done.g){
-g+=1;
-document.getElementById('games').innerText=g+'+';
-if(g>=30){ done.g=true; }
-}
-
-if(done.s&&done.l&&done.g){
-clearInterval(count);
-setTimeout(()=>{
-Notify.toast('500+ students and growing! Join the fun! 🎉','success',4000);
-Notify.miniConfetti();
-},300);
-}
-},25)
-
-/* ── Show XP when stats reach milestones ── */
-  function showStatsMilestones(){
-  if(s>=200 && !window._ms200){window._ms200=true;Notify.toast('200+ learners! So much growth! 🌱','star',2500);Notify.miniConfetti();Notify.achievementUnlock(7,'panda_welcome');}
-  if(s>=400 && !window._ms400){window._ms400=true;Notify.toast('400+ learners and growing!'  ,'star',2500);}
-  if(s>=500 && !window._ms500){window._ms500=true;Notify.toast('500+ learners! 🎉','heart',4000);Notify.confetti();Notify.achievementUnlock(7,'500_learners');}
-  }
-
-/* ── Page load celebration ── */
-window.addEventListener('load',()=>{
-setTimeout(()=>{
-Notify.toast('Welcome to Hanverse! Start your adventure! 🐼','heart',3500);
-Notify.miniConfetti();
-},800);
-});
-
-setInterval(showStatsMilestones,200);
-
-/* ── Navbar: show login/signup or profile pic + name ── */
-(function fillNavProfile(){
-  try {
-    var sess = JSON.parse(localStorage.getItem('hanverse_user') || '{}');
-    /* toggle nav auth buttons: hide both when logged in */
-    document.querySelectorAll('.btn-nav-auth').forEach(function(b){
-      b.style.display = sess.user_id ? 'none' : '';
-    });
-
-    /* toggle profile section: show when logged in */
-    var section = document.getElementById('navProfileSection');
-    if (!section) return;
-    if (sess.user_id) {
-      section.style.display = 'flex';
-      var imgEl  = document.getElementById('navAvatarImg');
-      var fbEl   = document.getElementById('navAvatarFallback');
-      var nameEl = document.getElementById('navProfileName');
-      if (sess.profile_picture) {
-        if (imgEl) { imgEl.src = sess.profile_picture; imgEl.style.display = ''; }
-        if (fbEl)  { fbEl.style.display = 'none'; }
-      } else {
-        if (imgEl) { imgEl.style.display = 'none'; }
-        if (fbEl)  { fbEl.style.display = ''; }
-      }
-      if (nameEl) nameEl.textContent = sess.fullName || sess.username || 'You';
-    } else {
-      section.style.display = 'none';
-    }
-  } catch(e) {}
-})();
-
 </script>
 
 </body>
+
 </html>

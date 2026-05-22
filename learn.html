@@ -1,89 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
 
-    <title>Hanverse Learn</title>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Hanverse Learn</title>
 
-    <!-- SEO -->
-    <meta name="description" content="Browse all Hanverse Mandarin courses. YCT 1 through YCT 4 lessons with interactive exercises, vocabulary practice, and progress tracking.">
-    <meta name="keywords" content="Mandarin Chinese, YCT, Chinese language learning, kids Chinese, YCT lessons, Chinese courses">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Hanverse">
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Hanverse">
-    <meta property="og:url" content="https://hanverse.netlify.app/learn.html">
-    <meta property="og:title" content="Hanverse Learn">
-    <meta property="og:description" content="Browse all Hanverse Mandarin courses. YCT 1 through YCT 4 lessons with interactive exercises and progress tracking.">
-    <meta property="og:locale" content="en_US">
+<style>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Hanverse Learn">
-    <meta name="twitter:description" content="Browse all Hanverse Mandarin courses. YCT 1 through YCT 4 lessons with interactive exercises and progress tracking.">
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://hanverse.netlify.app/learn.html">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Hanverse",
-  "url": "https://hanverse.netlify.app",
-  "description": "Learn Mandarin Chinese the fun way! Interactive YCT courses, games, and stories for young learners.",
-  "inLanguage": "en",
-  "applicationCategory": "EducationalApplication",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  }
-}
-</script>
-
-    <script src="notifications-client.js"></script>
-    <script src="notifications.js"></script>
-
-
-    <style>
+/* ════════════════════════════════════
+   ROOT
+   ════════════════════════════════════ */
 
 :root{
---red:#F4D35E;
---yellow:#E63946;
+
+--cream:#FFF9F2;
+
+--orange:#FFB703;
+--red:#E63946;
 --blue:#4EA8DE;
 --green:#74C69D;
---bg:#FFFDF7;
---text-primary:#1A1A2E;
---text-secondary:#6B7280;
---border:#E5E7EB;
---surface:#FFFFFF;
+--purple:#9B5DE5;
+
+--text:#1E293B;
+--muted:#64748B;
+
 }
 
+/* ════════════════════════════════════
+   GLOBAL
+   ════════════════════════════════════ */
+
 *{
+
 margin:0;
 padding:0;
 box-sizing:border-box;
+
 font-family:'Poppins',sans-serif;
+
 }
 
 body{
-background:var(--bg);
-color:#333;
+
+background:var(--cream);
+
+color:var(--text);
+
 overflow-x:hidden;
-padding:25px;
+
 }
 
+html{
 
-/* NAV */
+scroll-behavior:smooth;
+
+}
+
+/* ════════════════════════════════════
+   FLOATING BACKGROUND BLOBS
+   ════════════════════════════════════ */
+
+.blob{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(70px);
+
+opacity:.18;
+
+z-index:-1;
+
+animation:blobFloat 10s infinite ease-in-out;
+
+}
+
+.blob1{
+
+width:320px;
+height:320px;
+
+background:var(--blue);
+
+top:-100px;
+left:-80px;
+
+}
+
+.blob2{
+
+width:260px;
+height:260px;
+
+background:var(--orange);
+
+right:-80px;
+top:300px;
+
+animation-delay:2s;
+
+}
+
+.blob3{
+
+width:220px;
+height:220px;
+
+background:var(--purple);
+
+bottom:-60px;
+left:40%;
+
+animation-delay:4s;
+
+}
+
+/* ════════════════════════════════════
+   NAVBAR
+   ════════════════════════════════════ */
 
 nav{
 
@@ -91,79 +136,47 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 
-padding:14px 30px;
+padding:22px 8%;
 
-background:white;
-
-border-radius:25px;
-
-margin-bottom:30px;
-
-box-shadow:
-0 4px 20px rgba(0,0,0,.05);
-
-}
-
-/* ── Button base ── */
-.btn{
-padding:10px 22px;
-border:none;
-border-radius:40px;
-cursor:pointer;
-font-weight:600;
-font-size:.875rem;
-transition:.3s;
-}
-.btn-login{
-background:var(--red);
-color:white;
-}
-.btn-login:hover{
-transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(244,211,94,.25);
-}
-.btn-signup{
-background:var(--yellow);
-color:#333;
-}
-.btn-signup:hover{
-transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(230,57,70,.18);
-}
-.btn-nav-auth{
-white-space:nowrap;
-flex-shrink:0;
-text-decoration:none;
-text-align:center;
 }
 
 .logo{
 
 display:flex;
 align-items:center;
-gap:10px;
+gap:14px;
 
-font-size:28px;
-font-weight:700;
+font-size:32px;
+font-weight:800;
 
-color:var(--red);
+color:var(--orange);
 
 }
 
-.logo-badge{
+.logo-icon{
 
-background:var(--yellow);
+width:54px;
+height:54px;
 
-padding:8px;
+border-radius:20px;
 
-border-radius:50%;
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.06);
 
 }
 
 nav ul{
 
 display:flex;
-gap:30px;
+gap:34px;
 
 list-style:none;
 
@@ -173,94 +186,31 @@ nav a{
 
 text-decoration:none;
 
+font-weight:600;
+
 color:#444;
 
-font-weight:500;
-
-position:relative;
+transition:.3s;
 
 }
 
+nav a:hover,
 nav a.active{
 
 color:var(--red);
-
-font-weight:700;
-
-}
-
-nav a.active::after{
-
-content:"";
-
-position:absolute;
-
-left:0;
-bottom:-8px;
-
-width:100%;
-height:4px;
-
-background:var(--yellow);
-
-border-radius:20px;
 
 }
 
 .nav-buttons{
 
 display:flex;
-gap:10px;
+gap:14px;
 
 }
-
-
-/* NAV PROFILE */
-
-.nav-profile-section{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:3px;
-cursor:pointer;
-text-decoration:none;
-padding:4px 8px;
-border-radius:14px;
-transition:background .2s;
-position:relative;
-}
-
-.nav-profile-section:hover{background:#f5f5f5;}
-
-.nav-avatar-ring{
-
-width:38px;height:38px;
-border-radius:50%;
-overflow:hidden;
-border:2.5px solid var(--yellow);
-display:flex;align-items:center;justify-content:center;
-background:white;
-flex-shrink:0;
-
-}
-
-.nav-avatar-img{width:100%;height:100%;object-fit:cover;}
-
-.nav-avatar-fallback{font-size:1.1rem;}
-
-.nav-profile-name{
-
-font-size:.75rem;
-font-weight:600;
-color:#444;
-white-space:nowrap;
-
-}
-
 
 .btn{
 
-padding:13px 24px;
+padding:14px 24px;
 
 border:none;
 
@@ -268,183 +218,542 @@ border-radius:40px;
 
 cursor:pointer;
 
-font-weight:600;
+font-weight:700;
 
 transition:.3s;
 
-}
-
-.btn-main{
-
-background:var(--red);
-
-color:white;
+font-size:15px;
 
 }
 
-.btn-main:hover{
+.btn:hover{
 
 transform:translateY(-3px);
 
 }
 
-.btn-secondary{
+.btn-login{
 
-background:var(--yellow);
+background:white;
+
+color:#333;
+
+box-shadow:
+0 10px 20px rgba(0,0,0,.06);
 
 }
 
+.btn-signup{
 
-/* HERO */
-
-.hero{
-
-background:
-linear-gradient(
-135deg,
-var(--blue),
-#7bc7f4
-);
-
-padding:50px;
-
-border-radius:35px;
+background:var(--red);
 
 color:white;
 
-margin-bottom:50px;
-
-animation:fade .8s;
-
-}
-
-@keyframes fade{
-
-from{
-
-opacity:0;
-transform:translateY(30px);
+box-shadow:
+0 12px 25px rgba(230,57,70,.2);
 
 }
 
-to{
+/* ════════════════════════════════════
+   HERO
+   ════════════════════════════════════ */
 
-opacity:1;
-transform:translateY(0);
+.hero{
+
+padding:40px 8% 70px;
+
+display:grid;
+
+grid-template-columns:
+1.2fr .8fr;
+
+gap:60px;
+
+align-items:center;
 
 }
+
+.hero-left{
+
+animation:slideUp .8s ease;
+
+}
+
+.hero-badge{
+
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+background:white;
+
+padding:12px 18px;
+
+border-radius:40px;
+
+font-weight:600;
+
+margin-bottom:24px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.06);
+
+}
+
+.live-dot{
+
+width:10px;
+height:10px;
+
+background:var(--green);
+
+border-radius:50%;
+
+animation:pulse 1.5s infinite;
 
 }
 
 .hero h1{
 
-font-size:48px;
+font-size:72px;
 
-margin:15px 0;
+line-height:1;
+
+margin-bottom:24px;
 
 }
 
-.hero p{
+.hero h1 span{
 
-line-height:1.8;
+color:var(--blue);
+
+}
+
+#typing-text{
+
+font-size:20px;
+
+line-height:1.9;
 
 max-width:650px;
 
-}
+min-height:90px;
 
+margin-bottom:36px;
 
-.preview{
+color:var(--muted);
 
-display:flex;
-gap:20px;
-
-margin-top:30px;
-
-flex-wrap:wrap;
+font-weight:500;
 
 }
 
-.card{
+#typing-text::after{
 
-background:white;
+content:"|";
 
-padding:25px;
+margin-left:3px;
 
-border-radius:25px;
-
-min-width:150px;
-
-color:#333;
-
-transition:.3s;
-
-}
-
-.card:hover{
-
-transform:
-translateY(-8px);
-
-}
-
-.card h2{
+animation:blink .7s infinite;
 
 color:var(--red);
 
 }
 
+.hero-buttons{
 
-/* LESSONS */
+display:flex;
+gap:16px;
 
-.title{
-
-margin-bottom:30px;
-
-font-size:38px;
+flex-wrap:wrap;
 
 }
 
+.btn-main{
 
-.grid{
+background:var(--blue);
+
+color:white;
+
+box-shadow:
+0 12px 28px rgba(78,168,222,.25);
+
+}
+
+.btn-ghost{
+
+background:white;
+
+color:#333;
+
+box-shadow:
+0 10px 20px rgba(0,0,0,.06);
+
+}
+
+/* ════════════════════════════════════
+   LEARNING MAP
+   ════════════════════════════════════ */
+
+.hero-right{
+
+display:flex;
+justify-content:center;
+
+}
+
+.learning-map{
+
+width:420px;
+height:520px;
+
+background:white;
+
+border-radius:40px;
+
+padding:30px;
+
+position:relative;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.08);
+
+overflow:hidden;
+
+}
+
+.map-title{
+
+font-size:22px;
+font-weight:700;
+
+margin-bottom:28px;
+
+}
+
+.path{
+
+position:absolute;
+
+left:50%;
+
+top:90px;
+
+transform:translateX(-50%);
+
+width:8px;
+height:340px;
+
+background:
+linear-gradient(
+to bottom,
+var(--green),
+var(--blue),
+var(--purple)
+);
+
+border-radius:40px;
+
+}
+
+.node{
+
+position:absolute;
+
+width:82px;
+height:82px;
+
+border-radius:26px;
+
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:34px;
+
+box-shadow:
+0 14px 30px rgba(0,0,0,.08);
+
+transition:.35s;
+
+cursor:pointer;
+
+}
+
+.node:hover{
+
+transform:scale(1.08);
+
+}
+
+.node1{
+
+top:80px;
+left:60px;
+
+}
+
+.node2{
+
+top:180px;
+right:60px;
+
+}
+
+.node3{
+
+top:290px;
+left:60px;
+
+}
+
+.node4{
+
+top:390px;
+right:60px;
+
+}
+
+.lesson-label{
+
+position:absolute;
+
+background:#111827;
+
+color:white;
+
+padding:10px 14px;
+
+border-radius:18px;
+
+font-size:13px;
+
+font-weight:600;
+
+}
+
+.label1{
+
+top:95px;
+left:155px;
+
+}
+
+.label2{
+
+top:195px;
+right:155px;
+
+}
+
+.label3{
+
+top:305px;
+left:155px;
+
+}
+
+.label4{
+
+top:405px;
+right:155px;
+
+}
+
+/* ════════════════════════════════════
+   DAILY QUESTS
+   ════════════════════════════════════ */
+
+.quests{
+
+padding:0 8% 80px;
+
+}
+
+.quest-box{
+
+background:white;
+
+padding:34px;
+
+border-radius:34px;
 
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(280px,1fr));
+repeat(auto-fit,minmax(240px,1fr));
 
-gap:25px;
+gap:20px;
+
+box-shadow:
+0 14px 40px rgba(0,0,0,.06);
 
 }
 
-.lesson{
+.quest{
+
+background:#F8FAFC;
+
+padding:24px;
+
+border-radius:26px;
+
+transition:.3s;
+
+cursor:pointer;
+
+}
+
+.quest:hover{
+
+transform:translateY(-6px);
 
 background:white;
 
-padding:25px;
+}
+
+.quest-top{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:18px;
+
+}
+
+.quest-icon{
+
+font-size:30px;
+
+}
+
+.quest-xp{
+
+background:var(--orange);
+
+padding:6px 12px;
 
 border-radius:30px;
 
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
+font-size:12px;
+font-weight:700;
 
-transition:.4s;
-
-animation:slide .8s;
+color:white;
 
 }
 
-.lesson:hover{
+/* ════════════════════════════════════
+   LESSON CAROUSEL
+   ════════════════════════════════════ */
+
+.lessons{
+
+padding:0 8% 90px;
+
+}
+
+.section-title{
+
+font-size:44px;
+
+margin-bottom:40px;
+
+}
+
+.lesson-row{
+
+display:flex;
+
+gap:24px;
+
+overflow-x:auto;
+
+padding-bottom:12px;
+
+scrollbar-width:none;
+
+}
+
+.lesson-row::-webkit-scrollbar{
+
+display:none;
+
+}
+
+.lesson-card{
+
+min-width:300px;
+
+background:white;
+
+border-radius:34px;
+
+padding:28px;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.06);
+
+transition:.35s;
+
+cursor:pointer;
+
+}
+
+.lesson-card:hover{
 
 transform:
-translateY(-8px);
+translateY(-10px);
 
 }
 
-.lesson h3{
+.lesson-top{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.lesson-emoji{
+
+font-size:44px;
+
+}
+
+.lesson-level{
+
+background:#EEF7FF;
 
 color:var(--blue);
 
-margin-bottom:15px;
+padding:8px 14px;
+
+border-radius:20px;
+
+font-size:12px;
+font-weight:700;
+
+}
+
+.lesson-card h3{
+
+margin-bottom:14px;
+
+font-size:24px;
+
+}
+
+.lesson-card p{
+
+line-height:1.8;
+
+color:var(--muted);
+
+margin-bottom:22px;
 
 }
 
@@ -452,79 +761,112 @@ margin-bottom:15px;
 
 height:12px;
 
-background:#eee;
+background:#E5E7EB;
 
-border-radius:20px;
-
-margin:15px 0;
+border-radius:30px;
 
 overflow:hidden;
+
+margin-bottom:16px;
 
 }
 
 .fill{
 
-width:0;
-
 height:100%;
 
-background:var(--green);
-
-transition:2s;
+border-radius:30px;
 
 }
 
-.badge{
+.fill1{width:90%;background:var(--green);}
+.fill2{width:70%;background:var(--blue);}
+.fill3{width:50%;background:var(--orange);}
+.fill4{width:30%;background:var(--purple);}
 
-display:inline-block;
+.lesson-footer{
 
-padding:8px 15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 
-border-radius:20px;
+font-size:14px;
 
-background:#e8fff0;
-
-font-size:12px;
-
-margin-top:10px;
+font-weight:600;
 
 }
 
+/* ════════════════════════════════════
+   AI HELPER
+   ════════════════════════════════════ */
 
-/* SIGNUP CARD */
+.ai-helper{
 
-.join{
+position:fixed;
 
-margin-top:80px;
+bottom:24px;
+right:24px;
 
 background:white;
 
-padding:45px;
+padding:14px 18px;
 
-border-radius:35px;
+border-radius:24px;
 
-text-align:center;
+display:flex;
+gap:14px;
 
-border:
-3px dashed var(--yellow);
+max-width:320px;
 
 box-shadow:
-0 10px 25px rgba(0,0,0,.05);
+0 16px 40px rgba(0,0,0,.14);
+
+z-index:9999;
+
+animation:bubbleFloat 3s infinite;
 
 }
 
-.join h2{
+.ai-avatar{
 
-color:var(--blue);
+width:52px;
+height:52px;
 
-margin-bottom:20px;
+border-radius:18px;
+
+background:var(--blue);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:26px;
+
+color:white;
+
+flex-shrink:0;
 
 }
 
+.ai-message{
+
+font-size:14px;
+
+line-height:1.7;
+
+font-weight:600;
+
+color:#444;
+
+}
+
+/* ════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════ */
 
 footer{
 
-padding:30px;
+padding:40px;
 
 text-align:center;
 
@@ -532,208 +874,11 @@ color:#777;
 
 }
 
-
-/* COURSE CARD */
-.course-card{
-
-background:white;
-
-padding:25px;
-
-border-radius:30px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.05);
-
-transition:.4s;
-
-}
-
-.course-card:hover{
-
-transform:translateY(-8px);
-
-}
-
-.course-card h3{
-
-color:var(--blue);
-
-margin-bottom:12px;
-
-}
-
-.course-desc{
-
-font-size:.88rem;
-
-color:var(--text-secondary);
-
-margin-bottom:16px;
-
-line-height:1.5;
-
-}
-
-.course-badge{
-
-display:inline-block;
-
-padding:6px 14px;
-
-border-radius:20px;
-
-background:#e8fff0;
-
-font-size:12px;
-
-margin-bottom:12px;
-
-color:#2E7D32;
-
-}
-
-/* YCT LEVEL SECTION */
-.yct-level-section{
-
-background:white;
-
-border-radius:30px;
-
-padding:30px 25px;
-
-margin-bottom:32px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.05);
-
-animation:slide .8s;
-
-}
-
-.yct-level-header{
-
-display:flex;
-
-align-items:center;
-
-gap:16px;
-
-margin-bottom:20px;
-
-padding-bottom:18px;
-
-border-bottom:1px solid var(--border);
-
-}
-
-.yct-level-emoji{
-
-font-size:2rem;
-
-width:52px;height:52px;
-
-display:flex;align-items:center;justify-content:center;
-
-border-radius:16px;
-
-flex-shrink:0;
-
-}
-
-.yct-level-meta{flex:1;}
-
-.yct-level-title{
-
-font-size:1.25rem;
-
-font-weight:700;
-
-color:var(--text-primary);
-
-margin-bottom:2px;
-
-}
-
-.yct-level-words{
-
-font-size:.8rem;
-
-color:var(--text-secondary);
-
-}
-
-.yct-level-ring{
-
-width:50px;height:50px;
-
-border-radius:50%;
-
-border:4px solid var(--green);
-
-display:flex;align-items:center;justify-content:center;
-
-font-size:.8rem;
-
-font-weight:700;
-
-color:var(--green);
-
-flex-shrink:0;
-
-}
-
-.yct-level-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(255px,1fr));
-
-gap:18px;
-
-}
-
-
-/* Hamburger – hidden on large screens */
-.nav-checkbox{display:none;}
-.nav-hamburger{
-display:none;
-flex-direction:column;
-gap:5px;
-cursor:pointer;
-padding:4px;
-z-index:1002;
-}
-.nav-hamburger span{
-display:block;
-width:24px;height:2.5px;
-background:#333;
-border-radius:2px;
-transition:transform .3s,opacity .3s;
-}
-
-/* HERO */
-
-.hero{
-
-background:
-linear-gradient(
-135deg,
-var(--blue),
-#7bc7f4
-);
-
-padding:40px 30px;
-
-border-radius:35px;
-
-color:white;
-
-margin-bottom:40px;
-
-animation:fade .8s;
-
-}
-
-@keyframes fade{
+/* ════════════════════════════════════
+   ANIMATIONS
+   ════════════════════════════════════ */
+
+@keyframes slideUp{
 
 from{
 
@@ -751,1275 +896,706 @@ transform:translateY(0);
 
 }
 
-.hero h1{
+@keyframes float{
 
-font-size:42px;
+50%{
 
-margin:15px 0;
-
-}
-
-.hero p{
-
-line-height:1.8;
-
-max-width:650px;
+transform:translateY(-12px);
 
 }
 
+}
 
-.preview{
+@keyframes blink{
 
-display:flex;
-gap:16px;
+50%{
 
-margin-top:24px;
-
-flex-wrap:wrap;
+opacity:0;
 
 }
 
-.card{
+}
 
-background:white;
+@keyframes pulse{
 
-padding:20px;
+50%{
 
-border-radius:22px;
+transform:scale(1.4);
 
-min-width:130px;
-
-color:#333;
-
-transition:.3s;
+opacity:.6;
 
 }
 
-.card:hover{
+}
+
+@keyframes bubbleFloat{
+
+50%{
+
+transform:translateY(-5px);
+
+}
+
+}
+
+@keyframes blobFloat{
+
+50%{
 
 transform:
-translateY(-6px);
+translateY(-30px)
+translateX(20px);
 
 }
 
-.card h2{
-
-color:var(--red);
-
 }
 
+/* ════════════════════════════════════
+   MOBILE
+   ════════════════════════════════════ */
 
-/* LESSONS */
+@media(max-width:950px){
 
-.title{
+nav ul{
 
-margin-bottom:24px;
+display:none;
 
-font-size:34px;
-
-}
-
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(260px,1fr));
-
-gap:20px;
-
-}
-
-.lesson{
-
-background:white;
-
-padding:22px;
-
-border-radius:28px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
-
-transition:.4s;
-
-animation:slide .8s;
-
-}
-
-.lesson:hover{
-
-transform:
-translateY(-6px);
-
-}
-
-.lesson h3{
-
-color:var(--blue);
-
-margin-bottom:12px;
-
-}
-
-.progress{
-
-height:10px;
-
-background:#eee;
-
-border-radius:18px;
-
-margin:12px 0;
-
-overflow:hidden;
-
-}
-
-.fill{
-
-width:0;
-
-height:100%;
-
-background:var(--green);
-
-transition:2s;
-
-}
-
-.badge{
-
-display:inline-block;
-
-padding:6px 14px;
-
-border-radius:18px;
-
-background:#e8fff0;
-
-font-size:12px;
-
-margin-top:8px;
-
-}
-
-
-/* SIGNUP CARD */
-
-.join{
-
-margin-top:60px;
-
-background:white;
-
-padding:36px;
-
-border-radius:30px;
-
-text-align:center;
-
-border:
-3px dashed var(--yellow);
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.05);
-
-}
-
-.join h2{
-
-color:var(--blue);
-
-margin-bottom:16px;
-
-}
-
-
-footer{
-
-padding:24px;
-
-text-align:center;
-
-color:#777;
-
-}
-
-
-/* COURSE CARD */
-.course-card{
-
-background:white;
-
-padding:22px;
-
-border-radius:28px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.05);
-
-transition:.4s;
-
-}
-
-.course-card:hover{
-
-transform:translateY(-6px);
-
-}
-
-.course-card h3{
-
-color:var(--blue);
-
-margin-bottom:10px;
-
-}
-
-.course-desc{
-
-font-size:.85rem;
-
-color:var(--text-secondary);
-
-margin-bottom:14px;
-
-line-height:1.5;
-
-}
-
-.course-badge{
-
-display:inline-block;
-
-padding:5px 12px;
-
-border-radius:18px;
-
-background:#e8fff0;
-
-font-size:11px;
-
-margin-bottom:10px;
-
-color:#2E7D32;
-
-}
-
-/* YCT LEVEL SECTION */
-.yct-level-section{
-
-background:white;
-
-border-radius:28px;
-
-padding:26px 20px;
-
-margin-bottom:28px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.05);
-
-animation:slide .8s;
-
-}
-
-.yct-level-header{
-
-display:flex;
-
-align-items:center;
-
-gap:14px;
-
-margin-bottom:18px;
-
-padding-bottom:14px;
-
-border-bottom:1px solid var(--border);
-
-}
-
-.yct-level-emoji{
-
-font-size:1.8rem;
-
-width:48px;height:48px;
-
-display:flex;align-items:center;justify-content:center;
-
-border-radius:14px;
-
-flex-shrink:0;
-
-}
-
-.yct-level-meta{flex:1;}
-
-.yct-level-title{
-
-font-size:1.2rem;
-
-font-weight:700;
-
-color:var(--text-primary);
-
-margin-bottom:2px;
-
-}
-
-.yct-level-words{
-
-font-size:.78rem;
-
-color:var(--text-secondary);
-
-}
-
-.yct-level-ring{
-
-width:46px;height:46px;
-
-border-radius:50%;
-
-border:3.5px solid var(--green);
-
-display:flex;align-items:center;justify-content:center;
-
-font-size:.75rem;
-
-font-weight:700;
-
-color:var(--green);
-
-flex-shrink:0;
-
-}
-
-.yct-level-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-
-gap:16px;
-
-}
-
-
-/* ── MOBILE NAV OVERLAY ── */
-@media(max-width:900px){
-
-nav{
-  flex-wrap:wrap;
-  gap:8px;
-  padding:10px 4%;
-  border-radius:20px;
-}
-
-.nav-hamburger{
-  display:flex;
-  order:3;
-}
-
-/* hide nav links + auth buttons by default on mobile */
-nav > ul,
-nav > .btn-nav-auth{
-  display:none;
-}
-
-#navToggle:checked ~ ul,
-#navToggle:checked ~ .btn-nav-auth{
-  display:flex;
-}
-
-#navToggle:checked ~ ul{
-  order:5;
-  width:100%;
-  flex-direction:column;
-  gap:0;
-  background:white;
-  padding:8px 0 4px;
-  margin-top:4px;
-  border-top:1px solid #eee;
-}
-
-#navToggle:checked ~ ul li a{
-  display:block;
-  padding:12px 8px;
-  border-bottom:1px solid #f5f5f5;
-  color:#444;
-  font-weight:500;
-  text-decoration:none;
-}
-
-#navToggle:checked ~ ul li a.active{
-  color:var(--red);
-  font-weight:700;
-}
-
-#navToggle:checked ~ .btn-nav-auth{
-  order:6;
-  width:100%;
-  justify-content:center;
-  gap:10px;
-  margin:8px 0;
-}
-
-#navToggle:checked ~ .nav-profile-section{
-  order:7;
-  width:100%;
-  flex-direction:row;
-  justify-content:center;
-  gap:6px;
-  padding:10px 8px;
-  border-top:1px solid #f0f0f0;
-  background:white;
-  border-radius:0;
-}
-
-/* overlay backdrop */
-#navToggle:checked ~ .nav-backdrop{
-  display:block;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.3);
-  z-index:999;
-  animation:fadeBg .2s ease;
 }
 
 .hero{
-  padding:40px 5%;
+
+grid-template-columns:1fr;
+
+padding:30px 6% 70px;
+
 }
 
 .hero h1{
-  font-size:34px;
+
+font-size:52px;
+
 }
 
-.preview{
-  gap:12px;
+.hero-buttons{
+
+justify-content:center;
+
 }
 
-.card{
-  min-width:110px;
-  padding:16px;
+.hero-left{
+
+text-align:center;
+
 }
 
-.card h2{
-  font-size:1.4rem;
+.learning-map{
+
+width:100%;
+
+max-width:380px;
+
+height:500px;
+
 }
 
-.title{
-  font-size:28px;
+.quests,
+.lessons{
+
+padding-left:6%;
+padding-right:6%;
+
 }
 
-.grid{
-  grid-template-columns:1fr;
-  gap:16px;
-}
+.ai-helper{
 
-.lesson{
-  padding:18px;
-}
+left:14px;
+right:14px;
 
-.join{
-  padding:28px 20px;
-  margin-top:48px;
-}
+max-width:none;
 
-footer{
-  font-size:.78rem;
-  padding:20px;
-}
-
-.yct-level-section{
-  padding:22px 16px;
-}
-
-.yct-level-grid{
-  grid-template-columns:1fr;
 }
 
 }
 
-.nav-hamburger{
-  display:flex;
-  order:3;
-}
-
-/* hide nav items + auth buttons by default */
-nav > ul,
-nav > .btn-nav-auth,
-nav > .nav-profile-section{
-  display:none;
-}
-
-#navToggle:checked ~ ul,
-#navToggle:checked ~ .btn-nav-auth,
-#navToggle:checked ~ .nav-profile-section{
-  display:flex;
-}
-
-nav > ul{
-  order:5;
-  width:100%;
-  flex-direction:column;
-  gap:0;
-  background:white;
-  padding:8px 0 4px;
-  margin-top:4px;
-  border-top:1px solid #eee;
-}
-
-nav > ul li a{
-  display:block;
-  padding:10px 0;
-  border-bottom:1px solid #f0f0f0;
-  color:#444;
-  font-weight:500;
-  text-decoration:none;
-}
-
-nav > ul li a.active{
-  color:var(--red);
-  font-weight:700;
-}
-
-nav > .btn-nav-auth{
-  order:6;
-  width:100%;
-  justify-content:center;
-  margin-top:8px;
-  margin-bottom:8px;
-}
-
-#navToggle:checked ~ .nav-profile-section{
-  flex-direction:row;
-  justify-content:center;
-  gap:8px;
-  width:100%;
-  padding:8px 0;
-  border-top:1px solid #f0f0f0;
-}
-
-.hero{
-  padding:40px 5%;
-}
-
-.hero h1{
-  font-size:34px;
-}
-
-.preview{
-  gap:12px;
-}
-
-.card{
-  min-width:110px;
-  padding:16px;
-}
-
-.card h2{
-  font-size:1.4rem;
-}
-
-.title{
-  font-size:28px;
-}
-
-.grid{
-  grid-template-columns:1fr;
-  gap:16px;
-}
-
-.lesson{
-  padding:18px;
-}
-
-.join{
-  padding:28px 20px;
-  margin-top:48px;
-}
-
-footer{
-  font-size:.78rem;
-  padding:20px;
-}
-
-.yct-level-section{
-  padding:22px 16px;
-}
-
-.yct-level-grid{
-  grid-template-columns:1fr;
-}
-
-}
 </style>
+
 </head>
 
 <body>
 
+<!-- BLOBS -->
 
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<!-- NAVBAR -->
 
 <nav>
 
 <div class="logo">
 
-<div class="logo-badge">
+<div class="logo-icon">
 
 🐼
 
 </div>
 
-<span class="logo-text">Hanverse</span>
+Hanverse
 
 </div>
-
-<input type="checkbox" id="navToggle" class="nav-checkbox">
-
-<label for="navToggle" class="nav-hamburger" aria-label="Toggle navigation">
-  <span></span>
-</label>
 
 <ul>
-
-<li>
-<a href="index.html">
-Home
-</a>
-</li>
-
-<li>
-<a
-href="learn.html"
-class="active">
-Learn
-</a>
-</li>
-
-<li>
-<a href="#"
-onclick="comingSoon()">
-Worksheets
-</a>
-</li>
-
-<li>
-<a href="#"
-onclick="comingSoon()">
-Parents
-</a>
-</li>
-
+<li><a href="index.html">Home</a></li>
+<li><a href="learn.html" class="active">Learn</a></li>
+<li><a href="practice.html">Practice</a></li>
+<li><a href="worksheets.html">Worksheets</a></li>
+<li><a href="parents.html">Parents</a></li>
+<li><a href="#">Leaderboard</a></li>
 </ul>
 
-<a
-href="login.html"
-class="btn btn-login btn-nav-auth"
->Log In</a>
-
-<a
-href="signup.html"
-class="btn btn-signup btn-nav-auth"
->Sign Up</a>
-
-
-<div class="nav-profile-section" id="navProfileSection" style="display:none;">
-  <div class="nav-avatar-ring">
-    <img id="navAvatarImg" src="" alt="You" class="nav-avatar-img" style="display:none;">
-    <span id="navAvatarFallback" class="nav-avatar-fallback"></span>
-  </div>
-  <div class="nav-profile-name" id="navProfileName"></div>
-  <div class="pfp-dropdown" id="pfpDropdown" style="position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);background:white;border-radius:18px;padding:6px;display:none;flex-direction:column;gap:2px;z-index:2000;min-width:150px;box-shadow:0 12px 36px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06);">
-    <a href="profile.html" class="pfp-dd-item" id="pfpDropProfile"><span class="pfp-dd-icon">👤</span> Profile</a>
-    <div class="pfp-dd-divider" style="height:1px;background:#eee;margin:2px 0;"></div>
-    <div class="pfp-dd-item" id="pfpDropLogout"><span class="pfp-dd-icon">🚪</span> Logout</div>
-  </div>
+<div class="nav-buttons">
+<button class="btn btn-login" onclick="window.location.href='login.html'">Log In</button>
+<button class="btn btn-signup" onclick="window.location.href='signup.html'">Sign Up</button>
 </div>
 
+</nav>
 
-
-<div class="nav-backdrop" id="navBackdrop" style="display:none;position:fixed;inset:0;z-index:1999;"></div>
-
-
-
+<!-- HERO -->
 
 <section class="hero">
 
-<p>
+<div class="hero-left">
 
-✨ Structured YCT Learning
+<div class="hero-badge">
 
-</p>
+<div class="live-dot"></div>
+
+AI Powered Learning Journey
+
+</div>
 
 <h1>
 
-Explore Mandarin Lessons
+Learn Mandarin Like An
+
+<span>
+
+Adventure
+
+</span>
 
 </h1>
 
-<p>
+<p id="typing-text"></p>
 
-Discover stories, games and YCT lessons designed for young learners. Create an account to save progress and unlock achievements.
+<div class="hero-buttons">
 
-</p>
+<button class="btn btn-main">
 
-
-<div class="preview">
-
-<div class="card">
-
-<h2>
-
-YCT 1
-
-</h2>
-
-<p>
-
-80 words
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-
-YCT 2
-
-</h2>
-
-<p>
-
-150 words
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-
-20+
-
-</h2>
-
-<p>
-
-Games
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-
-50+
-
-</h2>
-
-<p>
-
-Worksheets
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<h2 class="title">
-
-Featured Lessons
-
-</h2>
-
-
-
-<div class="grid">
-
-<div class="lesson">
-
-<h3>Hello & Greetings</h3>
-
-<p>
-
-你好 · 再见 · 谢谢
-
-</p>
-
-<div class="progress">
-
-<div
-class="fill"
-data-width="100">
-
-</div>
-
-</div>
-
-<div class="badge">
-
-YCT 1
-
-</div>
-
-</div>
-
-
-
-<div class="lesson">
-
-<h3>Numbers 1–10</h3>
-
-<p>
-
-一 二 三 四 五 六 七 八 九 十
-
-</p>
-
-<div class="progress">
-
-<div
-class="fill"
-data-width="70">
-
-</div>
-
-</div>
-
-<div class="badge">
-
-YCT 1
-
-</div>
-
-</div>
-
-
-
-<div class="lesson">
-
-<h3>Family Members</h3>
-
-<p>
-
-爸爸 妈妈 哥哥 姐姐
-
-</p>
-
-<div class="progress">
-
-<div
-class="fill"
-data-width="50">
-
-</div>
-
-</div>
-
-<div class="badge">
-
-YCT 1
-
-</div>
-
-</div>
-
-
-
-<div class="lesson">
-
-<h3>School Objects</h3>
-
-<p>
-
-书 包 铅笔 橡皮
-
-</p>
-
-<div class="progress">
-
-<div
-class="fill"
-data-width="35">
-
-</div>
-
-</div>
-
-<div class="badge">
-
-YCT 1
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<section class="join" id="joinCTA">
-
-
-<h2>
-
-
-Create an account to continue
-
-</h2>
-
-
-<p>
-
-
-Save progress and continue where you stopped.
-
-</p>
-
-
-<br>
-
-
-<button
-class="btn btn-main"
-onclick="location.href='signup.html'">
-
-
-Get Started
+Continue Learning
 
 </button>
 
+<button class="btn btn-ghost">
+
+Explore Lessons
+
+</button>
+
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="learning-map">
+
+<div class="map-title">
+
+Your Learning Path 🧭
+
+</div>
+
+<div class="path"></div>
+
+<div class="node node1">
+
+👋
+
+</div>
+
+<div class="lesson-label label1">
+
+Greetings
+
+</div>
+
+<div class="node node2">
+
+🔢
+
+</div>
+
+<div class="lesson-label label2">
+
+Numbers
+
+</div>
+
+<div class="node node3">
+
+🏠
+
+</div>
+
+<div class="lesson-label label3">
+
+Family
+
+</div>
+
+<div class="node node4">
+
+🎒
+
+</div>
+
+<div class="lesson-label label4">
+
+School
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
+<!-- DAILY QUESTS -->
 
+<section class="quests">
 
-<!-- YCT level sections -->
-<div id="yctSections"></div>
+<div class="quest-box">
 
+<div class="quest">
 
-<script>
-/* render the YCT 1–4 course sections inside #yctSections */
-function renderYCTSections(courses) {
-  const container = document.getElementById('yctSections');
-  if (!container || !courses.length) return;
+<div class="quest-top">
 
-  container.innerHTML = '';
+<div class="quest-icon">
 
-  const levels = [
-    { key: 1, emoji: '🌱', color: '#74C69D', words: 80  },
-    { key: 2, emoji: '📖', color: '#4EA8DE', words: 150 },
-    { key: 3, emoji: '📗', color: '#A78BFA', words: 150 },
-    { key: 4, emoji: '📚', color: '#F59E0B', words: 150 },
-  ];
+🔥
 
-  levels.forEach(({ key, emoji, color }) => {
-    const levelCourses = courses.filter(c => {
-      const l = c.yct_level || c.level;
-      return Number(l) === key;
-    });
-    if (!levelCourses.length) return;
+</div>
 
-    const completed = levelCourses.reduce((s, c) => s + (c.words_learned || c.progress_pct || 0), 0);
-    const pct = Math.min(100, Math.round((completed / 150) * 100));
+<div class="quest-xp">
 
-    const section = document.createElement('section');
-    section.className = 'yct-level-section';
-    section.innerHTML = `
-      <div class="yct-level-header">
-        <span class="yct-level-emoji">${emoji}</span>
-        <div class="yct-level-meta">
-          <h3 class="yct-level-title">YCT ${key}</h3>
-          <p class="yct-level-words">${levelCourses.length} course${levelCourses.length > 1 ? 's' : ''} · up to ${pct}% complete</p>
-        </div>
-        <div class="yct-level-ring">
-          <span class="yct-level-pct">${pct}%</span>
-        </div>
-      </div>
-      <div class="yct-level-grid">
-        ${levelCourses.map(c => {
-          const icon  = c.icon || c.emoji || emoji;
-          const title = c.title || c.name || 'Course';
-          const desc  = c.description || c.summary || '';
-          const slope = c.progress_pct || c.completed_pct || 0;
-          return `<div class="course-card">
-            <span class="course-badge" style="background:${color}22;color:${color};">YCT ${key}</span>
-            <h3>${icon} ${title}</h3>
-            ${desc ? `<p class="course-desc">${desc}</p>` : ''}
-            <div class="progress"><div class="fill" style="width:${slope}%"></div></div>
-          </div>`;
-        }).join('')}
-      </div>
-    `;
-    container.appendChild(section);
-  });
-}
++25 XP
 
+</div>
+
+</div>
+
+<h3>
+
+3 Day Streak
+
+</h3>
+
+<p>
+
+Complete one lesson today to keep your streak alive.
+
+</p>
+
+</div>
+
+<div class="quest">
+
+<div class="quest-top">
+
+<div class="quest-icon">
+
+🎮
+
+</div>
+
+<div class="quest-xp">
+
++40 XP
+
+</div>
+
+</div>
+
+<h3>
+
+Play 2 Games
+
+</h3>
+
+<p>
+
+Practice vocabulary through interactive mini games.
+
+</p>
+
+</div>
+
+<div class="quest">
+
+<div class="quest-top">
+
+<div class="quest-icon">
+
+🏆
+
+</div>
+
+<div class="quest-xp">
+
+Badge
+
+</div>
+
+</div>
+
+<h3>
+
+Unlock Panda Badge
+
+</h3>
+
+<p>
+
+Finish all YCT 1 greetings lessons.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- LESSONS -->
+
+<section class="lessons">
+
+<h2 class="section-title">
+
+Continue Learning
+
+</h2>
+
+<div class="lesson-row">
+
+<div class="lesson-card">
+
+<div class="lesson-top">
+
+<div class="lesson-emoji">
+
+👋
+
+</div>
+
+<div class="lesson-level">
+
+YCT 1
+
+</div>
+
+</div>
+
+<h3>
+
+Greetings
+
+</h3>
+
+<p>
+
+Practice hello, goodbye and common polite phrases.
+
+</p>
+
+<div class="progress">
+
+<div class="fill fill1"></div>
+
+</div>
+
+<div class="lesson-footer">
+
+<span>
+
+90% Complete
+
+</span>
+
+<span>
+
+⭐ 120 XP
+
+</span>
+
+</div>
+
+</div>
+
+<div class="lesson-card">
+
+<div class="lesson-top">
+
+<div class="lesson-emoji">
+
+🔢
+
+</div>
+
+<div class="lesson-level">
+
+YCT 1
+
+</div>
+
+</div>
+
+<h3>
+
+Numbers
+
+</h3>
+
+<p>
+
+Master counting and pronunciation through games.
+
+</p>
+
+<div class="progress">
+
+<div class="fill fill2"></div>
+
+</div>
+
+<div class="lesson-footer">
+
+<span>
+
+70% Complete
+
+</span>
+
+<span>
+
+⭐ 90 XP
+
+</span>
+
+</div>
+
+</div>
+
+<div class="lesson-card">
+
+<div class="lesson-top">
+
+<div class="lesson-emoji">
+
+🏠
+
+</div>
+
+<div class="lesson-level">
+
+YCT 1
+
+</div>
+
+</div>
+
+<h3>
+
+Family Members
+
+</h3>
+
+<p>
+
+Learn how to talk about parents and siblings.
+
+</p>
+
+<div class="progress">
+
+<div class="fill fill3"></div>
+
+</div>
+
+<div class="lesson-footer">
+
+<span>
+
+50% Complete
+
+</span>
+
+<span>
+
+⭐ 70 XP
+
+</span>
+
+</div>
+
+</div>
+
+<div class="lesson-card">
+
+<div class="lesson-top">
+
+<div class="lesson-emoji">
+
+🎒
+
+</div>
+
+<div class="lesson-level">
+
+YCT 1
+
+</div>
+
+</div>
+
+<h3>
+
+School Objects
+
+</h3>
+
+<p>
+
+Discover Mandarin vocabulary for classroom items.
+
+</p>
+
+<div class="progress">
+
+<div class="fill fill4"></div>
+
+</div>
+
+<div class="lesson-footer">
+
+<span>
+
+30% Complete
+
+</span>
+
+<span>
+
+⭐ 40 XP
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- AI ASSISTANT -->
+
+<div class="ai-helper">
+
+<div class="ai-avatar">
+
+🤖
+
+</div>
+
+<div class="ai-message"
+id="aiMessage">
+
+Choose a lesson to continue 🚀
+
+</div>
+
+</div>
 
 <footer>
-
 © Hanverse 2026
-
 </footer>
 
-<!-- ═══════ NOTIFICATIONS ═══════ -->
+<script src="notifications.js"></script>
+<script src="notifications-client.js"></script>
 <script>
-  window.addEventListener('load', () => {
-    try {
-      if (window.HanverseNotifications && window.HanverseNotifications.init) {
-        window.HanverseNotifications.init();
-      }
-    } catch (e) {}
-  });
-</script>
-
-<script>
-function comingSoon(e) {
-  e && e.preventDefault();
-  Notify.toast('This lesson is coming very soon! 🚀','info',3000);
-  Notify.miniConfetti();
-}
-
-/* ── Animated progress bars ── */
-document.querySelectorAll('.fill').forEach(bar => {
-  setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 500);
-});
-
-/* ── Page load celebration ── */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    Notify.toast('Welcome to Learn! Pick any lesson and start 🐼','heart',3000);
-    Notify.miniConfetti();
-  }, 600);
-});
-
-/* ── Lesson card interactions ── */
-const lessonMsgs = [
-  { text: 'Let\'s learn greetings! 你好 👋',   xp: 15 },
-  { text: 'Numbers time! 一 二 三 四 五 🔢', xp: 15 },
-  { text: 'Meet your family! 爸 妈 🏠',      xp: 15 },
-  { text: 'School supplies! 书包铅笔 ✏️',   xp: 15 },
-];
-
-document.querySelectorAll('.lesson').forEach((card, i) => {
-  card.style.cursor = 'pointer';
-
-  /* hover ripple ── */
-  card.addEventListener('mouseenter', function() {
-    const ring = document.createElement('div');
-    ring.className = 'ripple-ring';
-    ring.style.cssText = 'inset:0; border-radius:30px; border: 2px solid rgba(78,168,222,.2);';
-    this.appendChild(ring);
-    setTimeout(() => ring.remove(), 500);
-  });
-
-  /* click preview ── */
-  card.addEventListener('click', function(e) {
-    const rect = this.getBoundingClientRect();
-    const r = document.createElement('div');
-    r.className = 'n-ripple-container';
-    const ring = document.createElement('div');
-    ring.className = 'n-ripple';
-    ring.style.cssText = `width:30px;height:30px; left:${e.clientX - rect.left - 15}px; top:${e.clientY - rect.top - 15}px; background:rgba(78,168,222,.35);`;
-    this.style.position = 'relative';
-    this.style.overflow = 'hidden';
-    this.appendChild(r);
-    r.appendChild(ring);
-    setTimeout(() => r.remove(), 700);
-
-    const msg = lessonMsgs[i] || { text: 'Lesson locked! Unlock by signing up.', xp: 0 };
-    Notify.toast(msg.text, 'xp', 2800);
-    Notify.showXP(msg.xp);
-    Notify.miniConfetti();
-  });
-});
-
-/* ── Preview cards ── */
-document.querySelectorAll('.card').forEach((card, i) => {
+/* ── lesson cards ── */
+document.querySelectorAll('.lesson-card').forEach(card => {
   card.addEventListener('click', function() {
-    const labels = ['YCT 1 has 80 fun words! 📖', 'YCT 2 has 150 exciting words! 📗', '20+ games to play! 🎮', '50+ worksheets! 📝'];
-    Notify.toast(labels[i] || 'Coming soon!', 'info', 2500);
+    const label = this.querySelector('h3').textContent.trim();
+    const xp = this.querySelector('.lesson-footer span:last-child').textContent.trim();
+    Notify.toast(`Started: ${label} — ${xp}`, 'xp', 3000);
+    Notify.showXP(50);
+  });
+});
+
+/* ── quest cards ── */
+document.querySelectorAll('.quest').forEach(quest => {
+  quest.addEventListener('click', function() {
+    const label = this.querySelector('h3').textContent.trim();
+    Notify.toast(`Quest tracked: "${label}"`, 'warn', 3000);
     Notify.miniConfetti();
   });
 });
 
-/* ── Session check: show logged-in state or login/signup ── */
-const SESSION_KEY = 'hanverse_user';
-
-function getSessionUser() {
-  try { return JSON.parse(localStorage.getItem(SESSION_KEY) || '{}'); }
-  catch { return {}; }
-}
-
-function requireSession() {
-  const raw = localStorage.getItem(SESSION_KEY);
-  if (!raw) { window.location.href = 'login.html'; return null; }
-  try { return JSON.parse(raw); } catch { window.location.href = 'login.html'; return null; }
-}
-
-async function loadUserCourses(userId) {
-  try {
-    const r = await fetch(`/api/courses?student_id=${encodeURIComponent(userId)}`);
-    if (!r.ok) return [];
-    const data = await r.json();
-    return Array.isArray(data) ? data : [];
-  } catch (e) {
-    console.error('Course load error:', e);
-    return [];
-  }
-}
-
-/* ── Mobile: manage hamburger overlay visibility ── */
-(function setupHamburger(){
-  var toggle = document.getElementById('navToggle');
-  if (!toggle) return;
-
-  /* on load, make sure mobile nav is in sync; on change, sync sidebar */
-  function syncNav(){
-    var pfp = document.getElementById('navProfileSection');
-    if (!pfp) return;
-    if (toggle.checked){
-      if (pfp.matches(':nth-child(n+8)')) pfp.classList.add('force-show');
-    } else {
-      pfp.classList.remove('force-show');
-    }
-  }
-
-  /* keep pfp-section visible in overlay (nav at 5th child or later) */
-  toggle.addEventListener('change', function(){
-    var pfp = document.getElementById('navProfileSection');
-    if (!pfp) return;
-    if (toggle.checked) {
-      pfp.style.cssText += ';order:6;display:flex;flex-direction:column;width:100%;padding:8px 0;border-top:1px solid #f0f0f0;background:white;';
-    } else {
-      pfp.style.cssText = pfp.style.cssText.replace(/;order:6;display:flex;flex-direction:column;width:100%;padding:8px 0;border-top:1px solid #f0f0f0;background:white;/g,'');
-    }
+/* ── learning map nodes ── */
+document.querySelectorAll('.node').forEach((node, i) => {
+  node.addEventListener('click', function() {
+    const labels = ['Greetings','Numbers','Family','School'];
+    Notify.toast(`Opening: ${labels[i] || 'Lesson'}`, 'info', 2500);
   });
+});
 
-  syncNav();
-  toggle.addEventListener('change', syncNav);
-})();
+/* ── hero buttons ── */
+const btnMain = document.querySelector('.btn-main');
+const btnGhost = document.querySelector('.btn-ghost');
+if (btnMain) btnMain.addEventListener('click', () => { Notify.toast('Resuming your last lesson! 🐼', 'star', 3500); });
+if (btnGhost) btnGhost.addEventListener('click', () => { Notify.toast('Launching Lesson Explorer!', 'info', 2500); });
 
-(function applySessionState() {
-  const user = getSessionUser();
-  const userId = user.user_id || user.userId;
-  const isLoggedIn = !!userId;
+/* ── login / signup ── */
+document.querySelectorAll('.btn-login').forEach(b => b.addEventListener('click', () => window.location.href='login.html'));
+document.querySelectorAll('.btn-signup').forEach(b => b.addEventListener('click', () => window.location.href='signup.html'));
 
-  /* toggle nav auth buttons: hide both when logged in */
-  document.querySelectorAll('.btn-nav-auth').forEach(function(b){
-    b.style.display = isLoggedIn ? 'none' : '';
-  });
-
-  /* nav profile section */
-  const navProfileSection = document.getElementById('navProfileSection');
-  if (navProfileSection) {
-    navProfileSection.style.display = isLoggedIn ? 'flex' : 'none';
-    const imgEl  = document.getElementById('navAvatarImg');
-    const fbEl   = document.getElementById('navAvatarFallback');
-    const nameEl = document.getElementById('navProfileName');
-
-    if (isLoggedIn) {
-      if (user.profile_picture) {
-        if (imgEl) { imgEl.src = user.profile_picture; imgEl.style.display = ''; }
-        if (fbEl)  { fbEl.style.display = 'none'; }
-      } else {
-        if (imgEl) { imgEl.style.display = 'none'; }
-        if (fbEl)  { fbEl.style.display = ''; }
-      }
-      if (nameEl) nameEl.textContent = user.full_name || user.username || 'You';
-    }
-  }
-
-  /* hide sign-up CTA when logged in */
-  const joinCTA = document.getElementById('joinCTA');
-  if (joinCTA) joinCTA.style.display = isLoggedIn ? 'none' : '';
-
-  /* load and render courses grouped by YCT level 1→4 */
-  if (isLoggedIn) {
-    loadUserCourses(userId).then(courses => {
-      renderYCTSections(courses);
-    });
-  }
-})();
-
-function logout() {
-  localStorage.removeItem(SESSION_KEY);
-  Notify.toast('Logged out successfully. See you soon! 👋', 'info', 2500);
-  setTimeout(() => {
-    window.location.href = 'login.html';
-  }, 600);
+/* ── typing effect ── */
+const phrases = [
+  'Master Mandarin through games, stories and AI tutoring.',
+  'Earn XP, complete quests and unlock achievements.',
+  'Follow structured YCT and HSK learning paths.',
+  'Experience a modern way to learn Chinese.'
+];
+const el = document.getElementById('typing-text');
+let pi=0,ci=0,del=false;
+function type(){
+  const cur=phrases[pi];
+  el.innerHTML = cur.substring(0,ci);
+  if(!del){ci++;if(ci>cur.length){del=true;setTimeout(type,1500);return;}}
+  else{ci--;if(ci<0){del=false;pi=(pi+1)%phrases.length;}}
+  setTimeout(type,del?35:55);
 }
+type();
 
-/* ── Sign-up CTA button ── */
-const joinBtn = document.querySelector('.join .btn-main');
-if (joinBtn) {
-  joinBtn.addEventListener('click', () => {
-    Notify.toast('Create your account and start learning! 🎉', 'heart', 2500);
-    Notify.miniConfetti();
-  });
-}
-
-/* ── Skill-based welcome notification ── */
-const user = (() => { try { return JSON.parse(localStorage.getItem('hanverse_user') || '{}'); } catch { return {}; } })();
-
-if (user.xp && user.xp >= 300) {
-  setTimeout(() => {
-    Notify.toast(`Level ${user.level || 5} scholar ready to learn more! ⭐`, 'star', 3000);
-  }, 900);
-}
-
-/* ── Milestone toast after progress bars finish ── */
-setTimeout(() => {
-  if (user.level >= 3) {
-    Notify.toast('Level 3+ learner — new lessons waiting!', 'lock', 3000);
-  }
-}, 2500);
-
-/* ── PFP click → dropdown ── */
-(function pfpDropdown(){
-  var pfpSection = document.getElementById('navProfileSection');
-  var dropdown   = document.getElementById('pfpDropdown');
-  var backdrop   = document.getElementById('navBackdrop');
-  if (!pfpSection || !dropdown) return;
-
-  function openDD(){ dropdown.classList.add('show'); if (backdrop) backdrop.classList.add('show'); }
-  function closeDD(){ dropdown.classList.remove('show'); if (backdrop) backdrop.classList.remove('show'); }
-
-  pfpSection.addEventListener('click', function(e){
-    e.stopPropagation();
-    var isOpen = dropdown.classList.contains('show');
-    closeDD();
-    if (!isOpen) openDD();
-  });
-  dropdown.addEventListener('click', function(e){ e.stopPropagation(); });
-  document.addEventListener('click', function(e){
-    if (!pfpSection.contains(e.target) && !dropdown.contains(e.target)) closeDD();
-  });
-  if (backdrop) backdrop.addEventListener('click', closeDD);
-
-  document.getElementById('pfpDropLogout').addEventListener('click', function(e){
-    e.stopPropagation();
-    closeDD();
-    localStorage.removeItem('hanverse_user');
-    Notify.toast('Logged out. See you soon! 👋','info',2000);
-    setTimeout(()=>{window.location.href='login.html';},600);
-  });
-})();
+/* ── AI helper rotation ── */
+const aiMsgs=['Choose a lesson to continue 🚀','Your AI tutor is online 🤖','Try the Greetings lesson 👋','Earn XP by completing lessons ⭐'];
+let ai=0;
+setInterval(()=>{ ai=(ai+1)%aiMsgs.length; document.getElementById('aiMessage').innerHTML=aiMsgs[ai]; },4000);
 </script>
 
-</body>
 </html>

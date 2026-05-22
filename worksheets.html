@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Hanverse Worksheets</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<style>
+
+/* ════════════════════════════════════
+   ROOT
+   ════════════════════════════════════ */
+
+:root{
+
+--bg:#FFF9F3;
+
+--orange:#FFB703;
+--red:#E63946;
+--blue:#4EA8DE;
+--green:#74C69D;
+--purple:#9B5DE5;
+
+--text:#1E293B;
+--muted:#64748B;
+
+}
+
+/* ════════════════════════════════════
+   GLOBAL
+   ════════════════════════════════════ */
+
+*{
+
+margin:0;
+padding:0;
+
+box-sizing:border-box;
+
+font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+background:var(--bg);
+
+color:var(--text);
+
+overflow-x:hidden;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+/* ════════════════════════════════════
+   PAPER BACKGROUND
+   ════════════════════════════════════ */
+
+.paper-lines{
+
+position:fixed;
+
+inset:0;
+
+background:
+linear-gradient(
+transparent 31px,
+rgba(0,0,0,.03) 32px
+);
+
+background-size:100% 32px;
+
+pointer-events:none;
+
+z-index:-2;
+
+}
+
+.blob{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(80px);
+
+opacity:.15;
+
+z-index:-1;
+
+animation:floatBlob 12s infinite ease-in-out;
+
+}
+
+.blob1{
+
+width:320px;
+height:320px;
+
+background:var(--blue);
+
+top:-120px;
+left:-80px;
+
+}
+
+.blob2{
+
+width:260px;
+height:260px;
+
+background:var(--orange);
+
+right:-60px;
+top:240px;
+
+animation-delay:2s;
+
+}
+
+/* ════════════════════════════════════
+   NAVBAR
+   ════════════════════════════════════ */
+
+nav{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:24px 8%;
+
+}
+
+.logo{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+font-size:34px;
+font-weight:800;
+
+color:var(--orange);
+
+}
+
+.logo-icon{
+
+width:56px;
+height:56px;
+
+border-radius:20px;
+
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+box-shadow:
+0 12px 25px rgba(0,0,0,.06);
+
+}
+
+nav ul{
+
+display:flex;
+gap:34px;
+
+list-style:none;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+font-weight:600;
+
+color:#444;
+
+transition:.3s;
+
+}
+
+nav a:hover,
+nav a.active{
+
+color:var(--red);
+
+}
+
+/* ════════════════════════════════════
+   HERO
+   ════════════════════════════════════ */
+
+.hero{
+
+padding:30px 8% 90px;
+
+display:grid;
+
+grid-template-columns:
+1fr 420px;
+
+gap:50px;
+
+align-items:center;
+
+}
+
+.hero-left{
+
+animation:slideUp .8s ease;
+
+}
+
+.hero-badge{
+
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+background:white;
+
+padding:12px 18px;
+
+border-radius:40px;
+
+font-weight:600;
+
+margin-bottom:24px;
+
+box-shadow:
+0 12px 25px rgba(0,0,0,.06);
+
+}
+
+.hero h1{
+
+font-size:74px;
+
+line-height:.95;
+
+margin-bottom:26px;
+
+}
+
+.hero h1 span{
+
+background:
+linear-gradient(
+90deg,
+var(--blue),
+var(--purple)
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+#typing-text{
+
+font-size:20px;
+
+line-height:1.9;
+
+max-width:650px;
+
+min-height:90px;
+
+margin-bottom:34px;
+
+color:var(--muted);
+
+font-weight:500;
+
+}
+
+#typing-text::after{
+
+content:"|";
+
+margin-left:4px;
+
+animation:blink .7s infinite;
+
+color:var(--red);
+
+}
+
+.hero-buttons{
+
+display:flex;
+gap:16px;
+
+flex-wrap:wrap;
+
+}
+
+.btn{
+
+padding:15px 26px;
+
+border:none;
+
+border-radius:40px;
+
+cursor:pointer;
+
+font-weight:700;
+
+font-size:15px;
+
+transition:.35s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+
+}
+
+.btn-main{
+
+background:var(--red);
+
+color:white;
+
+box-shadow:
+0 14px 28px rgba(230,57,70,.22);
+
+}
+
+.btn-secondary{
+
+background:white;
+
+color:#333;
+
+box-shadow:
+0 10px 20px rgba(0,0,0,.06);
+
+}
+
+/* ════════════════════════════════════
+   WORKSHEET PREVIEW
+   ════════════════════════════════════ */
+
+.hero-right{
+
+display:flex;
+justify-content:center;
+
+}
+
+.sheet-preview{
+
+width:100%;
+max-width:420px;
+
+background:white;
+
+border-radius:40px;
+
+padding:30px;
+
+transform:rotate(2deg);
+
+box-shadow:
+0 30px 70px rgba(0,0,0,.08);
+
+position:relative;
+
+}
+
+.sheet-preview::before{
+
+content:"";
+
+position:absolute;
+
+inset:14px;
+
+border:2px dashed #E5E7EB;
+
+border-radius:28px;
+
+pointer-events:none;
+
+}
+
+.sheet-title{
+
+font-size:24px;
+font-weight:700;
+
+margin-bottom:26px;
+
+}
+
+.question{
+
+margin-bottom:26px;
+
+}
+
+.question h4{
+
+margin-bottom:14px;
+
+}
+
+.answer-line{
+
+height:14px;
+
+background:#F1F5F9;
+
+border-radius:30px;
+
+margin-bottom:12px;
+
+}
+
+.line1{width:100%;}
+.line2{width:80%;}
+.line3{width:60%;}
+
+.sticker{
+
+position:absolute;
+
+width:72px;
+height:72px;
+
+border-radius:24px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:32px;
+
+background:white;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.08);
+
+}
+
+.sticker1{
+
+top:-20px;
+right:-20px;
+
+}
+
+.sticker2{
+
+bottom:-20px;
+left:-20px;
+
+}
+
+/* ════════════════════════════════════
+   FILTERS
+   ════════════════════════════════════ */
+
+.filters{
+
+padding:0 8% 50px;
+
+display:flex;
+gap:16px;
+
+flex-wrap:wrap;
+
+}
+
+.filter{
+
+padding:14px 20px;
+
+border-radius:30px;
+
+background:white;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.35s;
+
+box-shadow:
+0 10px 20px rgba(0,0,0,.05);
+
+}
+
+.filter:hover,
+.filter.active{
+
+background:var(--blue);
+
+color:white;
+
+}
+
+/* ════════════════════════════════════
+   WORKSHEET GRID
+   ════════════════════════════════════ */
+
+.worksheets{
+
+padding:0 8% 100px;
+
+}
+
+.section-title{
+
+font-size:46px;
+
+margin-bottom:40px;
+
+}
+
+.sheet-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:26px;
+
+}
+
+.sheet-card{
+
+background:white;
+
+border-radius:36px;
+
+padding:28px;
+
+position:relative;
+
+overflow:hidden;
+
+box-shadow:
+0 14px 35px rgba(0,0,0,.06);
+
+transition:.35s;
+
+cursor:pointer;
+
+}
+
+.sheet-card:hover{
+
+transform:
+translateY(-10px);
+
+}
+
+.sheet-top{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:24px;
+
+}
+
+.sheet-icon{
+
+width:70px;
+height:70px;
+
+border-radius:24px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:34px;
+
+color:white;
+
+}
+
+.icon1{background:var(--green);}
+.icon2{background:var(--purple);}
+.icon3{background:var(--orange);}
+.icon4{background:var(--blue);}
+
+.sheet-level{
+
+background:#EEF7FF;
+
+padding:8px 14px;
+
+border-radius:20px;
+
+font-size:12px;
+font-weight:700;
+
+color:var(--blue);
+
+}
+
+.sheet-card h3{
+
+font-size:26px;
+
+margin-bottom:14px;
+
+}
+
+.sheet-card p{
+
+line-height:1.8;
+
+color:var(--muted);
+
+margin-bottom:24px;
+
+}
+
+.sheet-meta{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+font-size:14px;
+
+font-weight:600;
+
+}
+
+.download{
+
+display:flex;
+align-items:center;
+gap:8px;
+
+color:var(--red);
+
+}
+
+/* ════════════════════════════════════
+   PRACTICE ZONE
+   ════════════════════════════════════ */
+
+.practice{
+
+padding:0 8% 100px;
+
+}
+
+.practice-box{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+#B388FF
+);
+
+padding:50px;
+
+border-radius:42px;
+
+color:white;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.practice-box h2{
+
+font-size:54px;
+
+margin-bottom:20px;
+
+}
+
+.practice-box p{
+
+max-width:700px;
+
+line-height:1.9;
+
+margin-bottom:30px;
+
+opacity:.95;
+
+}
+
+.practice-circle{
+
+position:absolute;
+
+width:240px;
+height:240px;
+
+border-radius:50%;
+
+background:
+rgba(255,255,255,.12);
+
+top:-80px;
+right:-60px;
+
+}
+
+/* ════════════════════════════════════
+   AI HELPER
+   ════════════════════════════════════ */
+
+.ai-helper{
+
+position:fixed;
+
+bottom:24px;
+right:24px;
+
+background:white;
+
+padding:14px 18px;
+
+border-radius:26px;
+
+display:flex;
+gap:14px;
+
+max-width:340px;
+
+box-shadow:
+0 18px 40px rgba(0,0,0,.14);
+
+z-index:9999;
+
+animation:bubbleFloat 3s infinite;
+
+}
+
+.ai-avatar{
+
+width:54px;
+height:54px;
+
+border-radius:18px;
+
+background:var(--blue);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:28px;
+
+color:white;
+
+flex-shrink:0;
+
+}
+
+.ai-message{
+
+font-size:14px;
+
+line-height:1.7;
+
+font-weight:600;
+
+color:#444;
+
+}
+
+/* FOOTER */
+
+footer{
+
+padding:50px;
+
+text-align:center;
+
+color:#777;
+
+}
+
+/* ANIMATIONS */
+
+@keyframes floatBlob{
+
+50%{
+
+transform:
+translateY(-30px)
+translateX(20px);
+
+}
+
+}
+
+@keyframes blink{
+
+50%{
+
+opacity:0;
+
+}
+
+}
+
+@keyframes bubbleFloat{
+
+50%{
+
+transform:translateY(-5px);
+
+}
+
+}
+
+@keyframes slideUp{
+
+from{
+
+opacity:0;
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+
+nav ul{
+
+display:none;
+
+}
+
+.hero{
+
+grid-template-columns:1fr;
+
+padding:20px 6% 90px;
+
+}
+
+.hero-left{
+
+text-align:center;
+
+}
+
+.hero-buttons{
+
+justify-content:center;
+
+}
+
+.hero h1{
+
+font-size:54px;
+
+}
+
+.filters,
+.worksheets,
+.practice{
+
+padding-left:6%;
+padding-right:6%;
+
+}
+
+.practice-box h2{
+
+font-size:40px;
+
+}
+
+.ai-helper{
+
+left:14px;
+right:14px;
+
+max-width:none;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- PAPER -->
+
+<div class="paper-lines"></div>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+
+<div class="logo-icon">
+
+🐼
+
+</div>
+
+Hanverse
+
+</div>
+
+<ul>
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="learn.html">
+Learn
+</a>
+</li>
+
+<li>
+<a
+href="worksheets.html"
+class="active">
+Worksheets
+</a>
+</li>
+
+<li>
+<a href="#">
+Games
+</a>
+</li>
+
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-left">
+
+<div class="hero-badge">
+
+📝 Printable Mandarin Practice
+
+</div>
+
+<h1>
+
+Worksheets That Make
+
+<span>
+
+Learning Fun
+
+</span>
+
+</h1>
+
+<p id="typing-text"></p>
+
+<div class="hero-buttons">
+
+<button class="btn btn-main">
+
+Browse Worksheets
+
+</button>
+
+<button class="btn btn-secondary">
+
+Print Practice
+
+</button>
+
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="sheet-preview">
+
+<div class="sticker sticker1">
+
+⭐
+
+</div>
+
+<div class="sticker sticker2">
+
+🐼
+
+</div>
+
+<div class="sheet-title">
+
+YCT 1 Practice Sheet
+
+</div>
+
+<div class="question">
+
+<h4>
+
+1. Write “Hello” in Chinese
+
+</h4>
+
+<div class="answer-line line1"></div>
+
+</div>
+
+<div class="question">
+
+<h4>
+
+2. Match the numbers
+
+</h4>
+
+<div class="answer-line line2"></div>
+
+<div class="answer-line line3"></div>
+
+</div>
+
+<div class="question">
+
+<h4>
+
+3. Circle the correct word
+
+</h4>
+
+<div class="answer-line line1"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FILTERS -->
+
+<section class="filters">
+
+<div class="filter active">
+
+All
+
+</div>
+
+<div class="filter">
+
+YCT 1
+
+</div>
+
+<div class="filter">
+
+YCT 2
+
+</div>
+
+<div class="filter">
+
+Vocabulary
+
+</div>
+
+<div class="filter">
+
+Writing
+
+</div>
+
+<div class="filter">
+
+Games
+
+</div>
+
+</section>
+
+<!-- WORKSHEETS -->
+
+<section class="worksheets">
+
+<h2 class="section-title">
+
+Featured Worksheets
+
+</h2>
+
+<div class="sheet-grid">
+
+<div class="sheet-card">
+
+<div class="sheet-top">
+
+<div class="sheet-icon icon1">
+
+👋
+
+</div>
+
+<div class="sheet-level">
+
+YCT 1
+
+</div>
+
+</div>
+
+<h3>
+
+Greetings Practice
+
+</h3>
+
+<p>
+
+Practice hello, goodbye and common Mandarin greetings.
+
+</p>
+
+<div class="sheet-meta">
+
+<span>
+
+12 Questions
+
+</span>
+
+<div class="download">
+
+⬇ Download
+
+</div>
+
+</div>
+
+</div>
+
+<div class="sheet-card">
+
+<div class="sheet-top">
+
+<div class="sheet-icon icon2">
+
+🔢
+
+</div>
+
+<div class="sheet-level">
+
+YCT 1
+
+</div>
+
+</div>
+
+<h3>
+
+Numbers 1–10
+
+</h3>
+
+<p>
+
+Match numbers, trace characters and complete counting games.
+
+</p>
+
+<div class="sheet-meta">
+
+<span>
+
+15 Questions
+
+</span>
+
+<div class="download">
+
+⬇ Download
+
+</div>
+
+</div>
+
+</div>
+
+<div class="sheet-card">
+
+<div class="sheet-top">
+
+<div class="sheet-icon icon3">
+
+🏠
+
+</div>
+
+<div class="sheet-level">
+
+YCT 2
+
+</div>
+
+</div>
+
+<h3>
+
+Family Members
+
+</h3>
+
+<p>
+
+Learn Mandarin vocabulary for parents, siblings and relatives.
+
+</p>
+
+<div class="sheet-meta">
+
+<span>
+
+10 Questions
+
+</span>
+
+<div class="download">
+
+⬇ Download
+
+</div>
+
+</div>
+
+</div>
+
+<div class="sheet-card">
+
+<div class="sheet-top">
+
+<div class="sheet-icon icon4">
+
+✏️
+
+</div>
+
+<div class="sheet-level">
+
+Writing
+
+</div>
+
+</div>
+
+<h3>
+
+Character Tracing
+
+</h3>
+
+<p>
+
+Improve handwriting and practice Chinese stroke order.
+
+</p>
+
+<div class="sheet-meta">
+
+<span>
+
+8 Activities
+
+</span>
+
+<div class="download">
+
+⬇ Download
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PRACTICE -->
+
+<section class="practice">
+
+<div class="practice-box">
+
+<div class="practice-circle"></div>
+
+<h2>
+
+Print. Practice. Progress. 🚀
+
+</h2>
+
+<p>
+
+Download colorful printable worksheets designed for young learners.
+Practice Mandarin at home, in school or anywhere offline.
+
+</p>
+
+<button class="btn btn-main">
+
+Download Worksheet Pack
+
+</button>
+
+</div>
+
+</section>
+
+<!-- AI HELPER -->
+
+<div class="ai-helper">
+
+<div class="ai-avatar">
+
+🤖
+
+</div>
+
+<div class="ai-message"
+id="aiMessage">
+
+Try the Greetings worksheet 👋
+
+</div>
+
+</div>
+
+<footer>
+
+© Hanverse 2026
+
+</footer>
+
+<script>
+
+/* ════════════════════════════════════
+   TYPING EFFECT
+   ════════════════════════════════════ */
+
+const phrases = [
+
+"Printable Mandarin worksheets designed for fun learning.",
+
+"Practice Chinese characters, vocabulary and writing offline.",
+
+"Perfect for home practice, schools and classrooms.",
+
+"Learn Mandarin through colorful interactive activities."
+
+];
+
+const typingText =
+document.getElementById("typing-text");
+
+let phraseIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function typeEffect(){
+
+const current =
+phrases[phraseIndex];
+
+if(!deleting){
+
+typingText.innerHTML =
+current.substring(0,charIndex);
+
+charIndex++;
+
+if(charIndex >
+current.length){
+
+deleting = true;
+
+setTimeout(typeEffect,1500);
+
+return;
+
+}
+
+}else{
+
+typingText.innerHTML =
+current.substring(0,charIndex);
+
+charIndex--;
+
+if(charIndex < 0){
+
+deleting = false;
+
+phraseIndex++;
+
+if(phraseIndex >= phrases.length){
+
+phraseIndex = 0;
+
+}
+
+}
+
+}
+
+setTimeout(typeEffect,deleting ? 35 : 55);
+
+}
+
+typeEffect();
+
+/* ════════════════════════════════════
+   AI HELPER
+   ════════════════════════════════════ */
+
+const aiMessages = [
+
+"Try the Greetings worksheet 👋",
+
+"Download printable practice sheets 📝",
+
+"Character tracing helps handwriting ✏️",
+
+"Practice Mandarin offline 🚀"
+
+];
+
+const aiMessage =
+document.getElementById("aiMessage");
+
+let aiIndex = 0;
+
+setInterval(()=>{
+
+aiIndex++;
+
+if(aiIndex >= aiMessages.length){
+
+aiIndex = 0;
+
+}
+
+aiMessage.innerHTML =
+aiMessages[aiIndex];
+
+},4000);
+
+</script>
+
+</body>
+
+</html>

@@ -211,12 +211,30 @@
             </div>
         </main>
     </div>
+    <script src="notifications.js"></script>
     <script>
         function markAllRead() {
             document.querySelectorAll('.notification-card.unread').forEach(card => {
                 card.classList.remove('unread');
             });
+            Notify.toast('All notifications marked as read ✓', 'success', 2500);
         }
+
+        document.querySelectorAll('.notification-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.notification-title').textContent;
+                const wasUnread = this.classList.contains('unread');
+                this.classList.remove('unread');
+                if (wasUnread) Notify.toast(title, 'info', 2500);
+            });
+        });
+
+        window.addEventListener('load', function() {
+            const unread = document.querySelectorAll('.notification-card.unread').length;
+            if (unread > 0) {
+                setTimeout(() => Notify.toast(`You have ${unread} unread notification${unread > 1 ? 's' : ''} 🔔`, 'star', 3000), 600);
+            }
+        });
 
         /* ── Navbar: show profile pic + username when logged in ── */
         (function fillNotifNav(){
