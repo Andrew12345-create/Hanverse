@@ -3,7 +3,12 @@
    Interactive · Child-Friendly · Dope Animations
    ===================================================== */
 
+// Idempotent guard: avoid re-defining Notify if script is loaded twice
+if (window.Notify && typeof window.Notify.toast === 'function') {
+  // already initialized
+} else {
 const Notify = (() => {
+
   /* ─────────────── CONFIG ─────────────── */
   const TYPE = {
     success:  { emoji: '✅', label: 'Success' },
@@ -626,6 +631,7 @@ const MAX_HISTORY     = 200;
     get TYPE() { return TYPE; },
   };
 })();
+}
 
 /* ──────────────────── GLOBAL CSS ──────────────────── */
 const NOTIFY_CSS = `
