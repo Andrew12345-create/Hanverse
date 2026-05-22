@@ -1,32 +1,128 @@
-const express = require('express');
 const pkg = require('pg');
-const cors = require('cors');
 const bcrypt = require('bcrypt');
-
 const { Pool } = pkg;
-const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Database connection pool
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: { rejectUnauthorized: false }
 });
 
-// Test database connection
-pool.connect((err, client, release) => {
-  if (err) {
-    console.error('Error connecting to database:', err.stack);
-  } else {
-    console.log('Database connected successfully');
-    release();
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
+function json(statusCode, body) {
+  return { statusCode, headers, body: JSON.stringify(body) };
+}
+
+exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+
+  // Strip Netlify function prefix to get clean path
+  const path = event.path
+    .replace('/.netlify/functions/server', '')
+    .replace('/api', '') || '/';
+
+  try {
+    /* ── LOGIN ── */
+    if (path === '/login' && event.httpMethod === 'POST') {
+      const { email, password } = JSON.parse(event.body || '{}');
+      if (!email || !password) return json(400, { error: 'Email and password are required' });
+
+      const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      if (!rows.length) return json(401, { error: 'Invalid email or password' });
+
+      const user = rows[0];
+      const match = await bcrypt.compare(password, user.password_hash);
+      if (!match) return json(401, { error: 'Invalid email or password' });
+
+      // Streak + XP
+      const daysDiff = Math.floor((Date.now() - new Date(user.last_active)) / 86400000);
+      const newStreak = daysDiff === 1 ? user.streak_days + 1 : daysDiff > 1 ? 1 : user.streak_days;
+      const newXp = user.xp + 10;
+      const newLevel = newXp >= user.level * 100 ? user.level + 1 : user.level;
+
+      await pool.query(
+        'UPDATE users SET last_active=CURRENT_DATE, streak_days=$1, xp=$2, level=$3, updated_at=CURRENT_TIMESTAMP WHERE user_id=$4',
+        [newStreak, newXp, newLevel, user.user_id]
+      );
+
+      const [progress, achievements, notifications, settings, vocabulary] = await Promise.all([
+        pool.query('SELECT * FROM user_progress WHERE user_id=$1', [user.user_id]),
+        pool.query('SELECT * FROM achievements WHERE user_id=$1', [user.user_id]),
+        pool.query('SELECT * FROM notifications WHERE user_id=$1 ORDER BY created_at DESC LIMIT 20', [user.user_id]),
+        pool.query('SELECT * FROM user_settings WHERE user_id=$1', [user.user_id]),
+        pool.query('SELECT * FROM vocabulary_progress WHERE user_id=$1', [user.user_id]),
+      ]);
+
+      return json(200, {
+        success: true,
+        user: { user_id: user.user_id, username: user.username, email: user.email, full_name: user.full_name, xp: newXp, level: newLevel, streak_days: newStreak, profile_picture: user.profile_picture, created_at: user.created_at },
+        progress: progress.rows,
+        achievements: achievements.rows,
+        notifications: notifications.rows,
+        settings: settings.rows[0] || null,
+        vocabulary: vocabulary.rows
+      });
+    }
+
+    /* ── SIGNUP ── */
+    if (path === '/signup' && event.httpMethod === 'POST') {
+      const { email, password, fullName, username } = JSON.parse(event.body || '{}');
+      if (!email || !password || !fullName || !username) return json(400, { error: 'All fields are required' });
+
+      const existing = await pool.query('SELECT user_id FROM users WHERE email=$1 OR username=$2', [email, username]);
+      if (existing.rows.length) return json(400, { error: 'Email or username already exists' });
+
+      const passwordHash = await bcrypt.hash(password, 10);
+      const { rows } = await pool.query(
+        'INSERT INTO users (username, email, password_hash, full_name, last_active) VALUES ($1,$2,$3,$4,CURRENT_DATE) RETURNING *',
+        [username, email, passwordHash, fullName]
+      );
+      const user = rows[0];
+      await pool.query('INSERT INTO user_settings (user_id) VALUES ($1)', [user.user_id]);
+
+      return json(200, {
+        success: true,
+        user: { user_id: user.user_id, username: user.username, email: user.email, full_name: user.full_name, xp: 0, level: 1, streak_days: 0 }
+      });
+    }
+
+    /* ── GET USER ── */
+    const userMatch = path.match(/^\/user\/(.+)$/);
+    if (userMatch && event.httpMethod === 'GET') {
+      const userId = userMatch[1];
+      const { rows } = await pool.query('SELECT * FROM users WHERE user_id=$1', [userId]);
+      if (!rows.length) return json(404, { error: 'User not found' });
+
+      const [progress, achievements, notifications, settings, vocabulary] = await Promise.all([
+        pool.query('SELECT * FROM user_progress WHERE user_id=$1 ORDER BY completed_at DESC', [userId]),
+        pool.query('SELECT * FROM achievements WHERE user_id=$1', [userId]),
+        pool.query('SELECT * FROM notifications WHERE user_id=$1 ORDER BY created_at DESC LIMIT 20', [userId]),
+        pool.query('SELECT * FROM user_settings WHERE user_id=$1', [userId]),
+        pool.query('SELECT * FROM vocabulary_progress WHERE user_id=$1', [userId]),
+      ]);
+
+      return json(200, {
+        user: rows[0],
+        progress: progress.rows,
+        achievements: achievements.rows,
+        notifications: notifications.rows,
+        settings: settings.rows[0] || null,
+        vocabulary: vocabulary.rows
+      });
+    }
+
+    return json(404, { error: 'Not found' });
+
+  } catch (err) {
+    console.error('Function error:', err);
+    return json(500, { error: 'Server error', detail: err.message });
   }
-});
+};
 
 // Login endpoint
 app.post('/api/login', async (req, res) => {
